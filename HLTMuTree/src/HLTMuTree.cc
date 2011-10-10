@@ -115,21 +115,57 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       for (reco::GenParticleCollection::size_type i=0; i+1<genColl.product()->size(); i++) {
         const GenParticleRef genPtl(genColl,i);
         if (abs(genPtl->pdgId()) == 13 && genPtl->status() == 1) {
-
-          GenMu.pid[nGen] = genPtl->pdgId();
-          if (genPtl->numberOfMothers() > 0 ) {
-            GenMu.mom[nGen] = genPtl->mother(0)->pdgId();
-            cout << "mom pid: " << genPtl->mother(0)->pdgId() << endl;
-          } else {
-            GenMu.mom[nGen] = 10; 
-          }
-
           GenMu.pt[nGen] = genPtl->pt();
           GenMu.p[nGen] = genPtl->p();
           GenMu.eta[nGen] = genPtl->eta();
           GenMu.phi[nGen] = genPtl->phi();
           GenMu.status[nGen] = genPtl->status();
+          GenMu.pid[nGen] = genPtl->pdgId();
+          
+          GenMu.mom[nGen] = 10; 
+          if (genPtl->numberOfMothers() > 0 ) {
+            vector<int> momid;
+            vector<int>::iterator it_jpsi, it_ups;
+            for (unsigned int mom = 0; mom < genPtl->numberOfMothers(); mom++) {
+              cout << "mom pid: " << genPtl->mother(mom)->pdgId() << endl;
+              momid.push_back(genPtl->mother(mom)->pdgId());
+            }
+
+            if (!momid.empty()) {
+              it_jpsi = find(momid.begin(),momid.end(),443);
+              it_ups = find(momid.begin(),momid.end(),553);
+              if (it_jpsi != momid.end()) GenMu.mom[nGen] = 443;
+              if (it_ups != momid.end()) GenMu.mom[nGen] = 553;
+              
+              //No J/psi, Y mother -> Should check grandmother
+              if (it_jpsi == momid.end() && it_ups == momid.end()) {
+                const Candidate *mother = genPtl->mother(0);
+                momid.clear();
+                for (unsigned int mom = 0; mom < mother->numberOfMothers(); mom++) {
+                  cout << "grand mom pid: " << mother->mother(mom)->pdgId() << endl;
+                  momid.push_back(mother->mother(mom)->pdgId());
+                }
+
+                if (!momid.empty()) {
+                  it_jpsi = find(momid.begin(),momid.end(),443);
+                  it_ups = find(momid.begin(),momid.end(),553);
+                  if (it_jpsi != momid.end()) GenMu.mom[nGen] = 443;
+                  if (it_ups != momid.end()) GenMu.mom[nGen] = 553;
+                  if (it_jpsi == momid.end() && it_ups == momid.end()) GenMu.mom[nGen] = momid[0];
+                }
+              } //End of no J/psi, Y mother -> Should check grandmother
+            }
+
+          }
           nGen++;
+
+/*          if (genPtl->numberOfMothers() > 0 ) {
+            GenMu.mom[nGen] = genPtl->mother(0)->pdgId();
+            cout << "mom pid: " << genPtl->mother(0)->pdgId() << endl;
+          } else {
+            GenMu.mom[nGen] = 10; 
+          }*/
+
         }
       }
     } //End of gen collection
@@ -172,9 +208,10 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Loop over reco::muon
   if (doReco) {
     //Put centrality information
-    centrality = new CentralityProvider(iSetup);
+/*    centrality = new CentralityProvider(iSetup);
     centrality->newEvent(iEvent,iSetup);
-    cbin = centrality->getBin();
+    cbin = centrality->getBin();*/
+    cbin = -1;
 
     //Get vertex position
     edm::Handle< vector<reco::Vertex> > vertex;
@@ -196,28 +233,43 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     for (unsigned int i=0; i<muons->size(); i++) {
       edm::RefToBase<reco::Muon> muCand(muons,i);
       if (muCand.isNull()) continue;
-      if (muCand->isGlobalMuon()) {
-        edm::RefToBase<reco::Track> glb = edm::RefToBase<reco::Track>(muCand->combinedMuon());
-//        edm::RefToBase<reco::Track> glb = edm::RefToBase<reco::Track>(muCand->globalTrack());
-        GlbMu.charge[nGlb] = glb->charge();
-        GlbMu.pt[nGlb] = glb->pt();
-        GlbMu.p[nGlb] = glb->p();
-        GlbMu.eta[nGlb] = glb->eta();
-        GlbMu.phi[nGlb] = glb->phi();
-        GlbMu.dxy[nGlb] = glb->dxy(vertex->begin()->position()); 
-        GlbMu.dz[nGlb] = glb->dz(vertex->begin()->position());
-        nGlb++;
+      if (muCand->globalTrack().isNonnull() && muCand->innerTrack().isNonnull()) {
+        if (muCand->isGlobalMuon() && muCand->isTrackerMuon() && fabs(muCand->combinedMuon()->eta()) < 2.4 && 
+            muCand->combinedMuon().get()->hitPattern().numberOfValidMuonHits()>0 && 
+            muCand->innerTrack().get()->hitPattern().numberOfValidTrackerHits()>10) {
+              edm::RefToBase<reco::Track> trk = edm::RefToBase<reco::Track>(muCand->innerTrack());
+              edm::RefToBase<reco::Track> glb = edm::RefToBase<reco::Track>(muCand->combinedMuon());
+              const reco::HitPattern& p = trk->hitPattern();
+              if (isMuonInAccept(muCand) &&
+                  trk->found() > 10 &&
+                  glb->chi2()/glb->ndof() < 20.0 &&
+                  trk->chi2()/trk->ndof() < 4.0 &&
+                  p.pixelLayersWithMeasurement() > 0 &&
+                  fabs(trk->dxy(vertex->begin()->position())) < 3.0 &&
+                  fabs(trk->dz(vertex->begin()->position())) < 15.0 ) {
+                    GlbMu.charge[nGlb] = glb->charge();
+                    GlbMu.pt[nGlb] = glb->pt();
+                    GlbMu.p[nGlb] = glb->p();
+                    GlbMu.eta[nGlb] = glb->eta();
+                    GlbMu.phi[nGlb] = glb->phi();
+                    GlbMu.dxy[nGlb] = glb->dxy(vertex->begin()->position()); 
+                    GlbMu.dz[nGlb] = glb->dz(vertex->begin()->position());
+                    nGlb++;
+              }
+        }
       }
-      if (muCand->isStandAloneMuon()) {
-        edm::RefToBase<reco::Track> sta = edm::RefToBase<reco::Track>(muCand->standAloneMuon());
-        StaMu.charge[nSta] = sta->charge();
-        StaMu.pt[nSta] = sta->pt();
-        StaMu.p[nSta] = sta->p();
-        StaMu.eta[nSta] = sta->eta();
-        StaMu.phi[nSta] = sta->phi();
-        StaMu.dxy[nSta] = sta->dxy(vertex->begin()->position()); 
-        StaMu.dz[nSta] = sta->dz(vertex->begin()->position()); 
-        nSta++;
+      if (muCand->isStandAloneMuon() && muCand->outerTrack().isNonnull()) {
+        if (muCand->standAloneMuon().get()->hitPattern().numberOfValidMuonHits()>0 && fabs(muCand->standAloneMuon()->eta())<2.4) {
+          edm::RefToBase<reco::Track> sta = edm::RefToBase<reco::Track>(muCand->standAloneMuon());
+          StaMu.charge[nSta] = sta->charge();
+          StaMu.pt[nSta] = sta->pt();
+          StaMu.p[nSta] = sta->p();
+          StaMu.eta[nSta] = sta->eta();
+          StaMu.phi[nSta] = sta->phi();
+          StaMu.dxy[nSta] = sta->dxy(vertex->begin()->position()); 
+          StaMu.dz[nSta] = sta->dz(vertex->begin()->position()); 
+          nSta++;
+        }
       }
       if (nGlb >= nmax) {
         cout << "Global muons in a event exceeded maximum. \n";
@@ -288,6 +340,15 @@ HLTMuTree::beginJob()
 void 
 HLTMuTree::endJob() {
 }
+
+bool
+HLTMuTree::isMuonInAccept(const edm::RefToBase<reco::Muon> aMuon) {
+  return (fabs(aMuon->eta()) < 2.4 &&
+         ((fabs(aMuon->eta()) < 1.0 && aMuon->pt() >= 3.4) ||
+         (1.0 <= fabs(aMuon->eta()) && fabs(aMuon->eta()) < 1.5 && aMuon->pt() >= 5.8-2.4*fabs(aMuon->eta())) ||
+         (1.5 <= fabs(aMuon->eta()) && aMuon->pt() >= 3.3667-7.0/9.0*fabs(aMuon->eta()))));
+}
+
 
 //define this as a plug-in
 DEFINE_FWK_MODULE(HLTMuTree);

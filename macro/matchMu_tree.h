@@ -9,22 +9,6 @@
 
 
 
-static const int nmax =10000;
-
-struct MUTREE {
-  Int_t run;
-  Int_t event;
-  Int_t nptl;
-  Float_t eta[nmax];
-  Float_t pt[nmax];
-  Float_t phi[nmax];
-  Int_t charge[nmax];
-  Int_t mom[nmax];
-  Int_t status[nmax];
-};
-
-
-
 
 class FriendMuTree {
 public :
@@ -303,10 +287,15 @@ public :
    Int_t           HLT_HIL3DoubleMuOpen_Mgt2_SS;
    Int_t           HLT_HIL3DoubleMuOpen_Mgt2;
    Int_t           HLT_HIL3Mu3;
-   Int_t           HLT_DoubleMuOpenPP;
+   Int_t           HLT_HIL1DoubleMuOpen_v1;
+   Int_t           HLT_HIL1DoubleMu0_HighQ;
+   Int_t           HLT_HIL2DoubleMu0_NHitQ;
+   Int_t           HLT_HIL2DoubleMu0_L1HighQL2NHitQ;
+   Int_t           HLT_HIL2DoubleMu0_v1;
+   Int_t           HLT_HIL2DoubleMu3_v1;
    Int_t           HLT_HIL2DoubleMu0;
-   Int_t           HLT_HIL2Mu3;
    Int_t           HLT_HIL2DoubleMu3;
+   Int_t           HLT_HIL2Mu3;
    Int_t           HLT_HIL2Mu5Tight;
    Int_t           HLT_HIL2Mu20;
    Int_t           HLT_HIL1SingleMu3;
@@ -414,6 +403,12 @@ public :
    TBranch        *b_HLT_HIL1SingleMu7;   //!
    TBranch        *b_HLT_HIL1DoubleMuOpen;   //!
    TBranch        *b_HLT_HIL1DoubleMuOpen_Core;   //!
+   TBranch        *b_HLT_HIL1DoubleMuOpen_v1;
+   TBranch        *b_HLT_HIL1DoubleMu0_HighQ;
+   TBranch        *b_HLT_HIL2DoubleMu0_NHitQ;
+   TBranch        *b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ;
+   TBranch        *b_HLT_HIL2DoubleMu0_v1;
+   TBranch        *b_HLT_HIL2DoubleMu3_v1;
    TBranch        *b_L1_DoubleMu3;   //!
    TBranch        *b_L1_DoubleMuOpen;   //!
    TBranch        *b_L1_DoubleMuOpen_BptxAND;   //!
@@ -582,14 +577,20 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2",&HLT_HIL3DoubleMuOpen_Mgt2,&b_HLT_HIL3DoubleMuOpen_Mgt2);
    fChain->SetBranchAddress("HLT_HIL3Mu3",&HLT_HIL3Mu3,&b_HLT_HIL3Mu3);
    fChain->SetBranchAddress("HLT_HIL2DoubleMu0", &HLT_HIL2DoubleMu0, &b_HLT_HIL2DoubleMu0);
-   fChain->SetBranchAddress("HLT_HIL2Mu3", &HLT_HIL2Mu3, &b_HLT_HIL2Mu3);
    fChain->SetBranchAddress("HLT_HIL2DoubleMu3", &HLT_HIL2DoubleMu3, &b_HLT_HIL2DoubleMu3);
+   fChain->SetBranchAddress("HLT_HIL2Mu3", &HLT_HIL2Mu3, &b_HLT_HIL2Mu3);
    fChain->SetBranchAddress("HLT_HIL2Mu5Tight", &HLT_HIL2Mu5Tight, &b_HLT_HIL2Mu5Tight);
    fChain->SetBranchAddress("HLT_HIL2Mu20", &HLT_HIL2Mu20, &b_HLT_HIL2Mu20);
    fChain->SetBranchAddress("HLT_HIL1SingleMu3", &HLT_HIL1SingleMu3, &b_HLT_HIL1SingleMu3);
    fChain->SetBranchAddress("HLT_HIL1SingleMu5", &HLT_HIL1SingleMu5, &b_HLT_HIL1SingleMu5);
    fChain->SetBranchAddress("HLT_HIL1SingleMu7", &HLT_HIL1SingleMu7, &b_HLT_HIL1SingleMu7);
    fChain->SetBranchAddress("HLT_HIL1DoubleMuOpen", &HLT_HIL1DoubleMuOpen, &b_HLT_HIL1DoubleMuOpen);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMuOpen_v1", &HLT_HIL1DoubleMuOpen_v1, &b_HLT_HIL1DoubleMuOpen_v1);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMu0_HighQ", &HLT_HIL1DoubleMu0_HighQ, &b_HLT_HIL1DoubleMu0_HighQ);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_NHitQ", &HLT_HIL2DoubleMu0_NHitQ, &b_HLT_HIL2DoubleMu0_NHitQ);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_L1HighQL2NHitQ", &HLT_HIL2DoubleMu0_L1HighQL2NHitQ, &b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_v1", &HLT_HIL2DoubleMu0_v1, &b_HLT_HIL2DoubleMu0_v1);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu3_v1", &HLT_HIL2DoubleMu3_v1, &b_HLT_HIL2DoubleMu3_v1);
    fChain->SetBranchAddress("L1_DoubleMu3", &L1_DoubleMu3, &b_L1_DoubleMu3);
    fChain->SetBranchAddress("L1_DoubleMuOpen", &L1_DoubleMuOpen, &b_L1_DoubleMuOpen);
    fChain->SetBranchAddress("L1_DoubleMuOpen_BptxAND", &L1_DoubleMuOpen_BptxAND, &b_L1_DoubleMuOpen_BptxAND);

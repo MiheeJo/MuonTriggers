@@ -15,6 +15,7 @@
 #include <TStyle.h>
 #include <TSystem.h>
 #include "TTree.h"
+#include "TString.h"
 
 // miscellaneous  
 #include <fstream>
@@ -31,8 +32,8 @@ This macro will calculate and plot different trigger rates vs time (s)
  */
 
 void calculateTriggerRates(
-         TString inFile0Name = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/newL2oldL1/hltana_oldL1newL2.root",
-         //"/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/original/hltana_newL1HLT.root",
+         TString inFile0Name = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/v3/hltana_newL1newHLT.root",
+         //"/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/newL2oldL1/hltana_oldL1newL2.root",
 			   Int_t runNum        = 152791,
 			   TString outdir      = "output",
 			   char *projectTitle  = "HIAllPhy2010",
@@ -53,10 +54,9 @@ void calculateTriggerRates(
 // 				     "L1_SingleMu3_BptxAND","HLT_HIL1SingleMu3","HLT_HIL2Mu3",
 // 				     "L1_DoubleMuOpen_BptxAND","HLT_HIL1DoubleMuOpen","HLT_HIL2DoubleMu3"};
 
-  const int ntrigs = 12;
+  const int ntrigs = 11;
   const char* triggerPath[ntrigs] = {
     "",
-    "L1_DoubleMuOpen",
     "HLT_HIL1DoubleMuOpen",
     "HLT_HIL2DoubleMu0",
     "HLT_HIL2DoubleMu3",
@@ -69,7 +69,7 @@ void calculateTriggerRates(
     "HLT_HIL3Mu3"
   };
   
-  
+  TString str;
   TH1D *ahTemp[ntrigs];
   double ahTempRate[ntrigs];  //Rates (Integrated over lumisections)
   // Load input
@@ -82,7 +82,7 @@ void calculateTriggerRates(
   {
     
     TH1D *ph  = new TH1D("ph","",1100,0,1100);
-    HltTree->Draw("LumiBlock>>ph",Form("%s",triggerPath[it]));
+    HltTree->Draw("LumiBlock>>ph",str.Format("%s",triggerPath[it]));
 
     TH1D *phLumi = (TH1D*)gDirectory->Get("ph");
     phLumi->SetDirectory(0);
@@ -104,9 +104,10 @@ void calculateTriggerRates(
   gStyle->SetOptStat(kFALSE);
 
   // legend
-  TLegend *l0= new TLegend(0.2,0.6,0.85,0.9);
-  l0->SetHeader(Form("HICorePhysics_L1DoubleMuOpen: %d",nEvents));
-  l0->SetFillStyle(0);;
+  TLegend *l0= new TLegend(0.2,0.67,0.8,0.93);
+  l0->SetHeader(str.Format("HICorePhysics_L1DoubleMuOpen: %d",nEvents));
+  l0->SetMargin(0.1);
+  l0->SetFillStyle(0);
   l0->SetLineColor(0);
   l0->SetLineWidth(5.0);
   l0->SetTextSize(0.03); 
@@ -122,10 +123,11 @@ void calculateTriggerRates(
       TH1 *phLocal = (TH1 *)(ahTemp[it]->Clone("phLocal"));
       phLocal->SetDirectory(0); 
       phLocal->SetLineColor(it);
+      if (it >= 10) phLocal->SetLineColor(it+20);
       if(it==5)	phLocal->SetLineColor(kOrange+2);
       phLocal->Draw("same");
 
-      l0->AddEntry(phLocal,Form("%s: %.1f%, %.1f Hz",triggerPath[it],100*phLocal->GetEntries()/nEvents,ahTempRate[it]),"l");;
+      l0->AddEntry(phLocal,str.Format("%s: %.2f%, %.2f Hz",triggerPath[it],100*phLocal->GetEntries()/nEvents,ahTempRate[it]),"l");;
      
       pcLumi->Update();
      

@@ -9,6 +9,8 @@
 #include <TH1.h>
 #include <TMath.h>
 
+
+static const int nmax =10000;
 const float PI = 3.1415926535897932385;
 const float Mmu = 0.105658369;
 // Number of bins
@@ -43,13 +45,16 @@ struct FLAG {
   float dCut;
   bool jpsi;
   bool dimuTrig;
-  string trig;
   string fdir;
+  string trigPath;
   int trigLevel;
+  int trig;
 
   // Trigger cut parameters
   bool doDimuMassCut;
   float mCut;             //in GeV
+  bool doSinglemuPtCut;
+  float pTCut;             //in GeV
 };
 
 class INFO {
@@ -94,6 +99,20 @@ struct MATCH {
   std::vector<float> cand_chg;
 };
 
+struct MUTREE {
+  Int_t run;
+  Int_t event;
+  Int_t nptl;
+  Float_t eta[nmax];
+  Float_t pt[nmax];
+  Float_t phi[nmax];
+  Int_t charge[nmax];
+  Int_t mom[nmax];
+  Int_t status[nmax];
+};
+
+
+
 // 'a' is index number of MATCH *mat
 // eta, phi, pt, chg are candidate's properties
 void matching (bool match_dR, MATCH *mat, unsigned int a, float eta, float phi, float pt, int chg=0) {
@@ -117,4 +136,12 @@ void matching (bool match_dR, MATCH *mat, unsigned int a, float eta, float phi, 
       mat->cand_chg[a] = chg;
   }
   return;
+}
+
+bool isMuInAcc(float eta, float pt){
+  return ( fabs(eta) < 2.4 &&
+         ( (fabs(eta) < 1.0 && pt >= 3.4) ||
+            (1.0 <= fabs(eta) && fabs(eta) < 1.5 && pt >= 5.8-2.4*fabs(eta)) ||
+            (1.5 <= fabs(eta) && pt >= 3.3667-7.0/9.0*fabs(eta)) ) 
+         );
 }

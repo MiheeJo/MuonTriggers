@@ -32,8 +32,9 @@ This macro will calculate and plot different trigger rates vs time (s)
  */
 
 void calculateTriggerRates(
-         TString inFile0Name = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/v3/hltana_newL1newHLT.root",
-         //"/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/newL2oldL1/hltana_oldL1newL2.root",
+         TString inFile0Name = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/MC425/jpsi/hltana_jpsi.root",
+         //"/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/newL2newL1/hltana_newL1newL2.root",
+         //"/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/v3/hltana_newL1newHLT.root",
 			   Int_t runNum        = 152791,
 			   TString outdir      = "output",
 			   char *projectTitle  = "HIAllPhy2010",
@@ -54,19 +55,30 @@ void calculateTriggerRates(
 // 				     "L1_SingleMu3_BptxAND","HLT_HIL1SingleMu3","HLT_HIL2Mu3",
 // 				     "L1_DoubleMuOpen_BptxAND","HLT_HIL1DoubleMuOpen","HLT_HIL2DoubleMu3"};
 
-  const int ntrigs = 11;
+  const int ntrigs = 22;
   const char* triggerPath[ntrigs] = {
     "",
-    "HLT_HIL1DoubleMuOpen",
-    "HLT_HIL2DoubleMu0",
-    "HLT_HIL2DoubleMu3",
-    "HLT_HIL2Mu3",
-    "HLT_HIL3DoubleMuOpen",
+    "HLT_HIMinBiasHfOrBSC_v1",
+    "HLT_HIL1SingleMu3_v1",
+    "HLT_HIL1SingleMu5_v1",
+    "HLT_HIL1SingleMu7_v1",
+    "HLT_HIL2Mu3_v1",
+    "HLT_HIL2Mu5Tight_v1",
+    "HLT_HIL1DoubleMuOpen_v1",
+    "HLT_HIL1DoubleMu0_HighQ",
+    "HLT_HIL2DoubleMu0_NHitQ",
+    "HLT_HIL2DoubleMu0_L1HighQL2NHitQ",
+    "HLT_HIL2DoubleMu0_v1",
+    "HLT_HIL2DoubleMu3_v1",
+    "HLT_HIL2Mu3_NHitQ",
+    "HLT_HIL2Mu3_L1HighQ",
+    "HLT_HIL2Mu3_L1HighQL2NHitQ",
+    "HLT_HIL3Mu3",
+    "HLT_HIL3Mu3_L1HighQ",
     "HLT_HIL3DoubleMuOpen_Mgt2",
     "HLT_HIL3DoubleMuOpen_Mgt2_SS",
     "HLT_HIL3DoubleMuOpen_Mgt2_OS",
     "HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",
-    "HLT_HIL3Mu3"
   };
   
   TString str;
@@ -104,7 +116,7 @@ void calculateTriggerRates(
   gStyle->SetOptStat(kFALSE);
 
   // legend
-  TLegend *l0= new TLegend(0.2,0.67,0.8,0.93);
+  TLegend *l0= new TLegend(0.2,0.4,0.8,0.9);
   l0->SetHeader(str.Format("HICorePhysics_L1DoubleMuOpen: %d",nEvents));
   l0->SetMargin(0.1);
   l0->SetFillStyle(0);

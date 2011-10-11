@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "TFile.h"
+#include "TROOT.h"
 #include "TTree.h"
 #include "TChain.h"
 #include "TH2.h"
@@ -35,9 +36,6 @@ double* calcEff(TTree* HltTree, const char *title, double nEvt,TString cut,int f
   result[0]=eff;
   result[1]=effErr;
 
-  cout << "calcEFF" << endl;
-  cout << title << endl;
-  cout << cut << endl;
   // print out or not
   if (flag) {
     triggers->push_back(string(title));
@@ -104,17 +102,32 @@ void printEff(TTree* HltTree,const char *cut,const char *title, char *projectTit
     effs.push_back(calcEff(HltTree,"L1_DoubleMu3",nEvt,Form("(%s)&&L1_DoubleMu3",cut)));
   }
   if (anaMode=="HLTMu") {
-    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu3",nEvt,Form("(%s)&&HLT_HIL1SingleMu3",cut)));
+/*    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu3",nEvt,Form("(%s)&&HLT_HIL1SingleMu3",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3",nEvt,Form("(%s)&&HLT_HIL2Mu3",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3Mu3",nEvt,Form("(%s)&&HLT_HIL2Mu3",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMuOpen",nEvt,Form("(%s)&&HLT_HIL1DoubleMuOpen",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu3",nEvt,Form("(%s)&&HLT_HIL2DoubleMu3",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu3",nEvt,Form("(%s)&&HLT_HIL2DoubleMu3",cut)));*/
+    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu3_v1",nEvt,Form("(%s)&&HLT_HIL1SingleMu3_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_v1",nEvt,Form("(%s)&&HLT_HIL2Mu3_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_L1HighQ",nEvt,Form("(%s)&&HLT_HIL2Mu3_L1HighQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_NHitQ",nEvt,Form("(%s)&&HLT_HIL2Mu3_NHitQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_L1HighQL2NHitQ",nEvt,Form("(%s)&&HLT_HIL2Mu3_L1HighQL2NHitQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3Mu3",nEvt,Form("(%s)&&HLT_HIL3Mu3",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3Mu3_L1HighQ",nEvt,Form("(%s)&&HLT_HIL3Mu3_L1HighQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu5_v1",nEvt,Form("(%s)&&HLT_HIL1SingleMu5_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu5Tight_v1",nEvt,Form("(%s)&&HLT_HIL2Mu5Tight_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu7_v1",nEvt,Form("(%s)&&HLT_HIL1SingleMu7_v1",cut)));
+
+/*    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMuOpen_v1",nEvt,Form("(%s)&&HLT_HIL1DoubleMuOpen_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMu0_HighQ",nEvt,Form("(%s)&&HLT_HIL1DoubleMu0_HighQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_NHitQ",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_NHitQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_L1HighQL2NHitQ",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_L1HighQL2NHitQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu3_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu3_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_SS",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_SS",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",cut)));*/
   }
   results->push_back(effs);
 
@@ -176,7 +189,7 @@ void printEff(TTree* HltTree,const char *cut,const char *title, char *projectTit
   c1->SaveAs(fname.c_str());
   c1->SaveAs(Form("%s/trigCorr_%s_%s.C",goutdir.Data(),projectTitle,title));
 
-  cout <<"<img src=\"%ATTACHURLPATH%/"<<fname<<"\" alt=\""<<fname<<"\" width='671'   height='478' />"<<endl;   
+//  cout <<"<img src=\"%ATTACHURLPATH%/"<<fname<<"\" alt=\""<<fname<<"\" width='671'   height='478' />"<<endl;   
 }
 
 void trigAnaCorrelation(
@@ -184,11 +197,12 @@ void trigAnaCorrelation(
     Int_t runNum = 1,
     Int_t goodLumiStart = 1,
     TString inFile0Name = 
-    "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/v3/hltana_newL1newHLT.root",
+    "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/MC425/jpsi/hltana_jpsi.root",
     TString outdir="./out",
     char *projectTitle = "HIAllPhy2010",
     string source="data")
 {
+  gROOT->Macro("~/JpsiStyle.C");
   // Load input
   TChain * HltTree = new TChain("hltanalysis/HltTree","HI OpenHLT Tree");
   HltTree->Add(inFile0Name);
@@ -201,7 +215,7 @@ void trigAnaCorrelation(
   anaMode=mode;
 
   // Define Output
-  TString evtSel("HLT_HIL1DoubleMuOpen");
+  TString evtSel("HLT_HIMinBiasHfOrBSC_v1");
 //  TString evtSel("L1Tech_BPTX_plus_AND_minus.v0_5bx");
   outdir+=Form("/run%d_%s_%s",runNum,anaMode.Data(),evtSel.Data());
   gSystem->mkdir(outdir.Data(),kTRUE);
@@ -211,8 +225,8 @@ void trigAnaCorrelation(
   // define event types
   vector<string> evtType;
   vector<string> evtTypeCut;
-  evtType.push_back(evtSel.Data()); evtTypeCut.push_back(evtSel.Data());
-//  evtType.push_back("BptxAND"); evtTypeCut.push_back(evtSel.Data());
+//  evtType.push_back(evtSel.Data()); evtTypeCut.push_back(evtSel.Data());
+  evtType.push_back("BptxAND"); evtTypeCut.push_back(evtSel.Data());
   if (source=="mc") {
   }
   else if (source=="data") {

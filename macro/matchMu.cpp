@@ -26,7 +26,7 @@ int matchMu() {
 
   map<string,int> triglist;
   map<string,int>::iterator it_trig;
-  triglist["HLT_HIL1DoubleMuOpen_v1"] = 1;
+//  triglist["HLT_HIL1DoubleMuOpen_v1"] = 1;
   triglist["HLT_HIL2DoubleMu0_v1"] = 2;
 /*  triglist["HLT_HIL2DoubleMu3_v1"] = 2;
   triglist["HLT_HIL2DoubleMu0_NHitQ"] = 2;
@@ -38,8 +38,8 @@ int matchMu() {
   triglist["HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy"] = 3;*/
 
   map<string,int> triglist_single;
-  triglist_single["HLT_HIL2Mu3_v1"] = 2;
-/*  triglist_single["HLT_HIL2Mu3_NHitQ"] = 2;
+/*  triglist_single["HLT_HIL2Mu3_v1"] = 2;
+  triglist_single["HLT_HIL2Mu3_NHitQ"] = 2;
   triglist_single["HLT_HIL2Mu3_L1HighQ"] = 2;
   triglist_single["HLT_HIL2Mu3_L1HighQL2NHitQ"] = 2;
   triglist_single["HLT_HIL3Mu3"] = 3;
@@ -51,10 +51,10 @@ int matchMu() {
   FLAG &flag = flag_;
   // Matching parameters  
   flag.doSim= false;
-  flag.doGen= true;
-  flag.doSta= false;
+  flag.doGen= false;
+  flag.doSta= true;
   flag.match_dR = true;
-  flag.dCut = 1000000.0;
+  flag.dCut = 0.4;
   flag.jpsi = true;
 //  flag.fdir = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/v3/";
   flag.fdir = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/MC425/jpsi/";
@@ -84,7 +84,7 @@ int matchMu() {
     }
 
     // Single muon triggers
-    for (it_trig=triglist_single.begin(); it_trig!=triglist_single.end(); it_trig++) {
+/*    for (it_trig=triglist_single.begin(); it_trig!=triglist_single.end(); it_trig++) {
       flag.trigPath = (*it_trig).first;
       flag.trigLevel = (*it_trig).second;
       flag.dimuTrig = true;
@@ -100,7 +100,7 @@ int matchMu() {
         sys->Exec(tmp.c_str());
         nGraph++;
       }
-    }
+    }*/
 
     sys->Exec(Form("mkdir %s",filelist[f]));
     sys->Exec(Form("mv HLT_* %s",filelist[f]));
@@ -136,6 +136,10 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   TH1F *Eff_L2_match_eta = new TH1F("eff_L2_match_eta","eff_L2_match_eta;single mu #eta",ETA,-2.4,2.4);
   TH1F *Eff_L2_match_phi = new TH1F("eff_L2_match_phi","eff_L2_match_phi;single mu #phi",PHI,-PI,PI);
   TH1F *Eff_L2_match_pt = new TH1F("eff_L2_match_pt","eff_L2_match_pt;single mu p_{T}",PT,0,20);
+
+  TH2F *Eff_etapt_di = new TH2F("eff_etapt_di","eff_etapt_di;dimu #eta;dimu p_{T}",ETA,-2.4,2.4,PT,0,20);
+  TH2F *Eff_acc_etapt_di = new TH2F("eff_acc_etapt_di","eff_acc_etapt_di;dimu #eta;dimu p_{T}",ETA,-2.4,2.4,PT,0,20);
+  TH2F *Eff_match_etapt_di = new TH2F("eff_match_etapt_di","eff_match_etapt_di;dimu #eta;dimu p_{T}",ETA,-2.4,2.4,PT,0,20);
 
   TGraphAsymmErrors *Eff_eta_di = new TGraphAsymmErrors();
   TGraphAsymmErrors *Eff_phi_di = new TGraphAsymmErrors();
@@ -213,11 +217,11 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
    mutree->SetBranchAddress("Gen_mom",muTree.mom);
    mutree->SetBranchAddress("Gen_status",muTree.status);
   } else if (flag.doSta && !flag.doGen) {
-   mutree->SetBranchAddress("Sta_eta",muTree.eta);
-   mutree->SetBranchAddress("Sta_pt",muTree.pt);
-   mutree->SetBranchAddress("Sta_phi",muTree.phi);
-   mutree->SetBranchAddress("Sta_nptl",&muTree.nptl);
-   mutree->SetBranchAddress("Sta_charge",muTree.charge);
+   mutree->SetBranchAddress("Glb_eta",muTree.eta);
+   mutree->SetBranchAddress("Glb_pt",muTree.pt);
+   mutree->SetBranchAddress("Glb_phi",muTree.phi);
+   mutree->SetBranchAddress("Glb_nptl",&muTree.nptl);
+   mutree->SetBranchAddress("Glb_charge",muTree.charge);
   } else {
     cout << "Choose doSta or doGen, not both!\n";
     return -1;
@@ -272,7 +276,7 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
         if (!flag.doSim && muTree.status[a] == -99) continue;    //skip sim muon
         if ( (!flag.jpsi && muTree.mom[a] != 553) || (flag.jpsi && muTree.mom[a] != 443) ) continue;
       } else if (flag.doSta) {
-        if(!isMuInAcc(muTree.eta[a], muTree.pt[a])) continue;    //Check sta muons are within acceptance range
+        if(!isMuInAcc(muTree.eta[a], muTree.pt[a])) continue;    //Check glb muons are within acceptance range
       }
       if (fabs(muTree.eta[a]) <= 2.4) { 
         float pt = muTree.pt[a];
@@ -320,10 +324,14 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
         out << "Acc L2dimu.M(): " << L2dimu.M() << endl;
         out << "Acc L2dimu.Eta(): " << L2dimu.Eta() << endl;
         out << "Acc L2dimu.Pt(): " << L2dimu.Pt() << endl;
-        Eff_acc_mass_di->Fill(L2dimu.M());
-        Eff_acc_phi_di->Fill(L2dimu.Phi());
-        Eff_acc_eta_di->Fill(L2dimu.Eta());
-        Eff_acc_pt_di->Fill(L2dimu.Pt());
+        if ((flag.jpsi && (L2dimu.M() > 2 && L2dimu.M() < 5)) ||
+           (!flag.jpsi && (L2dimu.M() > 8 && L2dimu.M() < 11))) {
+          Eff_acc_mass_di->Fill(L2dimu.M());
+          Eff_acc_phi_di->Fill(L2dimu.Phi());
+          Eff_acc_eta_di->Fill(L2dimu.Eta());
+          Eff_acc_pt_di->Fill(L2dimu.Pt());
+          Eff_acc_etapt_di->Fill(L2dimu.Eta(),L2dimu.Pt());
+        }
       }
     }
 
@@ -404,13 +412,17 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
     }
     if (flag.dimuTrig && (L2mu[0].Pt()!=0 && L2mu[1].Pt()!=0) ){
       L2dimu = L2mu[0] + L2mu[1]; // Use only 0th, 1th L1 objects
-      out << "Match L2dimu.M(): " << L2dimu.M() << endl;
-      out << "Match L2dimu.Eta(): " << L2dimu.Eta() << endl;
-      out << "Match L2dimu.Pt(): " << L2dimu.Pt() << endl;
-      Eff_match_mass_di->Fill(L2dimu.M());
-      Eff_match_phi_di->Fill(L2dimu.Phi());
-      Eff_match_eta_di->Fill(L2dimu.Eta());
-      Eff_match_pt_di->Fill(L2dimu.Pt());
+      if ((flag.jpsi && (L2dimu.M() > 2 && L2dimu.M() < 5)) ||
+         (!flag.jpsi && (L2dimu.M() > 8 && L2dimu.M() < 11))) {
+          out << "Match L2dimu.M(): " << L2dimu.M() << endl;
+          out << "Match L2dimu.Eta(): " << L2dimu.Eta() << endl;
+          out << "Match L2dimu.Pt(): " << L2dimu.Pt() << endl;
+          Eff_match_mass_di->Fill(L2dimu.M());
+          Eff_match_phi_di->Fill(L2dimu.Phi());
+          Eff_match_eta_di->Fill(L2dimu.Eta());
+          Eff_match_pt_di->Fill(L2dimu.Pt());
+          Eff_match_etapt_di->Fill(L2dimu.Eta(),L2dimu.Pt());
+      }
     }
 
 
@@ -556,15 +568,19 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
     Eff_eta->SetTitle("Efficiency with gen muon info");
     Eff_phi->SetTitle("Efficiency with gen muon info");
     Eff_pt->SetTitle("Efficiency with gen muon info");
+    Eff_etapt->SetTitle("Efficiency with gen muon info");
   } else {
-    Eff_eta->SetTitle("Efficiency with sta muon info");
-    Eff_phi->SetTitle("Efficiency with sta muon info");
-    Eff_pt->SetTitle("Efficiency with sta muon info");
+    Eff_eta->SetTitle("Efficiency with reco muon info");
+    Eff_phi->SetTitle("Efficiency with reco muon info");
+    Eff_pt->SetTitle("Efficiency with reco muon info");
+    Eff_etapt->SetTitle("Efficiency with reco muon info");
   }
 
   Eff_eta->GetXaxis()->SetTitle("single mu #eta");
   Eff_phi->GetXaxis()->SetTitle("single mu #phi");
   Eff_pt->GetXaxis()->SetTitle("single mu p_{T}");
+  Eff_etapt->GetXaxis()->SetTitle("single mu #eta");
+  Eff_etapt->GetYaxis()->SetTitle("single mu p_{T}");
 
   Eff_eta->SetMaximum(1.2);
   Eff_phi->SetMaximum(1.2);
@@ -582,21 +598,26 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
     Eff_eta_di->SetTitle("Efficiency with gen muon info");
     Eff_mass_di->SetTitle("Efficiency with gen muon info");
     Eff_pt_di->SetTitle("Efficiency with gen muon info");
+    Eff_etapt_di->SetTitle("Efficiency with gen muon info");
   } else {
-    Eff_eta_di->SetTitle("Efficiency with sta muon info");
-    Eff_mass_di->SetTitle("Efficiency with sta muon info");
-    Eff_pt_di->SetTitle("Efficiency with sta muon info");
+    Eff_eta_di->SetTitle("Efficiency with reco muon info");
+    Eff_mass_di->SetTitle("Efficiency with reco muon info");
+    Eff_pt_di->SetTitle("Efficiency with reco muon info");
+    Eff_etapt_di->SetTitle("Efficiency with reco muon info");
   }
 
   Eff_eta_di->GetXaxis()->SetTitle("dimu #eta");
   Eff_mass_di->GetXaxis()->SetTitle("dimu mass");
   Eff_pt_di->GetXaxis()->SetTitle("dimu p_{T}");
+  Eff_etapt_di->GetXaxis()->SetTitle("dimu #eta");
+  Eff_etapt_di->GetYaxis()->SetTitle("dimu p_{T}");
 
   Eff_eta_di->SetMaximum(1.2);
   Eff_mass_di->SetMaximum(1.2);
   Eff_pt_di->SetMaximum(1.2);
 
   Eff_etapt->Divide(Eff_match_etapt,Eff_acc_etapt);
+  Eff_etapt_di->Divide(Eff_match_etapt_di,Eff_acc_etapt_di);
 
   ////////// Fake 
   Fake_eta->SetMarkerStyle(kFullCircle);  Fake_eta->SetMarkerSize(1.2);
@@ -612,9 +633,9 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
     Fake_phi->SetTitle("Fake with L2 muon info (gen matching)");
     Fake_pt->SetTitle("Fake with L2 muon info (gen matching)");
   } else {
-    Fake_eta->SetTitle("Fake with L2 muon info (sta matching)");
-    Fake_phi->SetTitle("Fake with L2 muon info (sta matching)");
-    Fake_pt->SetTitle("Fake with L2 muon info (sta matching)");
+    Fake_eta->SetTitle("Fake with L2 muon info (reco matching)");
+    Fake_phi->SetTitle("Fake with L2 muon info (reco matching)");
+    Fake_pt->SetTitle("Fake with L2 muon info (reco matching)");
   }
 
   Fake_eta->GetXaxis()->SetTitle("single mu #eta");
@@ -639,9 +660,9 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
     Fake_mass_di->SetTitle("Fake with L2 muon info (gen matching)");
     Fake_pt_di->SetTitle("Fake with L2 muon info (gen matching)");
   } else {
-    Fake_eta_di->SetTitle("Fake with L2 muon info (sta matching)");
-    Fake_mass_di->SetTitle("Fake with L2 muon info (sta matching)");
-    Fake_pt_di->SetTitle("Fake with L2 muon info (sta matching)");
+    Fake_eta_di->SetTitle("Fake with L2 muon info (reco matching)");
+    Fake_mass_di->SetTitle("Fake with L2 muon info (reco matching)");
+    Fake_pt_di->SetTitle("Fake with L2 muon info (reco matching)");
   }
 
   Fake_eta_di->GetXaxis()->SetTitle("dimu #eta");
@@ -664,7 +685,7 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   TPaletteAxis *paxis;
 
 
-  TCanvas *cchg= new TCanvas("chg","chg",1300,1000);
+/*  TCanvas *cchg= new TCanvas("chg","chg",1300,1000);
   cchg->Divide(2,2);
   cchg->cd(1);    Charge_wrong_L1->Draw();
   cchg->cd(2);    Charge_wrong_L2->Draw();
@@ -679,7 +700,7 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   t->DrawLatex(0.0,0.6,stmp.str().c_str());
   stmp.str("");  stmp << "Trigger path: " << flag.trigPath;
   cchg->SaveAs("charge.png");
-  delete cchg;
+  delete cchg;*/
 
   TCanvas *ceff = new TCanvas("eff","eff",1300,1000);
   ceff->Divide(2,2);
@@ -689,8 +710,16 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   ceff->cd(4);
   stmp.str("");  stmp << "Events: " << mutree->GetEntries();
   t->DrawLatex(0.0,0.9,stmp.str().c_str());
-  stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
-  t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  if (flag.trigLevel == 1) {
+    stmp.str("");  stmp << "L1 fired events: " << info.tot_NL1ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 2) {
+    stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 3) {
+    stmp.str("");  stmp << "L3 fired events: " << info.tot_NL3ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  }
   stmp.str("");  stmp << "Total # of accepted #mu: " << Eff_acc_eta->GetEntries();
   t->DrawLatex(0.0,0.7,stmp.str().c_str());
   stmp.str("");  stmp << "Total # of matched #mu: " << Eff_match_eta->GetEntries();
@@ -724,10 +753,13 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   ceff->cd(4);
   stmp.str("");  stmp << "Events: " << mutree->GetEntries();
   t->DrawLatex(0.0,0.9,stmp.str().c_str());
-  if (flag.trigLevel == 2) {
+  if (flag.trigLevel == 1) {
+    stmp.str("");  stmp << "L1 fired events: " << info.tot_NL1ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 2) {
     stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
-  } else {
+  } else if (flag.trigLevel == 3) {
     stmp.str("");  stmp << "L3 fired events: " << info.tot_NL3ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
   }
@@ -773,11 +805,14 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   ceff->cd(4);
   stmp.str("");  stmp << "Events: " << mutree->GetEntries();
   t->DrawLatex(0.0,0.9,stmp.str().c_str());
-  if (flag.trigLevel == 2) {
+  if (flag.trigLevel == 1) {
+    stmp.str("");  stmp << "L1 fired events: " << info.tot_NL1ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 2) {
     stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
-  } else {
-    stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
+  } else if (flag.trigLevel == 3) {
+    stmp.str("");  stmp << "L3 fired events: " << info.tot_NL3ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
   }
   stmp.str("");  stmp << "Total # of accepted #mu: " << Eff_acc_etapt->GetEntries();
@@ -793,6 +828,47 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   ceff->SaveAs("eff_2D.png");
   ceff->SaveAs("eff_2D.C");
   delete ceff;
+  ceff = new TCanvas("eff","eff",1300,1000);
+  ceff->Divide(2,2);
+  ceff->cd(1);    Eff_etapt_di->Draw("colz");
+  gPad->Update();
+  paxis = (TPaletteAxis*)Eff_etapt_di->GetListOfFunctions()->FindObject("palette");
+  if (paxis != NULL) {paxis->SetY2NDC(0.7); paxis->SetLabelSize(0.03);}
+  ceff->cd(2);    Eff_acc_etapt_di->Draw("colz");
+  gPad->Update();
+  paxis = (TPaletteAxis*)Eff_acc_etapt_di->GetListOfFunctions()->FindObject("palette");
+  if (paxis != NULL) {paxis->SetY2NDC(0.7); paxis->SetLabelSize(0.03);}
+  ceff->cd(3);    Eff_match_etapt_di->Draw("colz");
+  gPad->Update();
+  paxis = (TPaletteAxis*)Eff_match_etapt_di->GetListOfFunctions()->FindObject("palette");
+  if (paxis != NULL) {paxis->SetY2NDC(0.7); paxis->SetLabelSize(0.03);}
+  ceff->cd(4);
+  stmp.str("");  stmp << "Events: " << mutree->GetEntries();
+  t->DrawLatex(0.0,0.9,stmp.str().c_str());
+  if (flag.trigLevel == 1) {
+    stmp.str("");  stmp << "L1 fired events: " << info.tot_NL1ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 2) {
+    stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 3) {
+    stmp.str("");  stmp << "L3 fired events: " << info.tot_NL3ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  }
+  stmp.str("");  stmp << "Total # of accepted di#mu: " << Eff_acc_etapt_di->GetEntries();
+  t->DrawLatex(0.0,0.7,stmp.str().c_str());
+  stmp.str("");  stmp << "Total # of matched di#mu: " << Eff_match_etapt_di->GetEntries();
+  t->DrawLatex(0.0,0.6,stmp.str().c_str());
+  stmp.str("");  stmp << "Eff: " << Eff_match_etapt_di->GetEntries()/Eff_acc_etapt_di->GetEntries();
+  t->DrawLatex(0.0,0.5,stmp.str().c_str());
+  stmp.str("");  stmp << "Input file : " << file_name;
+  t->DrawLatex(0.0,0.4,stmp.str().c_str());
+  stmp.str("");  stmp << "Trigger path: " << flag.trigPath;
+  t->DrawLatex(0.0,0.3,stmp.str().c_str());
+  ceff->SaveAs("eff_di_2D.png");
+  ceff->SaveAs("eff_di_2D.C");
+  delete ceff;
+
 
   // Not execute Fake
   if (false) {
@@ -804,10 +880,13 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   cfake->cd(4);
   stmp.str("");  stmp << "Events: " << mutree->GetEntries();
   t->DrawLatex(0.0,0.9,stmp.str().c_str());
-  if (flag.trigLevel == 2) {
+  if (flag.trigLevel == 1) {
+    stmp.str("");  stmp << "L1 fired events: " << info.tot_NL1ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 2) {
     stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
-  } else {
+  } else if (flag.trigLevel == 3) {
     stmp.str("");  stmp << "L3 fired events: " << info.tot_NL3ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
   }
@@ -841,10 +920,13 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   cfake->cd(4);
   stmp.str("");  stmp << "Events: " << mutree->GetEntries();
   t->DrawLatex(0.0,0.9,stmp.str().c_str());
-  if (flag.trigLevel == 2) {
+  if (flag.trigLevel == 1) {
+    stmp.str("");  stmp << "L1 fired events: " << info.tot_NL1ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 2) {
     stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
-  } else {
+  } else if (flag.trigLevel == 3) {
     stmp.str("");  stmp << "L3 fired events: " << info.tot_NL3ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
   }
@@ -887,10 +969,13 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   cfake->cd(4);
   stmp.str("");  stmp << "Events: " << mutree->GetEntries();
   t->DrawLatex(0.0,0.9,stmp.str().c_str());
-  if (flag.trigLevel == 2) {
+  if (flag.trigLevel == 1) {
+    stmp.str("");  stmp << "L1 fired events: " << info.tot_NL1ValidEvt;
+    t->DrawLatex(0.0,0.8,stmp.str().c_str());
+  } else if (flag.trigLevel == 2) {
     stmp.str("");  stmp << "L2 fired events: " << info.tot_NL2ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
-  } else {
+  } else if (flag.trigLevel == 3) {
     stmp.str("");  stmp << "L3 fired events: " << info.tot_NL3ValidEvt;
     t->DrawLatex(0.0,0.8,stmp.str().c_str());
   }

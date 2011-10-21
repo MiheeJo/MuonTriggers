@@ -52,7 +52,8 @@ int matchMu() {
   // Matching parameters  
   flag.doSim= false;
   flag.doGen= false;
-  flag.doSta= true;
+  flag.doSta= false;
+  flag.doGlb= true;
   flag.match_dR = true;
   flag.dCut = 0.4;
   flag.jpsi = true;
@@ -208,7 +209,7 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
   mutree = muTree_.fChain;
   mutree->SetBranchAddress("Run",&muTree.run);
   mutree->SetBranchAddress("Event",&muTree.event);
-  if (flag.doGen && !flag.doSta) {
+  if (flag.doGen && !flag.doSta && !flag.doGlb) {
    mutree->SetBranchAddress("Gen_eta",muTree.eta);
    mutree->SetBranchAddress("Gen_pt",muTree.pt);
    mutree->SetBranchAddress("Gen_phi",muTree.phi);
@@ -216,14 +217,20 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
    mutree->SetBranchAddress("Gen_pid",muTree.charge);
    mutree->SetBranchAddress("Gen_mom",muTree.mom);
    mutree->SetBranchAddress("Gen_status",muTree.status);
-  } else if (flag.doSta && !flag.doGen) {
+  } else if (flag.doSta && !flag.doGen && !flag.doGlb) {
+   mutree->SetBranchAddress("Sta_eta",muTree.eta);
+   mutree->SetBranchAddress("Sta_pt",muTree.pt);
+   mutree->SetBranchAddress("Sta_phi",muTree.phi);
+   mutree->SetBranchAddress("Sta_nptl",&muTree.nptl);
+   mutree->SetBranchAddress("Sta_charge",muTree.charge);
+  } else if (flag.doGlb && !flag.doGen && !flag.doSta) {
    mutree->SetBranchAddress("Glb_eta",muTree.eta);
    mutree->SetBranchAddress("Glb_pt",muTree.pt);
    mutree->SetBranchAddress("Glb_phi",muTree.phi);
    mutree->SetBranchAddress("Glb_nptl",&muTree.nptl);
    mutree->SetBranchAddress("Glb_charge",muTree.charge);
   } else {
-    cout << "Choose doSta or doGen, not both!\n";
+    cout << "Choose doSta or doGlb or doGen!\n";
     return -1;
   }
 
@@ -275,7 +282,7 @@ int match(const char *file_name, FLAG &flag, int nGraph) {
       if (flag.doGen) {
         if (!flag.doSim && muTree.status[a] == -99) continue;    //skip sim muon
         if ( (!flag.jpsi && muTree.mom[a] != 553) || (flag.jpsi && muTree.mom[a] != 443) ) continue;
-      } else if (flag.doSta) {
+      } else if (flag.doSta || flag.doGlb) {
         if(!isMuInAcc(muTree.eta[a], muTree.pt[a])) continue;    //Check glb muons are within acceptance range
       }
       if (fabs(muTree.eta[a]) <= 2.4) { 

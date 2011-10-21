@@ -41,6 +41,7 @@ struct FLAG {
   bool doGen;
   bool doSim;
   bool doSta;
+  bool doGlb;
   bool match_dR;
   float dCut;
   bool jpsi;

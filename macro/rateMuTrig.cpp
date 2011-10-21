@@ -26,7 +26,8 @@ int rateMuTrig() {
   flag.doSinglemuPtCut = true;
   flag.pTCut = 1.0;             //in GeV
   flag.doGen = false;
-  flag.doSta = true;
+  flag.doSta = false;
+  flag.doGlb = true;
 
   // Triggered object with trigger paths
   vector<string> trigPath;  //TrigPath, read L2/L3 or not
@@ -311,7 +312,7 @@ int rateMuTrig() {
   mutree = muTree_.fChain;
   mutree->SetBranchAddress("Run",&muTree.run);
   mutree->SetBranchAddress("Event",&muTree.event);
-  if (flag.doGen && !flag.doSta) {
+  if (flag.doGen && !flag.doSta && !flag.doGlb) {
    mutree->SetBranchAddress("Gen_eta",muTree.eta);
    mutree->SetBranchAddress("Gen_pt",muTree.pt);
    mutree->SetBranchAddress("Gen_phi",muTree.phi);
@@ -319,7 +320,13 @@ int rateMuTrig() {
    mutree->SetBranchAddress("Gen_pid",muTree.charge);
    mutree->SetBranchAddress("Gen_mom",muTree.mom);
    mutree->SetBranchAddress("Gen_status",muTree.status);
-  } else if (flag.doSta && !flag.doGen) {
+  } else if (flag.doSta && !flag.doGen && !flag.doGlb) {
+   mutree->SetBranchAddress("Sta_eta",muTree.eta);
+   mutree->SetBranchAddress("Sta_pt",muTree.pt);
+   mutree->SetBranchAddress("Sta_phi",muTree.phi);
+   mutree->SetBranchAddress("Sta_nptl",&muTree.nptl);
+   mutree->SetBranchAddress("Sta_charge",muTree.charge);
+  } else if (flag.doGlb && !flag.doGen && !flag.doSta) {
    mutree->SetBranchAddress("Glb_eta",muTree.eta);
    mutree->SetBranchAddress("Glb_pt",muTree.pt);
    mutree->SetBranchAddress("Glb_phi",muTree.phi);
@@ -376,7 +383,7 @@ int rateMuTrig() {
     for (unsigned int idx=0; idx<ntrig; idx++) {
       if (trig[idx]) {
         Trig_fired[idx]++;    //Trigger fired
-/*        // |y| < 2.1
+/*        // |y| < 2.1 cut applied single muons will be filled up for all histos after this step
         int nFired=0;
         if (readHLT[idx] == 1) {
           for (int a=0; a<ohTree.NL1Mu; a++) {
@@ -395,7 +402,7 @@ int rateMuTrig() {
           if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
         }
 
-        // |p_T| > 1
+        // |p_T| > 1 cut applied single muons will be filled up for all histos after this step
         int nFired=0;
         if (readHLT[idx] == 1) {
           for (int a=0; a<ohTree.NL1Mu; a++) {

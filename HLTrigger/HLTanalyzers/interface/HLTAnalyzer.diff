@@ -1,0 +1,132 @@
+13d12
+< #include "HLTrigger/HLTanalyzers/interface/HLTHeavyIon.h"
+37,41d35
+< #include "DataFormats/HeavyIonEvent/interface/Centrality.h"
+< #include "DataFormats/HeavyIonEvent/interface/EvtPlane.h"
+< 
+< 
+< 
+43a38
+> #include "DataFormats/TauReco/interface/PFTauDiscriminator.h"
+74a70
+>   /*
+76a73
+>   */
+78,79c75,76
+<   RECOVertex  vrt_analysis_;
+<   HLTHeavyIon hi_analysis_;
+---
+>   RECOVertex  vrt_analysisHLT_;
+>   RECOVertex  vrt_analysisOffline0_;
+84c81,82
+<   edm::InputTag recjets_,reccorjets_,genjets_,recmet_,genmet_,ht_, calotowers_,hltresults_,genEventInfo_;
+---
+>   edm::InputTag recjets_,reccorjets_,genjets_,recmet_,genmet_,ht_,recoPFJets_,calotowers_,hltresults_,genEventInfo_;
+>   edm::InputTag hltjets_, hltcorjets_;
+100,103c98,113
+<   edm::InputTag MuCandTag2_,MuIsolTag2_,MuCandTag3_,MuIsolTag3_;
+<   edm::InputTag oniaPixelTag_,oniaTrackTag_;
+<   edm::InputTag HLTTau_;
+< 
+---
+>   edm::InputTag MuCandTag2_,MuIsolTag2_,MuNoVtxCandTag2_,MuCandTag3_,MuIsolTag3_;
+>   edm::InputTag oniaPixelTag_,oniaTrackTag_,DiMuVtx_;
+>   edm::InputTag HLTTau_, PFTau_, PFTauTightCone_;
+>   edm::InputTag PFJets_;
+>   
+>   //offline reco tau collection and discriminators
+>   edm::InputTag RecoPFTau_;
+>   edm::InputTag RecoPFTauDiscrByTanCOnePercent_;
+>   edm::InputTag RecoPFTauDiscrByTanCHalfPercent_;
+>   edm::InputTag RecoPFTauDiscrByTanCQuarterPercent_;
+>   edm::InputTag RecoPFTauDiscrByTanCTenthPercent_;
+>   edm::InputTag RecoPFTauDiscrByIso_;
+>   edm::InputTag RecoPFTauAgainstMuon_;
+>   edm::InputTag RecoPFTauAgainstElec_;
+>   
+>  
+109,112c119,120
+<   edm::InputTag m_lifetimeBJetsL25Relaxed;
+<   edm::InputTag m_lifetimeBJetsL3Relaxed;
+<   edm::InputTag m_softmuonBJetsL25;
+<   edm::InputTag m_softmuonBJetsL3;
+---
+>   edm::InputTag m_lifetimeBJetsL25SingleTrack;
+>   edm::InputTag m_lifetimeBJetsL3SingleTrack;
+119,120d126
+<   edm::InputTag BarrelPhoton_;
+<   edm::InputTag EndcapPhoton_;
+135,142d140
+<   edm::InputTag IsoElectronLW_;
+<   edm::InputTag NonIsoElectronLW_;
+<   edm::InputTag IsoEleTrackIsolLW_;
+<   edm::InputTag NonIsoEleTrackIsolLW_;
+<   edm::InputTag IsoElectronSS_;
+<   edm::InputTag NonIsoElectronSS_;
+<   edm::InputTag IsoEleTrackIsolSS_;
+<   edm::InputTag NonIsoEleTrackIsolSS_;
+145,148c143,158
+<   edm::InputTag L1IsoPixelSeedsLW_;
+<   edm::InputTag L1NonIsoPixelSeedsLW_;
+<   edm::InputTag L1IsoPixelSeedsSS_;
+<   edm::InputTag L1NonIsoPixelSeedsSS_;
+---
+>   edm::InputTag NonIsoR9_; 
+>   edm::InputTag IsoR9_;  
+>   edm::InputTag NonIsoR9ID_;
+>   edm::InputTag IsoR9ID_;
+>   edm::InputTag IsoHoverEH_;
+>   edm::InputTag NonIsoHoverEH_; 
+>   edm::InputTag HFECALClusters_; 
+>   edm::InputTag HFElectrons_; 
+>   // add ECAL Activity
+>   edm::InputTag ECALActivity_;
+>   edm::InputTag ActivityEcalIso_;
+>   edm::InputTag ActivityHcalIso_;
+>   edm::InputTag ActivityTrackIso_;
+>   edm::InputTag ActivityR9_;
+>   edm::InputTag ActivityR9ID_;
+>   edm::InputTag ActivityHoverEH_;
+150a161
+>   /*
+160a172
+>   */
+162a175
+>   /*
+163a177
+>   */
+166,170c180,181
+<   edm::InputTag VertexTag_;
+< 
+<   edm::InputTag CentralityTag_;
+<   edm::InputTag EvtPlaneTag_;
+<   edm::InputTag HiTag_;
+---
+>   edm::InputTag VertexTagHLT_;
+>   edm::InputTag VertexTagOffline0_;
+176a188
+>     double _MinPtChargedHadrons, _MinPtGammas;
+179,201d190
+<   bool _DoMC;
+<   bool _DoHLT;
+<   bool _DoVertex;
+<   bool _DoHeavyIon;
+<   bool _DoAlCa;
+< 
+<   bool _DoTracks;
+<   bool _DoJets;
+<   bool _DoPhotons;
+<   bool _DoSuperClusters;
+<   bool _DoElectrons;
+< 
+<   bool _DoBJets;
+< 
+<   bool _DoMuons;
+<   bool _DoL1Muons;
+<   bool _DoL2Muons;
+<   bool _DoL3Muons;
+<   bool _DoOfflineMuons;
+<   bool _DoQuarkonias;
+< 
+<   bool _DoCentrality;
+<   bool _UseTFileService;

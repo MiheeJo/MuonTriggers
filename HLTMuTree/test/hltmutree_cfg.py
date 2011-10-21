@@ -16,14 +16,14 @@ process.source = cms.Source("PoolSource",
     noEventSort = cms.untracked.bool(True),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
     fileNames = cms.untracked.vstring(
-_input_
-#    "rfio:///castor/cern.ch/user/m/mironov/cmssw440patch10/MC425/jpsi/v3/jpsimc_rawrecohltdebug_83_1_Bxk.root",
+#_input_
+"rfio:/castor/cern.ch/user/m/mironov/cmssw440/newL1/root/hlt_f9.root",
     )
 )
 
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string(_output_)
-#    fileName = cms.string("test.root")
+#    fileName = cms.string(_output_)
+    fileName = cms.string("test.root")
 )
 
 # load centrality

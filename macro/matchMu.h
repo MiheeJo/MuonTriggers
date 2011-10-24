@@ -146,3 +146,7 @@ bool isMuInAcc(float eta, float pt){
             (1.5 <= fabs(eta) && pt >= 3.3667-7.0/9.0*fabs(eta)) ) 
          );
 }
+
+bool isValidMu() {
+  return;
+}

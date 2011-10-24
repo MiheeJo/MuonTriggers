@@ -333,7 +333,7 @@ int rateMuTrig() {
    mutree->SetBranchAddress("Glb_nptl",&muTree.nptl);
    mutree->SetBranchAddress("Glb_charge",muTree.charge);
   } else {
-    cout << "Choose doGlb or doGen, not both!\n";
+    cout << "Choose doSta or doGlb or doGen!\n";
     return -1;
   }
 
@@ -348,7 +348,7 @@ int rateMuTrig() {
 
 
   for (int i=0; i<ohTree.fChain->GetEntries(); i++) {
-//    if (i%1000 == 0) cout << "processing entry: " << i << endl;
+    if (i%1000 == 0) cout << "processing entry: " << i << endl;
     mutree->GetEntry(i);
     ohTree.GetEntry(i);
     tree->GetEntry(i);
@@ -383,7 +383,7 @@ int rateMuTrig() {
     for (unsigned int idx=0; idx<ntrig; idx++) {
       if (trig[idx]) {
         Trig_fired[idx]++;    //Trigger fired
-/*        // |y| < 2.1 cut applied single muons will be filled up for all histos after this step
+/*        // |y| < 2.1
         int nFired=0;
         if (readHLT[idx] == 1) {
           for (int a=0; a<ohTree.NL1Mu; a++) {
@@ -402,7 +402,7 @@ int rateMuTrig() {
           if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
         }
 
-        // |p_T| > 1 cut applied single muons will be filled up for all histos after this step
+        // |p_T| > 1
         int nFired=0;
         if (readHLT[idx] == 1) {
           for (int a=0; a<ohTree.NL1Mu; a++) {

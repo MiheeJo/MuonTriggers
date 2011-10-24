@@ -110,6 +110,14 @@ struct MUTREE {
   Int_t charge[nmax];
   Int_t mom[nmax];
   Int_t status[nmax];
+  Int_t nValMuHits[nmax];
+  Int_t nValTrkHits[nmax];
+  Int_t nTrkFound[nmax];
+  Float_t glbChi2_ndof[nmax];
+  Float_t trkChi2_ndof[nmax];
+  Int_t pixLayerWMeas[nmax];
+  Float_t trkDxy[nmax];
+  Float_t trkDz[nmax];
 };
 
 
@@ -147,6 +155,14 @@ bool isMuInAcc(float eta, float pt){
          );
 }
 
-bool isValidMu() {
-  return;
+bool isValidMu(MUTREE &mutree, int idx) {
+    return (isMuInAcc(mutree.eta[idx], mutree.pt[idx]) &&
+            mutree.nTrkFound[idx] > 10 &&
+            mutree.glbChi2_ndof[idx] < 20.0 &&
+            //    q.numberOfValidMuonHits() > 6 &&
+            mutree.trkChi2_ndof[idx] < 4.0 &&
+//            aMuon->muonID("TrackerMuonArbitrated") &&
+            mutree.pixLayerWMeas[idx] > 0 &&
+            mutree.trkDxy[idx] < 3.0 &&
+            mutree.trkDz[idx] < 15.0 );
 }

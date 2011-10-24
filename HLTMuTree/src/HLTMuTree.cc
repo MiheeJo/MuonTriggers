@@ -13,7 +13,7 @@
 //
 // Original Author:  Mihee Jo,588 R-012,+41227673278,
 //         Created:  Thu Jul  7 11:47:28 CEST 2011
-// $Id: HLTMuTree.cc,v 1.2 2011/10/10 15:34:49 miheejo Exp $
+// $Id: HLTMuTree.cc,v 1.3 2011/10/24 15:15:36 miheejo Exp $
 //
 //
 
@@ -77,6 +77,14 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     GlbMu.phi[i] = 0;
     GlbMu.dxy[i] = 0;
     GlbMu.dz[i] = 0;
+    GlbMu.nValMuHits[i] = 0;
+    GlbMu.nValTrkHits[i] = 0; 
+    GlbMu.nTrkFound[i] = 0;
+    GlbMu.glbChi2_ndof[i] = 0;
+    GlbMu.trkChi2_ndof[i] = 0;
+    GlbMu.pixLayerWMeas[i] = 0;
+    GlbMu.trkDxy[i] = 0;
+    GlbMu.trkDz[i] = 0;
     StaMu.charge[i] = 0;
     StaMu.pt[i] = 0;
     StaMu.p[i] = 0;

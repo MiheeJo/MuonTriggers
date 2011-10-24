@@ -74,14 +74,6 @@ class HLTMuTree : public edm::EDAnalyzer {
     edm::InputTag   tagVtx;
     edm::InputTag   tagL1gtReadout;
 
-/*    std::string                   hltResName;         //HLT trigger results name
-    std::vector<std::string>      hltProcNames;       //HLT process name(s)
-    std::vector<std::string>      hltTrgNames;        //HLT trigger name(s)
-    std::vector<int>              hltTrgBits;         //HLT trigger bit(s)
-    std::vector<bool>             hltTrgDeci;         //HLT trigger descision(s)
-    std::vector<std::string>      hltTrgUsedNames;    //HLT used trigger name(s)
-    std::string                   hltUsedResName;     //used HLT trigger results name
-*/
     Bool_t    doReco;
     Bool_t    doGen;
     Bool_t    accRecoMu;
@@ -115,6 +107,14 @@ class HLTMuTree : public edm::EDAnalyzer {
       float phi[nmax];
       float dxy[nmax];
       float dz[nmax];
+      int nValMuHits[nmax];
+      int nValTrkHits[nmax];
+      int nTrkFound[nmax];
+      float glbChi2_ndof[nmax];
+      float trkChi2_ndof[nmax];
+      int pixLayerWMeas[nmax];
+      float trkDxy[nmax];
+      float trkDz[nmax];
     } GLBMU;
 
     typedef struct {

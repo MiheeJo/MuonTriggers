@@ -6,9 +6,9 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-#process.GlobalTag.globaltag = 'GR_R_44_V4::All'
+process.GlobalTag.globaltag = 'GR_R_44_V4::All'
 #process.GlobalTag.globaltag = 'STARTHI44_V4::All'
-process.GlobalTag.globaltag = 'START44_V4::All'
+#process.GlobalTag.globaltag = 'START44_V4::All'
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
@@ -17,7 +17,7 @@ process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
     fileNames = cms.untracked.vstring(
 #_input_
-"rfio:/castor/cern.ch/user/m/mironov/cmssw440/newL1/root/hlt_f9.root",
+"rfio:/castor/cern.ch/user/m/mironov/cmssw440/MC425/jpsi/v1/jpsimc_rawrecohltdebug_93_1_Rp7.root",
     )
 )
 
@@ -28,14 +28,14 @@ process.TFileService = cms.Service("TFileService",
 
 # load centrality
 from CmsHi.Analysis2010.CommonFunctions_cff import *
-'''
+
 overrideCentrality(process)
 process.HeavyIonGlobalParameters = cms.PSet(
   centralityVariable = cms.string("HFhits"),
   nonDefaultGlauberModel = cms.string(""),
   centralitySrc = cms.InputTag("hiCentrality")
 )
-'''
+
 
 process.analysis = cms.EDAnalyzer('HLTMuTree',
   muons = cms.InputTag("muons"),

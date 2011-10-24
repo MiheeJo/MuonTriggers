@@ -13,7 +13,7 @@
 //
 // Original Author:  Mihee Jo,588 R-012,+41227673278,
 //         Created:  Thu Jul  7 11:47:28 CEST 2011
-// $Id$
+// $Id: HLTMuTree.cc,v 1.2 2011/10/10 15:34:49 miheejo Exp $
 //
 //
 
@@ -36,20 +36,6 @@ HLTMuTree::HLTMuTree(const edm::ParameterSet& iConfig)
   doGen = iConfig.getUntrackedParameter<bool>("doGen");
   tagGenPtl = iConfig.getParameter<edm::InputTag>("genparticle");
   tagSimTrk = iConfig.getParameter<edm::InputTag>("simtrack");
-/*  if (!doGen) {
-    tagL1gtReadout = iConfig.getParameter<edm::InputTag>("L1gtReadout");
-    hltResName = iConfig.getUntrackedParameter<string>("hltTrgResults","TriggerResults::HLT");
-
-    if (iConfig.exists("hltTrgNames"))
-      hltTrgNames = iConfig.getUntrackedParameter<vector<string> >("hltTrgNames");
-
-    if (iConfig.exists("hltProcNames"))
-      hltProcNames = iConfig.getUntrackedParameter<vector<string> >("hltProcNames");
-    else {
-      hltProcNames.push_back("FU");
-      hltProcNames.push_back("HLT");
-    }
-  }*/
 
 }
 
@@ -208,10 +194,10 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Loop over reco::muon
   if (doReco) {
     //Put centrality information
-/*    centrality = new CentralityProvider(iSetup);
+    centrality = new CentralityProvider(iSetup);
     centrality->newEvent(iEvent,iSetup);
-    cbin = centrality->getBin();*/
-    cbin = -1;
+    cbin = centrality->getBin();
+//    cbin = -1;
 
     //Get vertex position
     edm::Handle< vector<reco::Vertex> > vertex;
@@ -234,29 +220,31 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       edm::RefToBase<reco::Muon> muCand(muons,i);
       if (muCand.isNull()) continue;
       if (muCand->globalTrack().isNonnull() && muCand->innerTrack().isNonnull()) {
-        if (muCand->isGlobalMuon() && muCand->isTrackerMuon() && fabs(muCand->combinedMuon()->eta()) < 2.4 && 
-            muCand->combinedMuon().get()->hitPattern().numberOfValidMuonHits()>0 && 
-            muCand->innerTrack().get()->hitPattern().numberOfValidTrackerHits()>10) {
-              edm::RefToBase<reco::Track> trk = edm::RefToBase<reco::Track>(muCand->innerTrack());
-              edm::RefToBase<reco::Track> glb = edm::RefToBase<reco::Track>(muCand->combinedMuon());
-              const reco::HitPattern& p = trk->hitPattern();
-              if (isMuonInAccept(muCand) &&
-                  trk->found() > 10 &&
-                  glb->chi2()/glb->ndof() < 20.0 &&
-                  trk->chi2()/trk->ndof() < 4.0 &&
-                  p.pixelLayersWithMeasurement() > 0 &&
-                  fabs(trk->dxy(vertex->begin()->position())) < 3.0 &&
-                  fabs(trk->dz(vertex->begin()->position())) < 15.0 ) {
-                    GlbMu.charge[nGlb] = glb->charge();
-                    GlbMu.pt[nGlb] = glb->pt();
-                    GlbMu.p[nGlb] = glb->p();
-                    GlbMu.eta[nGlb] = glb->eta();
-                    GlbMu.phi[nGlb] = glb->phi();
-                    GlbMu.dxy[nGlb] = glb->dxy(vertex->begin()->position()); 
-                    GlbMu.dz[nGlb] = glb->dz(vertex->begin()->position());
-                    nGlb++;
-              }
+        if (muCand->isGlobalMuon() && muCand->isTrackerMuon() && fabs(muCand->combinedMuon()->eta()) < 2.4) {
+          edm::RefToBase<reco::Track> trk = edm::RefToBase<reco::Track>(muCand->innerTrack());
+          edm::RefToBase<reco::Track> glb = edm::RefToBase<reco::Track>(muCand->combinedMuon());
+          const reco::HitPattern& p = trk->hitPattern();
+
+          GlbMu.nValMuHits[nGlb] = muCand->combinedMuon().get()->hitPattern().numberOfValidMuonHits();
+          GlbMu.nValTrkHits[nGlb] = muCand->innerTrack().get()->hitPattern().numberOfValidTrackerHits();
+
+          GlbMu.nTrkFound[nGlb] = trk->found();
+          GlbMu.glbChi2_ndof[nGlb] = glb->chi2()/glb->ndof();
+          GlbMu.trkChi2_ndof[nGlb] = trk->chi2()/trk->ndof();
+          GlbMu.pixLayerWMeas[nGlb] = p.pixelLayersWithMeasurement();
+          GlbMu.trkDxy[nGlb] = fabs(trk->dxy(vertex->begin()->position()));
+          GlbMu.trkDz[nGlb] = fabs(trk->dz(vertex->begin()->position()));
+
+          GlbMu.charge[nGlb] = glb->charge();
+          GlbMu.pt[nGlb] = glb->pt();
+          GlbMu.p[nGlb] = glb->p();
+          GlbMu.eta[nGlb] = glb->eta();
+          GlbMu.phi[nGlb] = glb->phi();
+          GlbMu.dxy[nGlb] = glb->dxy(vertex->begin()->position()); 
+          GlbMu.dz[nGlb] = glb->dz(vertex->begin()->position());
+          nGlb++;
         }
+        
       }
       if (muCand->isStandAloneMuon() && muCand->outerTrack().isNonnull()) {
         if (muCand->standAloneMuon().get()->hitPattern().numberOfValidMuonHits()>0 && fabs(muCand->standAloneMuon()->eta())<2.4) {
@@ -326,6 +314,15 @@ HLTMuTree::beginJob()
   treeMu->Branch("Glb_dxy",GlbMu.dxy,"Glb_dx[Glb_nptl]/F");
   treeMu->Branch("Glb_dz",GlbMu.dz,"Glb_dz[Glb_nptl]/F");
 
+  treeMu->Branch("Glb_nValMuHits",GlbMu.nValMuHits,"Glb_nValMuHits[Glb_nptl]/I");
+  treeMu->Branch("Glb_nValTrkHits",GlbMu.nValTrkHits,"Glb_nValTrkHits[Glb_nptl]/I");
+  treeMu->Branch("Glb_nTrkFound",GlbMu.nTrkFound,"Glb_nTrkFound[Glb_nptl]/I");
+  treeMu->Branch("Glb_glbChi2_ndof",GlbMu.glbChi2_ndof,"Glb_glbChi2_ndof[Glb_nptl]/F");
+  treeMu->Branch("Glb_trkChi2_ndof",GlbMu.trkChi2_ndof,"Glb_trkChi2_ndof[Glb_nptl]/F");
+  treeMu->Branch("Glb_pixLayerWMeas",GlbMu.pixLayerWMeas,"Glb_pixLayerWMeas[Glb_nptl]/I");
+  treeMu->Branch("Glb_trkDxy",GlbMu.trkDxy,"Glb_trkDxy[Glb_nptl]/F");
+  treeMu->Branch("Glb_trkDz",GlbMu.trkDz,"Glb_trkDz[Glb_nptl]/F");
+
   treeMu->Branch("Sta_nptl",&StaMu.nptl,"Sta_nptl/I");
   treeMu->Branch("Sta_charge",StaMu.charge,"Sta_charge[Sta_nptl]/I");
   treeMu->Branch("Sta_p",StaMu.p,"Sta_p[Sta_nptl]/F");
@@ -340,15 +337,6 @@ HLTMuTree::beginJob()
 void 
 HLTMuTree::endJob() {
 }
-
-bool
-HLTMuTree::isMuonInAccept(const edm::RefToBase<reco::Muon> aMuon) {
-  return (fabs(aMuon->eta()) < 2.4 &&
-         ((fabs(aMuon->eta()) < 1.0 && aMuon->pt() >= 3.4) ||
-         (1.0 <= fabs(aMuon->eta()) && fabs(aMuon->eta()) < 1.5 && aMuon->pt() >= 5.8-2.4*fabs(aMuon->eta())) ||
-         (1.5 <= fabs(aMuon->eta()) && aMuon->pt() >= 3.3667-7.0/9.0*fabs(aMuon->eta()))));
-}
-
 
 //define this as a plug-in
 DEFINE_FWK_MODULE(HLTMuTree);

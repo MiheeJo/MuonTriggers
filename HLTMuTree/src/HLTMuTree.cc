@@ -13,11 +13,11 @@
 //
 // Original Author:  Mihee Jo,588 R-012,+41227673278,
 //         Created:  Thu Jul  7 11:47:28 CEST 2011
-// $Id: HLTMuTree.cc,v 1.3 2011/10/24 15:15:36 miheejo Exp $
+// $Id: HLTMuTree.cc,v 1.4 2011/10/24 16:09:39 miheejo Exp $
 //
 //
 
-#include "UserCode/HLTMuTree/interface/HLTMuTree.h"
+#include "MuTrig/HLTMuTree/interface/HLTMuTree.h"
 
 using namespace std;
 using namespace reco;

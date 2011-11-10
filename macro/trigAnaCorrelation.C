@@ -102,32 +102,22 @@ void printEff(TTree* HltTree,const char *cut,const char *title, char *projectTit
     effs.push_back(calcEff(HltTree,"L1_DoubleMu3",nEvt,Form("(%s)&&L1_DoubleMu3",cut)));
   }
   if (anaMode=="HLTMu") {
-/*    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu3",nEvt,Form("(%s)&&HLT_HIL1SingleMu3",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3",nEvt,Form("(%s)&&HLT_HIL2Mu3",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMuOpen",nEvt,Form("(%s)&&HLT_HIL1DoubleMuOpen",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu3",nEvt,Form("(%s)&&HLT_HIL2DoubleMu3",cut)));*/
-    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu3_v1",nEvt,Form("(%s)&&HLT_HIL1SingleMu3_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_v1",nEvt,Form("(%s)&&HLT_HIL2Mu3_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_L1HighQ",nEvt,Form("(%s)&&HLT_HIL2Mu3_L1HighQ",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_NHitQ",nEvt,Form("(%s)&&HLT_HIL2Mu3_NHitQ",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_L1HighQL2NHitQ",nEvt,Form("(%s)&&HLT_HIL2Mu3_L1HighQL2NHitQ",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3Mu3",nEvt,Form("(%s)&&HLT_HIL3Mu3",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3Mu3_L1HighQ",nEvt,Form("(%s)&&HLT_HIL3Mu3_L1HighQ",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu5_v1",nEvt,Form("(%s)&&HLT_HIL1SingleMu5_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu5Tight_v1",nEvt,Form("(%s)&&HLT_HIL2Mu5Tight_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL1SingleMu7_v1",nEvt,Form("(%s)&&HLT_HIL1SingleMu7_v1",cut)));
-
-/*    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMuOpen_v1",nEvt,Form("(%s)&&HLT_HIL1DoubleMuOpen_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMu0_HighQ",nEvt,Form("(%s)&&HLT_HIL1DoubleMu0_HighQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3Mu3_v1",nEvt,Form("(%s)&&HLT_HIL3Mu3_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_NHitQ_v1",nEvt,Form("(%s)&&HLT_HIL2Mu3_NHitQ_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu7_v1",nEvt,Form("(%s)&&HLT_HIL2Mu7_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu15_v1",nEvt,Form("(%s)&&HLT_HIL2Mu15_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMuOpen_v1",nEvt,Form("(%s)&&HLT_HIL1DoubleMuOpen_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_NHitQ",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_NHitQ",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_L1HighQL2NHitQ",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_L1HighQL2NHitQ",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMu0_HighQ_v1",nEvt,Form("(%s)&&HLT_HIL1DoubleMu0_HighQ_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_NHitQ_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_NHitQ_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",cut)));
+    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_SS_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_SS_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu3_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu3_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_SS",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_SS",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",cut)));*/
+    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1",cut)));
   }
   results->push_back(effs);
 
@@ -196,15 +186,14 @@ void trigAnaCorrelation(
     TString mode="HLTMu",
     Int_t runNum = 1,
     Int_t goodLumiStart = 1,
-    TString inFile0Name = 
-    "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/MC425/jpsi/hltana_jpsi.root",
+    TString inFile0Name = "/castor/cern.ch/user/v/velicanu/HIHLT_Validation_Test_GRIF_v10.root",
     TString outdir="./out",
     char *projectTitle = "HIAllPhy2010",
     string source="data")
 {
   gROOT->Macro("~/JpsiStyle.C");
   // Load input
-  TChain * HltTree = new TChain("hltanalysis/HltTree","HI OpenHLT Tree");
+  TChain * HltTree = new TChain("hltbitnew/HltTree","HI OpenHLT Tree");
   HltTree->Add(inFile0Name);
   cout << inFile0Name << endl;
   cout << " # entries: " << HltTree->GetEntries() << endl;
@@ -225,8 +214,8 @@ void trigAnaCorrelation(
   // define event types
   vector<string> evtType;
   vector<string> evtTypeCut;
-//  evtType.push_back(evtSel.Data()); evtTypeCut.push_back(evtSel.Data());
-  evtType.push_back("BptxAND"); evtTypeCut.push_back(evtSel.Data());
+  evtType.push_back(evtSel.Data()); evtTypeCut.push_back(evtSel.Data());
+//  evtType.push_back("BptxAND"); evtTypeCut.push_back(evtSel.Data());
   if (source=="mc") {
   }
   else if (source=="data") {

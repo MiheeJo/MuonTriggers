@@ -32,17 +32,13 @@ This macro will calculate and plot different trigger rates vs time (s)
  */
 
 void calculateTriggerRates(
-         TString inFile0Name = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/MC425/jpsi/hltana_jpsi.root",
-         //"/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/newL2newL1/hltana_newL1newL2.root",
-         //"/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/v3/hltana_newL1newHLT.root",
+         TString inFile0Name = "/castor/cern.ch/user/v/velicanu/HIHLT_Validation_Test_GRIF_v10.root",
 			   Int_t runNum        = 152791,
 			   TString outdir      = "output",
 			   char *projectTitle  = "HIAllPhy2010",
 			   string source       = "data"
 			   )
 {
-  // gROOT->Macro("/Users/eusmartass/Software/utilities/setStyle.C+");
-
   char szBuf[256];
   int scale = 23;
 
@@ -55,37 +51,33 @@ void calculateTriggerRates(
 // 				     "L1_SingleMu3_BptxAND","HLT_HIL1SingleMu3","HLT_HIL2Mu3",
 // 				     "L1_DoubleMuOpen_BptxAND","HLT_HIL1DoubleMuOpen","HLT_HIL2DoubleMu3"};
 
-  const int ntrigs = 22;
+  const int ntrigs = 18;
   const char* triggerPath[ntrigs] = {
     "",
     "HLT_HIMinBiasHfOrBSC_v1",
-    "HLT_HIL1SingleMu3_v1",
-    "HLT_HIL1SingleMu5_v1",
-    "HLT_HIL1SingleMu7_v1",
     "HLT_HIL2Mu3_v1",
-    "HLT_HIL2Mu5Tight_v1",
+    "HLT_HIL2Mu7_v1",
+    "HLT_HIL2Mu15_v1",
+    "HLT_HIL2Mu3_NHitQ_v1",
+    "HLT_HIL3Mu3_v1",
     "HLT_HIL1DoubleMuOpen_v1",
-    "HLT_HIL1DoubleMu0_HighQ",
-    "HLT_HIL2DoubleMu0_NHitQ",
-    "HLT_HIL2DoubleMu0_L1HighQL2NHitQ",
+    "HLT_HIL1DoubleMu0_HighQ_v1",
     "HLT_HIL2DoubleMu0_v1",
+    "HLT_HIL2DoubleMu0_NHitQ_v1",
+    "HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1",
     "HLT_HIL2DoubleMu3_v1",
-    "HLT_HIL2Mu3_NHitQ",
-    "HLT_HIL2Mu3_L1HighQ",
-    "HLT_HIL2Mu3_L1HighQL2NHitQ",
-    "HLT_HIL3Mu3",
-    "HLT_HIL3Mu3_L1HighQ",
-    "HLT_HIL3DoubleMuOpen_Mgt2",
-    "HLT_HIL3DoubleMuOpen_Mgt2_SS",
-    "HLT_HIL3DoubleMuOpen_Mgt2_OS",
-    "HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",
+    "HLT_HIL3DoubleMuOpen_v1",
+    "HLT_HIL3DoubleMuOpen_Mgt2_v1",
+    "HLT_HIL3DoubleMuOpen_Mgt2_SS_v1",
+    "HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",
+    "HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1"
   };
   
   TString str;
   TH1D *ahTemp[ntrigs];
   double ahTempRate[ntrigs];  //Rates (Integrated over lumisections)
   // Load input
-  TChain * HltTree = new TChain("hltanalysis/HltTree","HI OpenHLT Tree");
+  TChain * HltTree = new TChain("hltbitnew/HltTree","HI OpenHLT Tree");
   HltTree->Add(inFile0Name);
   cout << inFile0Name << endl;
   cout << " # entries: " << HltTree->GetEntries() << endl;

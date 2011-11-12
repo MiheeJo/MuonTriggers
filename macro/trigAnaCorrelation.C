@@ -102,20 +102,12 @@ void printEff(TTree* HltTree,const char *cut,const char *title, char *projectTit
     effs.push_back(calcEff(HltTree,"L1_DoubleMu3",nEvt,Form("(%s)&&L1_DoubleMu3",cut)));
   }
   if (anaMode=="HLTMu") {
-    effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_v1",nEvt,Form("(%s)&&HLT_HIL2Mu3_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL3Mu3_v1",nEvt,Form("(%s)&&HLT_HIL3Mu3_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2Mu3_NHitQ_v1",nEvt,Form("(%s)&&HLT_HIL2Mu3_NHitQ_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2Mu7_v1",nEvt,Form("(%s)&&HLT_HIL2Mu7_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2Mu15_v1",nEvt,Form("(%s)&&HLT_HIL2Mu15_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMuOpen_v1",nEvt,Form("(%s)&&HLT_HIL1DoubleMuOpen_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL1DoubleMu0_HighQ_v1",nEvt,Form("(%s)&&HLT_HIL1DoubleMu0_HighQ_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_NHitQ_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_NHitQ_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",cut)));
-    effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_SS_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_SS_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL2DoubleMu3_v1",nEvt,Form("(%s)&&HLT_HIL2DoubleMu3_v1",cut)));
     effs.push_back(calcEff(HltTree,"HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1",nEvt,Form("(%s)&&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1",cut)));
   }
@@ -186,14 +178,16 @@ void trigAnaCorrelation(
     TString mode="HLTMu",
     Int_t runNum = 1,
     Int_t goodLumiStart = 1,
-    TString inFile0Name = "/castor/cern.ch/user/v/velicanu/HIHLT_Validation_Test_GRIF_v10.root",
+    TString inFile0Name = "/castor/cern.ch/user/k/kimy/openHLT//openhlt_run181531.root",
+    //"/castor/cern.ch/user/m/miheejo/openHLT/cms442/r181530_reco_v1_2/HIExpressPhysics_hiexp-hirun2011-r181530-reco-v1_2.root",
+//"/castor/cern.ch/user/v/velicanu/HIHLT_Validation_Test_GRIF_v10.root",
     TString outdir="./out",
     char *projectTitle = "HIAllPhy2010",
     string source="data")
 {
   gROOT->Macro("~/JpsiStyle.C");
   // Load input
-  TChain * HltTree = new TChain("hltbitnew/HltTree","HI OpenHLT Tree");
+  TChain * HltTree = new TChain("hltana/HltTree","HI OpenHLT Tree");
   HltTree->Add(inFile0Name);
   cout << inFile0Name << endl;
   cout << " # entries: " << HltTree->GetEntries() << endl;

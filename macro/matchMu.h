@@ -159,9 +159,7 @@ bool isValidMu(MUTREE &mutree, int idx) {
     return (isMuInAcc(mutree.eta[idx], mutree.pt[idx]) &&
             mutree.nTrkFound[idx] > 10 &&
             mutree.glbChi2_ndof[idx] < 20.0 &&
-            //    q.numberOfValidMuonHits() > 6 &&
             mutree.trkChi2_ndof[idx] < 4.0 &&
-//            aMuon->muonID("TrackerMuonArbitrated") &&
             mutree.pixLayerWMeas[idx] > 0 &&
             mutree.trkDxy[idx] < 3.0 &&
             mutree.trkDz[idx] < 15.0 );

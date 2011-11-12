@@ -14,72 +14,39 @@
 using namespace std;
 
 int rateMuTrig() {
-  const char *fnoh = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/newL2newL1/hltana_newL1newL2.root";
-  const char *fnMu = "/castor/cern.ch/user/m/miheejo/openHLT/cms440p10/HICorePhysics_L1DoubleMuOpen_RAWHLTRECO/newL2newL1/muTree_newL1newL2.root";
+  const char *fnoh = "/castor/cern.ch/user/k/kimy/openHLT//openhlt_run181531.root";
 
   FLAG flag_;
   FLAG &flag = flag_;
 
   // Trigger cut parameters
-  flag.doDimuMassCut = true;
+/*  flag.doDimuMassCut = true;
   flag.mCut = 2.0;             //in GeV
   flag.doSinglemuPtCut = true;
   flag.pTCut = 1.0;             //in GeV
   flag.doGen = false;
-  flag.doSta = false;
+  flag.doSta = false;*/
   flag.doGlb = true;
 
   // Triggered object with trigger paths
   vector<string> trigPath;  //TrigPath, read L2/L3 or not
   vector<int> readHLT;
-//  trigPath.push_back("L1_SingleMu3");
-//  readHLT.push_back(0);
-/*    trigPath.push_back("HLT_HIMinBiasHfOrBSC_v1");
-    readHLT.push_back(1);
-    trigPath.push_back("HLT_HIL1SingleMu3_v1");
-    readHLT.push_back(1);
-    trigPath.push_back("HLT_HIL1SingleMu5_v1");
-    readHLT.push_back(1);
-    trigPath.push_back("HLT_HIL1SingleMu7_v1");
-    readHLT.push_back(1);
-    trigPath.push_back("HLT_HIL2Mu3_v1");
-    readHLT.push_back(2);
-    trigPath.push_back("HLT_HIL2Mu5Tight_v1");
-    readHLT.push_back(2);*/
-    trigPath.push_back("HLT_HIL1DoubleMuOpen_v1");
-    readHLT.push_back(1);
-    trigPath.push_back("HLT_HIL1DoubleMu0_HighQ");
-    readHLT.push_back(1);
-    trigPath.push_back("HLT_HIL2DoubleMu0_NHitQ");
-    readHLT.push_back(2);
-    trigPath.push_back("HLT_HIL2DoubleMu0_L1HighQL2NHitQ");
-    readHLT.push_back(2);
-    trigPath.push_back("HLT_HIL2DoubleMu0_v1");
-    readHLT.push_back(2);
-    trigPath.push_back("HLT_HIL2DoubleMu3_v1");
-    readHLT.push_back(2);
-/*    trigPath.push_back("HLT_HIL3DoubleMuOpen_Mgt2");
-    readHLT.push_back(3);
-    trigPath.push_back("HLT_HIL3DoubleMuOpen_Mgt2_SS");
-    readHLT.push_back(3);
-    trigPath.push_back("HLT_HIL3DoubleMuOpen_Mgt2_OS");
-    readHLT.push_back(3);
-    trigPath.push_back("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy");
-    readHLT.push_back(3);*/
-/*  trigPath.push_back("HLT_HIL1SingleMu3");
-  readHLT.push_back(1);
-  trigPath.push_back("HLT_HIL2Mu3");
+  trigPath.push_back("HLT_HIL2Mu3_NHitQ_v1");
   readHLT.push_back(2);
-//  trigPath.push_back("HLT_HIL3Mu3");
-//  readHLT.push_back(3);
-//  trigPath.push_back("L1_DoubleMuOpen");
-//  readHLT.push_back(0);
-  trigPath.push_back("HLT_HIL1DoubleMuOpen");
-  readHLT.push_back(1);
-  trigPath.push_back("HLT_HIL2DoubleMu0");
+  trigPath.push_back("HLT_HIL2Mu7_v1");
   readHLT.push_back(2);
-  trigPath.push_back("HLT_HIL2DoubleMu3");
-  readHLT.push_back(2);*/
+  trigPath.push_back("HLT_HIL2Mu15_v1");
+  readHLT.push_back(2);
+  trigPath.push_back("HLT_HIL3Mu3_v1");
+  readHLT.push_back(3);
+  trigPath.push_back("HLT_HIL1DoubleMu0_HighQ_v1");
+  readHLT.push_back(1);
+  trigPath.push_back("HLT_HIL2DoubleMu3_v1");
+  readHLT.push_back(2);
+  trigPath.push_back("HLT_HIL3DoubleMuOpen_v1");
+  readHLT.push_back(3);
+  trigPath.push_back("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1");
+  readHLT.push_back(3);
 
   const unsigned int ntrig = trigPath.size();
   Int_t trig[ntrig];
@@ -301,7 +268,7 @@ int rateMuTrig() {
   HltTree       ohTree_(fnoh,true);
   HltTree       &ohTree = ohTree_;
   TTree *tree;
-  FriendMuTree  muTree_(fnMu,true);
+  FriendMuTree  muTree_(fnoh,true);
   cout << "2" << endl;
   if (!muTree_.fChain->GetCurrentFile() || !ohTree.fChain->GetCurrentFile()) {
     cout << "Failed to open root files\n"; return -1;
@@ -383,44 +350,6 @@ int rateMuTrig() {
     for (unsigned int idx=0; idx<ntrig; idx++) {
       if (trig[idx]) {
         Trig_fired[idx]++;    //Trigger fired
-/*        // |y| < 2.1
-        int nFired=0;
-        if (readHLT[idx] == 1) {
-          for (int a=0; a<ohTree.NL1Mu; a++) {
-            if (fabs(ohTree.L1MuEta[a]) < 2.1) nFired++;
-          }
-          if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
-        } else if (readHLT[idx] == 2){
-          for (int a=0; a<ohTree.NohMuL2; a++) {
-            if (fabs(ohTree.ohMuL2Eta[a]) < 2.1) nFired++;
-          }
-          if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
-        } else if (readHLT[idx] == 3) {
-          for (int a=0; a<ohTree.NohMuL3; a++) {
-            if (fabs(ohTree.ohMuL3Eta[a]) < 2.1)  nFired++;
-          }
-          if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
-        }
-
-        // |p_T| > 1
-        int nFired=0;
-        if (readHLT[idx] == 1) {
-          for (int a=0; a<ohTree.NL1Mu; a++) {
-            if (ohTree.L1MuPt[a] > 1) nFired++;
-          }
-          if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
-        } else if (readHLT[idx] == 2){
-          for (int a=0; a<ohTree.NohMuL2; a++) {
-            if (ohTree.ohMuL2Pt[a] > 1) nFired++;
-          }
-          if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
-        } else if (readHLT[idx] == 3) {
-          for (int a=0; a<ohTree.NohMuL3; a++) {
-            if (ohTree.ohMuL3Pt[a] > 1)  nFired++;
-          }
-          if (nFired > 1) Trig_fired[idx]++;    //Trigger fired
-        }*/
-        
 
         ////////// Global di-muon counting
         if (muTree.nptl >= 2) {
@@ -428,6 +357,8 @@ int rateMuTrig() {
           map<float,int>::iterator it;
 
           for (int a=0; a<muTree.nptl; a++) {
+            // Apply cuts on the single muons
+            if (!isValidMu(muTree,a)) continue;
             float pt = muTree.pt[a];
             l2[pt] = a;
           }
@@ -799,7 +730,6 @@ int rateMuTrig() {
     TCanvas *cl2dimu = new TCanvas("dimuL2","dimuL2",1300,1000);
     cl2dimu->Divide(2,2);
     cl2dimu->cd(1);
-    Dimu_mass_glb[i]->GetYaxis()->SetRangeUser(0,150);
     Dimu_mass_glb[i]->Draw();
     if (flag.doDimuMassCut) {
       DimuMCut_mass_glb[i]->SetFillColor(kRed);
@@ -861,7 +791,6 @@ int rateMuTrig() {
       cl2dimu = new TCanvas("dimuL2","dimuL2",1300,1000);
       cl2dimu->Divide(2,2);
       cl2dimu->cd(1);
-      Dimu_mass_L2[i]->GetYaxis()->SetRangeUser(0,150);
       Dimu_mass_L2[i]->Draw();
       if (flag.doDimuMassCut) {
         DimuMCut_mass_L2[i]->SetFillColor(kRed);
@@ -922,7 +851,6 @@ int rateMuTrig() {
         cl2dimu = new TCanvas("dimuL2","dimuL2",1300,1000);
         cl2dimu->Divide(2,2);
         cl2dimu->cd(1);
-        Dimu_mass_L3[i]->GetYaxis()->SetRangeUser(0,150);
         Dimu_mass_L3[i]->Draw();
         if (flag.doDimuMassCut) {
           DimuMCut_mass_L3[i]->SetFillColor(kRed);

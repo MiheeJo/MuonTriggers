@@ -36,38 +36,62 @@ float deltaR(Float_t gen_eta, Float_t gen_phi, Float_t l2_eta, Float_t l2_phi) {
         );
 }
 
-struct FLAG {
+class FLAG {
+public:
   // Matching parameters  
-  bool doGen;
-  bool doSim;
-  bool doSta;
-  bool doGlb;
-  bool match_dR;
-  float dCut;
-  bool jpsi;
-  bool dimuTrig;
-  string fdir;
-  string trigPath;
-  int trigLevel;
-  int trig;
+  bool doGen;         // Get efficiency with gen muons
+  bool doSim;         // Get efficiency with gen + sim muons
+  bool doSta;         // Get efficiency with standalone muons
+  bool doGlb;         // Get efficiency with global muons
+  bool match_dR;      // deltaR matching(true) or deltaEta matching(false)
+  float dCut;         // deltaR cut for matching trigger object and gen/reco muons
+  bool jpsi;          // Is this MC sample composed of J/psi(true) or Y(false)?
+  bool dimuTrig;      // Is this trigger a dimuon trigger? : true for dimuon trigger, false for single muon trigger
+  string fdir;        // file directory
+  string trigPath;    // name of trigger path
+  int trigLevel;      // Trigger level
+  int trig;           // Trigger bit : 1 for fired, 0 for not fired
 
   // Trigger cut parameters
-  bool doDimuMassCut;
+  bool doDimuMassCut;     // cut off dimuons below mass < mCut (with true)
   float mCut;             //in GeV
-  bool doSinglemuPtCut;
-  float pTCut;             //in GeV
+  bool doSinglemuPtCut;   // cut off single muons below pT < pTCut (with true)
+  float pTCut;            //in GeV
+
+  FLAG(void);
 };
+
+FLAG::FLAG(void) {
+  doGen = false;
+  doSim = false;
+  doSta = false;
+  doGlb = true;
+  match_dR = true;
+  dCut = 0.4;
+  jpsi = true;
+  dimuTrig = true;
+  fdir = "";
+  trigPath = "";
+  trigLevel = 2;
+  trig = 0;
+  doDimuMassCut = false;
+  mCut = 2;
+  doSinglemuPtCut = false;
+  pTCut = 1;
+}
 
 class INFO {
 public:
   int tot_NGenMu;
   int tot_NStaMu;
+  int tot_NGlbMu;
   int tot_NL1Mu;
   int tot_NohMuL2;
   int tot_NohMuL3;
   int tot_NL1ValidEvt;
   int tot_NL2ValidEvt;
   int tot_NL3ValidEvt;
+  int tot_NGlbValidEvt;   // total # of events that global muons passing acc & qual muon id cuts
   int tot_NLumiBlock;
 
   INFO(int init=0);
@@ -76,16 +100,19 @@ public:
 INFO::INFO(int init) {
   tot_NGenMu = init;
   tot_NStaMu = init;
+  tot_NGlbMu = init;
   tot_NL1Mu = init;
   tot_NohMuL2 = init;
   tot_NohMuL3 = init;
   tot_NL1ValidEvt = init;
   tot_NL2ValidEvt = init;
   tot_NL3ValidEvt = init;
+  tot_NGlbValidEvt = init;
   tot_NLumiBlock = init;
 }
 
 struct MATCH {
+  // deltaR or deltaEta from reference muon and candidate muon
   std::vector<float> deltaR;
   std::vector<float> deltaEta;
   // Used as reference during matching 
@@ -121,7 +148,7 @@ struct MUTREE {
 };
 
 
-
+// Find best matching between reference and candidate muon by getting the loweset deltaR/deltaEta
 // 'a' is index number of MATCH *mat
 // eta, phi, pt, chg are candidate's properties
 void matching (bool match_dR, MATCH *mat, unsigned int a, float eta, float phi, float pt, int chg=0) {
@@ -147,6 +174,7 @@ void matching (bool match_dR, MATCH *mat, unsigned int a, float eta, float phi, 
   return;
 }
 
+// Muon id cuts used for Quakonia analysis
 bool isMuInAcc(float eta, float pt){
   return ( fabs(eta) < 2.4 &&
          ( (fabs(eta) < 1.0 && pt >= 3.4) ||
@@ -155,12 +183,12 @@ bool isMuInAcc(float eta, float pt){
          );
 }
 
-bool isValidMu(MUTREE &mutree, int idx) {
-    return (isMuInAcc(mutree.eta[idx], mutree.pt[idx]) &&
-            mutree.nTrkFound[idx] > 10 &&
-            mutree.glbChi2_ndof[idx] < 20.0 &&
-            mutree.trkChi2_ndof[idx] < 4.0 &&
-            mutree.pixLayerWMeas[idx] > 0 &&
-            mutree.trkDxy[idx] < 3.0 &&
-            mutree.trkDz[idx] < 15.0 );
+bool isValidMu(MUTREE *mutree, int idx) {
+    return (isMuInAcc(mutree->eta[idx], mutree->pt[idx]) &&
+            mutree->nTrkFound[idx] > 10 &&
+            mutree->glbChi2_ndof[idx] < 20.0 &&
+            mutree->trkChi2_ndof[idx] < 4.0 &&
+            mutree->pixLayerWMeas[idx] > 0 &&
+            mutree->trkDxy[idx] < 3.0 &&
+            mutree->trkDz[idx] < 15.0 );
 }

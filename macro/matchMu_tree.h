@@ -102,14 +102,9 @@ public :
    virtual Int_t    GetEntry(Long64_t entry);
    virtual void     Init(TTree *tree);
    virtual void     Loop(void);
-   virtual bool     AccSingleMu(Float_t eta=0);
    virtual void     Show(Long64_t entry = -1);
 };
 
-
-bool FriendMuTree::AccSingleMu(Float_t eta) {
-  return ( fabs(eta) <= 2.4 );
-}
 
 
 FriendMuTree::FriendMuTree(const char *fin, bool castor)
@@ -127,7 +122,7 @@ FriendMuTree::FriendMuTree(const char *fin, bool castor)
      f = new TCastorFile(fin);
      if (!f) { std::cout << "Cannot load root file: " << ftmp << "\n"; }
      
-     fChain = (TTree*)f->Get("analysis/HLTMuTree");
+     fChain = (TTree*)f->Get("hltMuTree/HLTMuTree");
      if (!fChain) { std::cout << "Cannot load tree in : " << ftmp << "\n"; }
      else Init(fChain);
    } else {
@@ -139,7 +134,7 @@ FriendMuTree::FriendMuTree(const char *fin, bool castor)
      f2 = new TFile(fin);
      if (!f2) { std::cout << "Cannot load root file: " << fin << "\n"; }
      
-     fChain = (TTree*)f2->Get("analysis/HLTMuTree");
+     fChain = (TTree*)f2->Get("hltMuTree/HLTMuTree");
      if (!fChain) { std::cout << "Cannot load tree in : " << fin << "\n"; }
      else Init(fChain);
    }
@@ -226,7 +221,7 @@ void FriendMuTree::Show(Long64_t entry)
 void FriendMuTree::Loop(void) {
   if (fChain == 0) {std::cout << "Tree cannot be read. Something is wrong." << std::endl; return;}
   
-  fChain = (TTree*)gDirectory->Get("analaysis/HLTMuTree");
+  fChain = (TTree*)gDirectory->Get("hltMuTree/HLTMuTree");
   Long64_t nentries = fChain->GetEntriesFast();
 
   for (Long64_t ent=0; ent<nentries; ent++) {
@@ -305,33 +300,21 @@ public :
    Int_t           Bx;
    Int_t           Orbit;
    Float_t         AvgInstLumi;
-   Int_t           HLT_HIL3DoubleMuOpen;
-   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy;
-   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS;
-   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_SS;
-   Int_t           HLT_HIL3DoubleMuOpen_Mgt2;
-   Int_t           HLT_HIL3Mu3;
-   Int_t           HLT_HIL1DoubleMuOpen_v1;
-   Int_t           HLT_HIL1DoubleMu0_HighQ;
-   Int_t           HLT_HIL2DoubleMu0_NHitQ;
-   Int_t           HLT_HIL2DoubleMu0_L1HighQL2NHitQ;
+   Int_t           HLT_HIL3DoubleMuOpen_v1;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_v1;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_SS_v1;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_v1;
+   Int_t           HLT_HIL2DoubleMu0_NHitQ_v1;
+   Int_t           HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1;
    Int_t           HLT_HIL2DoubleMu0_v1;
    Int_t           HLT_HIL2DoubleMu3_v1;
+   Int_t           HLT_HIL1DoubleMuOpen_v1;
+   Int_t           HLT_HIL1DoubleMu0_HighQ_v1;
+   Int_t           HLT_HIL3Mu3_v1;
    Int_t           HLT_HIL2Mu3_v1;
-   Int_t           HLT_HIL2Mu5Tight_v1;
-   Int_t           HLT_HIL2Mu20_v1;
-   Int_t           HLT_HIL1SingleMu3_v1;
-   Int_t           HLT_HIL1SingleMu5_v1;
-   Int_t           HLT_HIL1SingleMu7_v1;
-   Int_t           HLT_HIL2DoubleMu0;
-   Int_t           HLT_HIL2DoubleMu3;
-   Int_t           HLT_HIL2Mu3;
-   Int_t           HLT_HIL2Mu5Tight;
-   Int_t           HLT_HIL2Mu20;
-   Int_t           HLT_HIL1SingleMu3;
-   Int_t           HLT_HIL1SingleMu5;
-   Int_t           HLT_HIL1SingleMu7;
-   Int_t           HLT_HIL1DoubleMuOpen;
+   Int_t           HLT_HIL2Mu7_v1;
+   Int_t           HLT_HIL2Mu15_v1;
    Int_t           L1_DoubleMu3;
    Int_t           L1_DoubleMuOpen;
    Int_t           L1_DoubleMuOpen_BptxAND;
@@ -417,34 +400,21 @@ public :
    TBranch        *b_Bx;   //!
    TBranch        *b_Orbit;   //!
    TBranch        *b_AvgInstLumi;   //!
-   TBranch        *b_HLT_HIL3DoubleMuOpen;
-   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy;
-   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS;
-   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_SS;
-   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2;
-   TBranch        *b_HLT_HIL3Mu3;
-   TBranch        *b_HLT_HIL2DoubleMu0;   //!
-   TBranch        *b_HLT_HIL2Mu3;   //!
-   TBranch        *b_HLT_HIL2DoubleMu3;   //!
-   TBranch        *b_HLT_HIL2Mu5Tight;   //!
-   TBranch        *b_HLT_HIL2Mu20;   //!
-   TBranch        *b_HLT_HIL1SingleMu3;   //!
-   TBranch        *b_HLT_HIL1SingleMu5;   //!
-   TBranch        *b_HLT_HIL1SingleMu7;   //!
-   TBranch        *b_HLT_HIL1DoubleMuOpen;   //!
-   TBranch        *b_HLT_HIL1DoubleMuOpen_Core;   //!
+   TBranch        *b_HLT_HIL3DoubleMuOpen_v1;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v1;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_SS_v1;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_v1;
+   TBranch        *b_HLT_HIL2DoubleMu0_NHitQ_v1;
+   TBranch        *b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1;
+   TBranch        *b_HLT_HIL2DoubleMu0_v1;   //!
+   TBranch        *b_HLT_HIL2DoubleMu3_v1;   //!
    TBranch        *b_HLT_HIL1DoubleMuOpen_v1;
-   TBranch        *b_HLT_HIL1DoubleMu0_HighQ;
-   TBranch        *b_HLT_HIL2DoubleMu0_NHitQ;
-   TBranch        *b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ;
-   TBranch        *b_HLT_HIL2DoubleMu0_v1;
-   TBranch        *b_HLT_HIL2DoubleMu3_v1;
-   TBranch        *b_HLT_HIL2Mu3_v1;
-   TBranch        *b_HLT_HIL2Mu5Tight_v1;
-   TBranch        *b_HLT_HIL2Mu20_v1;
-   TBranch        *b_HLT_HIL1SingleMu3_v1;
-   TBranch        *b_HLT_HIL1SingleMu5_v1;
-   TBranch        *b_HLT_HIL1SingleMu7_v1;
+   TBranch        *b_HLT_HIL1DoubleMu0_HighQ_v1;
+   TBranch        *b_HLT_HIL3Mu3_v1;
+   TBranch        *b_HLT_HIL2Mu3_v1;   //!
+   TBranch        *b_HLT_HIL2Mu7_v1;   //!
+   TBranch        *b_HLT_HIL2Mu15_v1;   //!
    TBranch        *b_L1_DoubleMu3;   //!
    TBranch        *b_L1_DoubleMuOpen;   //!
    TBranch        *b_L1_DoubleMuOpen_BptxAND;   //!
@@ -484,7 +454,7 @@ HltTree::HltTree(const char *fin, bool castor)
      f = new TCastorFile(fin);
      if (!f) { std::cout << "Cannot load root file: " << ftmp << "\n"; }
 
-     fChain = (TTree*)f->Get("hltanalysis/HltTree");
+     fChain = (TTree*)f->Get("hltana/HltTree");
      if (!fChain) { std::cout << "Cannot load tree in : " << ftmp << "\n"; }
      else Init(fChain);
    } else {
@@ -497,7 +467,7 @@ HltTree::HltTree(const char *fin, bool castor)
        f2 = new TFile(fin);
        if (!f2) { std::cout << "Cannot load root file: " << fin << "\n"; }
 
-       fChain = (TTree*)f2->Get("hltanalysis/HltTree");
+       fChain = (TTree*)f2->Get("hltana/HltTree");
        if (!fChain) { std::cout << "Cannot load tree in : " << fin << "\n"; }
        else Init(fChain);
 
@@ -606,33 +576,21 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("Bx", &Bx, &b_Bx);
    fChain->SetBranchAddress("Orbit", &Orbit, &b_Orbit);
    fChain->SetBranchAddress("AvgInstLumi", &AvgInstLumi, &b_AvgInstLumi);
-   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen",&HLT_HIL3DoubleMuOpen,&b_HLT_HIL3DoubleMuOpen);
-   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy);
-   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS",&HLT_HIL3DoubleMuOpen_Mgt2_OS,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS);
-   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_SS",&HLT_HIL3DoubleMuOpen_Mgt2_SS,&b_HLT_HIL3DoubleMuOpen_Mgt2_SS);
-   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2",&HLT_HIL3DoubleMuOpen_Mgt2,&b_HLT_HIL3DoubleMuOpen_Mgt2);
-   fChain->SetBranchAddress("HLT_HIL3Mu3",&HLT_HIL3Mu3,&b_HLT_HIL3Mu3);
-   fChain->SetBranchAddress("HLT_HIL2DoubleMu0", &HLT_HIL2DoubleMu0, &b_HLT_HIL2DoubleMu0);
-   fChain->SetBranchAddress("HLT_HIL2DoubleMu3", &HLT_HIL2DoubleMu3, &b_HLT_HIL2DoubleMu3);
-   fChain->SetBranchAddress("HLT_HIL2Mu3", &HLT_HIL2Mu3, &b_HLT_HIL2Mu3);
-   fChain->SetBranchAddress("HLT_HIL2Mu5Tight", &HLT_HIL2Mu5Tight, &b_HLT_HIL2Mu5Tight);
-   fChain->SetBranchAddress("HLT_HIL2Mu20", &HLT_HIL2Mu20, &b_HLT_HIL2Mu20);
-   fChain->SetBranchAddress("HLT_HIL1SingleMu3", &HLT_HIL1SingleMu3, &b_HLT_HIL1SingleMu3);
-   fChain->SetBranchAddress("HLT_HIL1SingleMu5", &HLT_HIL1SingleMu5, &b_HLT_HIL1SingleMu5);
-   fChain->SetBranchAddress("HLT_HIL1SingleMu7", &HLT_HIL1SingleMu7, &b_HLT_HIL1SingleMu7);
-   fChain->SetBranchAddress("HLT_HIL1DoubleMuOpen", &HLT_HIL1DoubleMuOpen, &b_HLT_HIL1DoubleMuOpen);
-   fChain->SetBranchAddress("HLT_HIL1DoubleMuOpen_v1", &HLT_HIL1DoubleMuOpen_v1, &b_HLT_HIL1DoubleMuOpen_v1);
-   fChain->SetBranchAddress("HLT_HIL1DoubleMu0_HighQ", &HLT_HIL1DoubleMu0_HighQ, &b_HLT_HIL1DoubleMu0_HighQ);
-   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_NHitQ", &HLT_HIL2DoubleMu0_NHitQ, &b_HLT_HIL2DoubleMu0_NHitQ);
-   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_L1HighQL2NHitQ", &HLT_HIL2DoubleMu0_L1HighQL2NHitQ, &b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ);
-   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_v1", &HLT_HIL2DoubleMu0_v1, &b_HLT_HIL2DoubleMu0_v1);
-   fChain->SetBranchAddress("HLT_HIL2DoubleMu3_v1", &HLT_HIL2DoubleMu3_v1, &b_HLT_HIL2DoubleMu3_v1);
-   fChain->SetBranchAddress("HLT_HIL2Mu3_v1", &HLT_HIL2Mu3_v1, &b_HLT_HIL2Mu3_v1);
-   fChain->SetBranchAddress("HLT_HIL2Mu5Tight_v1", &HLT_HIL2Mu5Tight_v1, &b_HLT_HIL2Mu5Tight_v1);
-   fChain->SetBranchAddress("HLT_HIL2Mu20_v1", &HLT_HIL2Mu20_v1, &b_HLT_HIL2Mu20_v1);
-   fChain->SetBranchAddress("HLT_HIL1SingleMu3_v1", &HLT_HIL1SingleMu3_v1, &b_HLT_HIL1SingleMu3_v1);
-   fChain->SetBranchAddress("HLT_HIL1SingleMu5_v1", &HLT_HIL1SingleMu5_v1, &b_HLT_HIL1SingleMu5_v1);
-   fChain->SetBranchAddress("HLT_HIL1SingleMu7_v1", &HLT_HIL1SingleMu7_v1, &b_HLT_HIL1SingleMu7_v1);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_v1",&HLT_HIL3DoubleMuOpen_v1,&b_HLT_HIL3DoubleMuOpen_v1);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1",&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",&HLT_HIL3DoubleMuOpen_Mgt2_OS_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v1);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_SS_v1",&HLT_HIL3DoubleMuOpen_Mgt2_SS_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_SS_v1);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_v1",&HLT_HIL3DoubleMuOpen_Mgt2_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_v1);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_NHitQ_v1",&HLT_HIL2DoubleMu0_NHitQ_v1,&b_HLT_HIL2DoubleMu0_NHitQ_v1);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1",&HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1,&b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v1);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_v1",&HLT_HIL2DoubleMu0_v1,&b_HLT_HIL2DoubleMu0_v1);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu3_v1",&HLT_HIL2DoubleMu3_v1,&b_HLT_HIL2DoubleMu3_v1);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMuOpen_v1",&HLT_HIL1DoubleMuOpen_v1,&b_HLT_HIL1DoubleMuOpen_v1);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMu0_HighQ_v1",&HLT_HIL1DoubleMu0_HighQ_v1,&b_HLT_HIL1DoubleMu0_HighQ_v1);
+   fChain->SetBranchAddress("HLT_HIL3Mu3_v1",&HLT_HIL3Mu3_v1,&b_HLT_HIL3Mu3_v1);
+   fChain->SetBranchAddress("HLT_HIL2Mu3_v1",&HLT_HIL2Mu3_v1,&b_HLT_HIL2Mu3_v1);
+   fChain->SetBranchAddress("HLT_HIL2Mu7_v1",&HLT_HIL2Mu7_v1,&b_HLT_HIL2Mu7_v1);
+   fChain->SetBranchAddress("HLT_HIL2Mu15_v1",&HLT_HIL2Mu15_v1,&b_HLT_HIL2Mu15_v1);
    fChain->SetBranchAddress("L1_DoubleMu3", &L1_DoubleMu3, &b_L1_DoubleMu3);
    fChain->SetBranchAddress("L1_DoubleMuOpen", &L1_DoubleMuOpen, &b_L1_DoubleMuOpen);
    fChain->SetBranchAddress("L1_DoubleMuOpen_BptxAND", &L1_DoubleMuOpen_BptxAND, &b_L1_DoubleMuOpen_BptxAND);

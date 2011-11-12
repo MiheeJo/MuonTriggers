@@ -274,31 +274,40 @@ int rateMuTrig() {
     cout << "Failed to open root files\n"; return -1;
   }
 
-  TTree *mutree;
-  MUTREE muTree;
-  mutree = muTree_.fChain;
-  mutree->SetBranchAddress("Run",&muTree.run);
-  mutree->SetBranchAddress("Event",&muTree.event);
+  TTree *muon_tree;
+  MUTREE *muTree = new MUTREE;
+  muon_tree = muTree_.fChain;
+  muon_tree->SetBranchAddress("Run",&muTree->run);
+  muon_tree->SetBranchAddress("Event",&muTree->event);
   if (flag.doGen && !flag.doSta && !flag.doGlb) {
-   mutree->SetBranchAddress("Gen_eta",muTree.eta);
-   mutree->SetBranchAddress("Gen_pt",muTree.pt);
-   mutree->SetBranchAddress("Gen_phi",muTree.phi);
-   mutree->SetBranchAddress("Gen_nptl",&muTree.nptl);
-   mutree->SetBranchAddress("Gen_pid",muTree.charge);
-   mutree->SetBranchAddress("Gen_mom",muTree.mom);
-   mutree->SetBranchAddress("Gen_status",muTree.status);
+   muon_tree->SetBranchAddress("Gen_eta",muTree->eta);
+   muon_tree->SetBranchAddress("Gen_pt",muTree->pt);
+   muon_tree->SetBranchAddress("Gen_phi",muTree->phi);
+   muon_tree->SetBranchAddress("Gen_nptl",&muTree->nptl);
+   muon_tree->SetBranchAddress("Gen_pid",muTree->charge);
+   muon_tree->SetBranchAddress("Gen_mom",muTree->mom);
+   muon_tree->SetBranchAddress("Gen_status",muTree->status);
   } else if (flag.doSta && !flag.doGen && !flag.doGlb) {
-   mutree->SetBranchAddress("Sta_eta",muTree.eta);
-   mutree->SetBranchAddress("Sta_pt",muTree.pt);
-   mutree->SetBranchAddress("Sta_phi",muTree.phi);
-   mutree->SetBranchAddress("Sta_nptl",&muTree.nptl);
-   mutree->SetBranchAddress("Sta_charge",muTree.charge);
+   muon_tree->SetBranchAddress("Sta_eta",&muTree->eta);
+   muon_tree->SetBranchAddress("Sta_pt",&muTree->pt);
+   muon_tree->SetBranchAddress("Sta_phi",muTree->phi);
+   muon_tree->SetBranchAddress("Sta_nptl",&muTree->nptl);
+   muon_tree->SetBranchAddress("Sta_charge",muTree->charge);
   } else if (flag.doGlb && !flag.doGen && !flag.doSta) {
-   mutree->SetBranchAddress("Glb_eta",muTree.eta);
-   mutree->SetBranchAddress("Glb_pt",muTree.pt);
-   mutree->SetBranchAddress("Glb_phi",muTree.phi);
-   mutree->SetBranchAddress("Glb_nptl",&muTree.nptl);
-   mutree->SetBranchAddress("Glb_charge",muTree.charge);
+   muon_tree->SetBranchAddress("Glb_eta",&muTree->eta);
+   muon_tree->SetBranchAddress("Glb_pt",muTree->pt);
+   muon_tree->SetBranchAddress("Glb_phi",muTree->phi);
+   muon_tree->SetBranchAddress("Glb_nptl",&muTree->nptl);
+   muon_tree->SetBranchAddress("Glb_charge",muTree->charge);
+   muon_tree->SetBranchAddress("Glb_nValMuHits",muTree->nValMuHits);
+   muon_tree->SetBranchAddress("Glb_nValTrkHits",muTree->nValTrkHits);
+   muon_tree->SetBranchAddress("Glb_nTrkFound",muTree->nTrkFound);
+   muon_tree->SetBranchAddress("Glb_glbChi2_ndof",muTree->glbChi2_ndof);
+   muon_tree->SetBranchAddress("Glb_trkChi2_ndof",muTree->trkChi2_ndof);
+   muon_tree->SetBranchAddress("Glb_pixLayerWMeas",muTree->pixLayerWMeas);
+   muon_tree->SetBranchAddress("Glb_trkDxy",muTree->trkDxy);
+   muon_tree->SetBranchAddress("Glb_trkDz",muTree->trkDz);
+
   } else {
     cout << "Choose doSta or doGlb or doGen!\n";
     return -1;
@@ -316,15 +325,15 @@ int rateMuTrig() {
 
   for (int i=0; i<ohTree.fChain->GetEntries(); i++) {
     if (i%1000 == 0) cout << "processing entry: " << i << endl;
-    mutree->GetEntry(i);
+    muon_tree->GetEntry(i);
     ohTree.GetEntry(i);
     tree->GetEntry(i);
 
     ////////// Compare event number
     bool noExist = false;
-    for (int a=0; (muTree.run != ohTree.Run) || (muTree.event != ohTree.Event); a++ ) {
-      if (a < mutree->GetEntries()) {
-        mutree->GetEntry(a);
+    for (int a=0; (muTree->run != ohTree.Run) || (muTree->event != ohTree.Event); a++ ) {
+      if (a < muon_tree->GetEntries()) {
+        muon_tree->GetEntry(a);
       } else {
         noExist = true;
         break;
@@ -332,8 +341,8 @@ int rateMuTrig() {
     }
     if (noExist) {
       cout << "muTree and ohTree don't have same run/event number. Strange." << endl;
-      cout << "muTree.Run: " << muTree.run << "\tohTree.Run: " << ohTree.Run << endl;
-      cout << "muTree.Event: " << muTree.event << "\tohTree.Event: " << ohTree.Event << endl;
+      cout << "muTree->Run: " << muTree->run << "\tohTree.Run: " << ohTree.Run << endl;
+      cout << "muTree->Event: " << muTree->event << "\tohTree.Event: " << ohTree.Event << endl;
       continue;
     }
 
@@ -352,14 +361,14 @@ int rateMuTrig() {
         Trig_fired[idx]++;    //Trigger fired
 
         ////////// Global di-muon counting
-        if (muTree.nptl >= 2) {
+        if (muTree->nptl >= 2) {
           map<float,int,ptcomp> l2;
           map<float,int>::iterator it;
 
-          for (int a=0; a<muTree.nptl; a++) {
+          for (int a=0; a<muTree->nptl; a++) {
             // Apply cuts on the single muons
             if (!isValidMu(muTree,a)) continue;
-            float pt = muTree.pt[a];
+            float pt = muTree->pt[a];
             l2[pt] = a;
           }
 
@@ -369,10 +378,10 @@ int rateMuTrig() {
           it++;
           a[1] = it->second; //Get 2nd index in a ohTree
           
-          if (muTree.charge[a[0]]*muTree.charge[a[1]] < 0) {  //only opposite muon pairs will be considered
+          if (muTree->charge[a[0]]*muTree->charge[a[1]] < 0) {  //only opposite muon pairs will be considered
             TLorentzVector L2mu1, L2mu2, L2dimu;
-            L2mu1.SetPtEtaPhiM(muTree.pt[a[0]],muTree.eta[a[0]],muTree.phi[a[0]],Mmu);
-            L2mu2.SetPtEtaPhiM(muTree.pt[a[1]],muTree.eta[a[1]],muTree.phi[a[1]],Mmu);
+            L2mu1.SetPtEtaPhiM(muTree->pt[a[0]],muTree->eta[a[0]],muTree->phi[a[0]],Mmu);
+            L2mu2.SetPtEtaPhiM(muTree->pt[a[1]],muTree->eta[a[1]],muTree->phi[a[1]],Mmu);
 
             L2dimu = L2mu1 + L2mu2; // Use only 0th, 1th L1 objects
             Dimu_mass_glb[idx]->Fill(L2dimu.M());
@@ -423,7 +432,7 @@ int rateMuTrig() {
             Frac_2mu_pt_L2[idx]->Fill(ohTree.ohMuL2Pt[a[0]],ohTree.ohMuL2Pt[a[1]]);
             Frac_2mu_eta_L2[idx]->Fill(fabs(ohTree.ohMuL2Eta[a[0]]),fabs(ohTree.ohMuL2Eta[a[1]]));
 
-            if (muTree.charge[a[0]]*muTree.charge[a[1]] < 0) {  //only opposite muon pairs will be considered
+            if (muTree->charge[a[0]]*muTree->charge[a[1]] < 0) {  //only opposite muon pairs will be considered
               TLorentzVector L2mu1, L2mu2, L2dimu;
               L2mu1.SetPtEtaPhiM(ohTree.ohMuL2Pt[a[0]],ohTree.ohMuL2Eta[a[0]],ohTree.ohMuL2Phi[a[0]],Mmu);
               L2mu2.SetPtEtaPhiM(ohTree.ohMuL2Pt[a[1]],ohTree.ohMuL2Eta[a[1]],ohTree.ohMuL2Phi[a[1]],Mmu);
@@ -482,7 +491,7 @@ int rateMuTrig() {
               Frac_2mu_pt_L3[idx]->Fill(ohTree.ohMuL3Pt[b[0]],ohTree.ohMuL3Pt[b[1]]);
               Frac_2mu_eta_L3[idx]->Fill(fabs(ohTree.ohMuL3Eta[b[0]]),fabs(ohTree.ohMuL3Eta[b[1]]));
 
-              if (muTree.charge[b[0]]*muTree.charge[b[1]] < 0) {  //only opposite muon pairs will be considered
+              if (muTree->charge[b[0]]*muTree->charge[b[1]] < 0) {  //only opposite muon pairs will be considered
                 TLorentzVector L3mu1, L3mu2, L3dimu;
                 L3mu1.SetPtEtaPhiM(ohTree.ohMuL3Pt[b[0]],ohTree.ohMuL3Eta[b[0]],ohTree.ohMuL3Phi[b[0]],Mmu);
                 L3mu2.SetPtEtaPhiM(ohTree.ohMuL3Pt[b[1]],ohTree.ohMuL3Eta[b[1]],ohTree.ohMuL3Phi[b[1]],Mmu);

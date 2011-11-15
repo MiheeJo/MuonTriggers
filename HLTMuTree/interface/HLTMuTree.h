@@ -42,6 +42,16 @@
 #include "SimDataFormats/TrackingAnalysis/interface/TrackingParticle.h"
 #include "SimDataFormats/TrackingAnalysis/interface/TrackingParticleFwd.h"
 
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
+#include "DataFormats/RecoCandidate/interface/RecoChargedCandidate.h"
+#include "DataFormats/RecoCandidate/interface/RecoChargedCandidateFwd.h"
+#include "DataFormats/L1Trigger/interface/L1MuonParticle.h" 
+#include "DataFormats/L1Trigger/interface/L1MuonParticleFwd.h" 
+#include "TrackingTools/PatternTools/interface/ClosestApproachInRPhi.h"
+
+
+
 // root include files
 #include "TROOT.h"
 #include "TTree.h"
@@ -72,11 +82,13 @@ class HLTMuTree : public edm::EDAnalyzer {
     edm::InputTag   tagGenPtl;
     edm::InputTag   tagSimTrk;
     edm::InputTag   tagVtx;
-    edm::InputTag   tagL1gtReadout;
+    edm::InputTag   MuCandTag1;
+    edm::InputTag   MuCandTag2;
+    edm::InputTag   MuCandTag3;
 
     Bool_t    doReco;
     Bool_t    doGen;
-    Bool_t    accRecoMu;
+    Bool_t    doHLT;
 
     CentralityProvider *centrality;
 
@@ -128,9 +140,17 @@ class HLTMuTree : public edm::EDAnalyzer {
       float dz[nmax];
     } STAMU;
 
-  GENMU GenMu;
-  GLBMU GlbMu;
-  STAMU StaMu;
+    GENMU GenMu;
+    GLBMU GlbMu;
+    STAMU StaMu;
+
+    float muonl2pt[nmax], muonl2eta[nmax], muonl2phi[nmax], muonl2dr[nmax], muonl2dz[nmax], muonl2vtxz[nmax];
+    float muonl3pt[nmax], muonl3eta[nmax], muonl3phi[nmax], muonl3dr[nmax], muonl3dz[nmax], muonl3vtxz[nmax], muonl3normchi2[nmax];
+    float muonl2pterr[nmax], muonl3pterr[nmax];
+    int nmu2cand, nmu3cand;
+    int muonl2chg[nmax], muonl2nhits[nmax], muonl3chg[nmax], muonl3nhits[nmax];
+    int muonl3ntrackerhits[nmax], muonl3nmuonhits[nmax];
+
 
 };
 //

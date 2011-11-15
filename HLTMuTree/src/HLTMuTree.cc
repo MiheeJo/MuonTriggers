@@ -1,23 +1,11 @@
-// -*- C++ -*-
-//
 // Package:    HLTMuTree
 // Class:      HLTMuTree
 // 
-/**\class HLTMuTree HLTMuTree.cc UserCode/HLTMuTree/src/HLTMuTree.cc
-
- Description: [one line class summary]
-
- Implementation:
-     [Notes on implementation]
-*/
-//
-// Original Author:  Mihee Jo,588 R-012,+41227673278,
-//         Created:  Thu Jul  7 11:47:28 CEST 2011
-// $Id: HLTMuTree.cc,v 1.4 2011/10/24 16:09:39 miheejo Exp $
-//
+// Original Author:  Mihee Jo
+// $Id: HLTMuTree.cc,v 1.3 2011/11/03 13:55:01 miheejo Exp $
 //
 
-#include "MuTrig/HLTMuTree/interface/HLTMuTree.h"
+#include "HiMuonAlgos/HLTMuTree/interface/HLTMuTree.h"
 
 using namespace std;
 using namespace reco;
@@ -32,20 +20,18 @@ HLTMuTree::HLTMuTree(const edm::ParameterSet& iConfig)
   //now do what ever initialization is needed
   tagRecoMu = iConfig.getParameter<edm::InputTag>("muons");
   tagVtx = iConfig.getParameter<edm::InputTag>("vertices");
-  doReco = iConfig.getUntrackedParameter<bool>("doReco");
-  doGen = iConfig.getUntrackedParameter<bool>("doGen");
   tagGenPtl = iConfig.getParameter<edm::InputTag>("genparticle");
   tagSimTrk = iConfig.getParameter<edm::InputTag>("simtrack");
-
+  MuCandTag2 = iConfig.getParameter<edm::InputTag>("MuCandTag2");
+  MuCandTag3 = iConfig.getParameter<edm::InputTag>("MuCandTag3");
+  doReco = iConfig.getUntrackedParameter<bool>("doReco");
+  doGen = iConfig.getUntrackedParameter<bool>("doGen");
+  doHLT = iConfig.getUntrackedParameter<bool>("doHLT");
 }
 
 
 HLTMuTree::~HLTMuTree()
 {
- 
-   // do anything here that needs to be done at desctruction time
-   // (e.g. close files, deallocate resources etc.)
-
 }
 
 
@@ -62,6 +48,7 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   
   //Initialization
   GenMu.nptl = GlbMu.nptl = StaMu.nptl = 0;
+  nmu2cand = nmu3cand = 0;
   for (int i=0; i<nmax; i++) {
     GenMu.pid[i] = 10;
     GenMu.status[i] = 0;
@@ -92,7 +79,14 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     StaMu.phi[i] = 0;
     StaMu.dxy[i] = 0;
     StaMu.dz[i] = 0;
+    muonl2pt[i] = 0; muonl2eta[i] = 0; muonl2phi[i] = 0; muonl2dr[i] = 0; muonl2dz[i] = 0; muonl2vtxz[i] = 0;
+    muonl3pt[i] = 0; muonl3eta[i] = 0; muonl3phi[i] = 0; muonl3dr[i] = 0; muonl3dz[i] = 0; muonl3vtxz[i] = 0; muonl3normchi2[i] = 0;
+    muonl2pterr[i] = 0; muonl3pterr[i] = 0;
+    muonl2chg[i] = 0; muonl2nhits[i] = 0; muonl3chg[i] = 0; muonl3nhits[i] = 0;
+    muonl3ntrackerhits[i] = 0; muonl3nmuonhits[i] = 0;
+
   }
+
 
   //Get run, event, centrality
   event = iEvent.id().event();
@@ -153,13 +147,6 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
           }
           nGen++;
 
-/*          if (genPtl->numberOfMothers() > 0 ) {
-            GenMu.mom[nGen] = genPtl->mother(0)->pdgId();
-            cout << "mom pid: " << genPtl->mother(0)->pdgId() << endl;
-          } else {
-            GenMu.mom[nGen] = 10; 
-          }*/
-
         }
       }
     } //End of gen collection
@@ -205,7 +192,6 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     centrality = new CentralityProvider(iSetup);
     centrality->newEvent(iEvent,iSetup);
     cbin = centrality->getBin();
-//    cbin = -1;
 
     //Get vertex position
     edm::Handle< vector<reco::Vertex> > vertex;
@@ -229,6 +215,7 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       if (muCand.isNull()) continue;
       if (muCand->globalTrack().isNonnull() && muCand->innerTrack().isNonnull()) {
         if (muCand->isGlobalMuon() && muCand->isTrackerMuon() && fabs(muCand->combinedMuon()->eta()) < 2.4) {
+ cout << "|y| < 2.4" <<endl;
           edm::RefToBase<reco::Track> trk = edm::RefToBase<reco::Track>(muCand->innerTrack());
           edm::RefToBase<reco::Track> glb = edm::RefToBase<reco::Track>(muCand->combinedMuon());
           const reco::HitPattern& p = trk->hitPattern();
@@ -278,13 +265,85 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     }
     GlbMu.nptl = nGlb;
     StaMu.nptl = nSta;
-  } // End of doReco
-  else {
+
+    if (doHLT) {
+      edm::Handle<reco::RecoChargedCandidateCollection> MuCands2;
+      iEvent.getByLabel(MuCandTag2,MuCands2);
+      if (MuCands2.isValid()) {
+        const reco::RecoChargedCandidateCollection myMucands2 = *MuCands2;
+        typedef reco::RecoChargedCandidateCollection::const_iterator cand;
+        nmu2cand = myMucands2.size();
+cout << "nmu2cand  " << nmu2cand << endl;
+        int imu2c=0;
+        for (cand i=myMucands2.begin(); i!=myMucands2.end(); i++) {
+          reco::TrackRef tk = i->get<reco::TrackRef>();
+
+          muonl2pt[imu2c] = tk->pt();
+          muonl2eta[imu2c] = tk->eta();
+          muonl2phi[imu2c] = tk->phi();
+          muonl2dr[imu2c] = fabs(tk->dxy(vertex->begin()->position())); //fabs(tk->dxy(BSPosition));
+          muonl2dz[imu2c] = tk->dz(vertex->begin()->position());
+          muonl2vtxz[imu2c] = tk->dz();
+          muonl2nhits[imu2c] = tk->numberOfValidHits(); 
+
+          double l2_err0 = tk->error(0); // error on q/p
+          double l2_abspar0 = fabs(tk->parameter(0)); // |q/p|
+
+          muonl2pterr[imu2c] = l2_err0/l2_abspar0;
+          muonl2chg[imu2c] = tk->charge();
+
+          imu2c++;
+        } // End of l2 muon loop
+      } else {nmu2cand = 0;} // End of l2 muon is valid
+
+      edm::Handle<reco::RecoChargedCandidateCollection> MuCands3;
+      iEvent.getByLabel(MuCandTag3,MuCands3);
+      if (MuCands3.isValid()) {
+        const reco::RecoChargedCandidateCollection myMucands3 = *MuCands3;
+        nmu3cand = myMucands3.size();
+        
+        typedef reco::RecoChargedCandidateCollection::const_iterator cand;
+        int imu3c=0;
+        for (cand i=myMucands3.begin(); i!=myMucands3.end(); i++) {
+          reco::TrackRef tk = i->get<reco::TrackRef>();
+
+          muonl3pt[imu3c] = tk->pt();
+          muonl3eta[imu3c] = tk->eta();
+          muonl3phi[imu3c] = tk->phi();
+
+          muonl3dr[imu3c] = fabs(tk->dxy(vertex->begin()->position()));
+          muonl3dz[imu3c] = tk->dz(vertex->begin()->position());
+          muonl3vtxz[imu3c] = tk->dz();
+          muonl3nhits[imu3c] = tk->numberOfValidHits();  
+
+          double l3_err0 = tk->error(0); // error on q/p
+          double l3_abspar0 = fabs(tk->parameter(0)); // |q/p|
+
+          muonl3pterr[imu3c] = l3_err0/l3_abspar0;
+          muonl3chg[imu3c] = tk->charge();
+
+          muonl3normchi2[imu3c] = tk->normalizedChi2();
+          muonl3ntrackerhits[imu3c] = tk->hitPattern().numberOfValidTrackerHits();
+          muonl3nmuonhits[imu3c] = tk->hitPattern().numberOfValidMuonHits();
+
+          imu3c++;
+        }
+      } else {nmu3cand = 0;}
+
+    } else {
+      nmu2cand=0; nmu3cand=0;
+    } // End of doHLT
+
+
+  } else {
     vx = -1;
     vy = -1;
     vz = -1; 
     cbin = -1;
-  }
+  } // End of doReco
+
+  // Get trigger objects
+
 
   // Fill a muon tree
   treeMu->Fill();
@@ -339,6 +398,31 @@ HLTMuTree::beginJob()
   treeMu->Branch("Sta_phi",StaMu.phi,"Sta_phi[Sta_nptl]/F");
   treeMu->Branch("Sta_dxy",StaMu.dxy,"Sta_dx[Sta_nptl]/F");
   treeMu->Branch("Sta_dz",StaMu.dz,"Sta_dz[Sta_nptl]/F");
+
+  treeMu->Branch("NohMuL2",&nmu2cand,"NohMuL2/I");
+  treeMu->Branch("ohMuL2Pt",muonl2pt,"ohMuL2Pt[NohMuL2]/F");
+  treeMu->Branch("ohMuL2Phi",muonl2phi,"ohMuL2Phi[NohMuL2]/F");
+  treeMu->Branch("ohMuL2Eta",muonl2eta,"ohMuL2Eta[NohMuL2]/F");
+  treeMu->Branch("ohMuL2Chg",muonl2chg,"ohMuL2Chg[NohMuL2]/I");
+  treeMu->Branch("ohMuL2PtErr",muonl2pterr,"ohMuL2PtErr[NohMuL2]/F");
+  treeMu->Branch("ohMuL2Dr",muonl2dr,"ohMuL2Dr[NohMuL2]/F");
+  treeMu->Branch("ohMuL2Dz",muonl2dz,"ohMuL2Dz[NohMuL2]/F");
+  treeMu->Branch("ohMuL2VtxZ",muonl2vtxz,"ohMuL2VtxZ[NohMuL2]/F");
+  treeMu->Branch("ohMuL2Nhits",muonl2nhits,"ohMuL2Nhits[NohMuL2]/I");   
+  treeMu->Branch("NohMuL3",&nmu3cand,"NohMuL3/I");
+  treeMu->Branch("ohMuL3Pt",muonl3pt,"ohMuL3Pt[NohMuL3]/F");
+  treeMu->Branch("ohMuL3Phi",muonl3phi,"ohMuL3Phi[NohMuL3]/F");
+  treeMu->Branch("ohMuL3Eta",muonl3eta,"ohMuL3Eta[NohMuL3]/F");
+  treeMu->Branch("ohMuL3Chg",muonl3chg,"ohMuL3Chg[NohMuL3]/I");
+  treeMu->Branch("ohMuL3PtErr",muonl3pterr,"ohMuL3PtErr[NohMuL3]/F");
+  treeMu->Branch("ohMuL3Dr",muonl3dr,"ohMuL3Dr[NohMuL3]/F");
+  treeMu->Branch("ohMuL3Dz",muonl3dz,"ohMuL3Dz[NohMuL3]/F");
+  treeMu->Branch("ohMuL3VtxZ",muonl3vtxz,"ohMuL3VtxZ[NohMuL3]/F");
+  treeMu->Branch("ohMuL3Nhits",muonl3nhits,"ohMuL3Nhits[NohMuL3]/I");    
+  treeMu->Branch("ohMuL3NormChi2", muonl3normchi2, "ohMuL3NormChi2[NohMuL3]/F");
+  treeMu->Branch("ohMuL3Ntrackerhits", muonl3ntrackerhits, "ohMuL3Ntrackerhits[NohMuL3]/I"); 
+  treeMu->Branch("ohMuL3Nmuonhits", muonl3nmuonhits, "ohMuL3Nmuonhits[NohMuL3]/I"); 
+
 }
 
 // ------------ method called once each job just after ending the event loop  ------------

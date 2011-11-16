@@ -2,7 +2,7 @@
 // Class:      HLTMuTree
 // 
 // Original Author:  Mihee Jo
-// $Id: HLTMuTree.cc,v 1.6 2011/11/15 23:34:23 miheejo Exp $
+// $Id: HLTMuTree.cc,v 1.7 2011/11/15 23:50:15 miheejo Exp $
 //
 
 #include "HiMuonAlgos/HLTMuTree/interface/HLTMuTree.h"
@@ -216,7 +216,6 @@ HLTMuTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       if (muCand.isNull()) continue;
       if (muCand->globalTrack().isNonnull() && muCand->innerTrack().isNonnull()) {
         if (muCand->isGlobalMuon() && muCand->isTrackerMuon() && fabs(muCand->combinedMuon()->eta()) < 2.4) {
- cout << "|y| < 2.4" <<endl;
           edm::RefToBase<reco::Track> trk = edm::RefToBase<reco::Track>(muCand->innerTrack());
           edm::RefToBase<reco::Track> glb = edm::RefToBase<reco::Track>(muCand->combinedMuon());
           const reco::HitPattern& p = trk->hitPattern();

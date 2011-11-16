@@ -24,6 +24,6 @@ cvs co -d CmsHi/PhotonAnalysis UserCode/CmsHi/PhotonAnalysis
 #cvs co -d HiMuonAlgos/HLTMuTree UserCode/CmsHi/HiMuonAlgos/HLTMuTree
 cvs co -d HiMuonAlgos/HLTMuTree UserCode/Miheejo/MuTrig/HLTMuTree
 cvs co UserCode/Miheejo/MuTrig/HLTMuTree/test/HiTrigAna_data_fromReco_cfg.py
-cp UserCode/Miheejo/MuTrig/HLTMuTree/test/HiTrigAna_data_fromReco_cfg.py CmsHi/HiHLTAlgos/test/
+cp UserCode/Miheejo/MuTrig/test/HiTrigAna_data_fromReco_cfg.py CmsHi/HiHLTAlgos/test/
 
 scram build -c

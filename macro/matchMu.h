@@ -43,7 +43,7 @@ public:
   bool doSim;         // Get efficiency with gen + sim muons
   bool doSta;         // Get efficiency with standalone muons
   bool doGlb;         // Get efficiency with global muons
-  bool match_dR;      // deltaR matching(true) or deltaEta matching(false)
+  bool match_dR;      // deltaR matching(true) or not
   float dCut;         // deltaR cut for matching trigger object and gen/reco muons
   bool jpsi;          // Is this MC sample composed of J/psi(true) or Y(false)?
   bool dimuTrig;      // Is this trigger a dimuon trigger? : true for dimuon trigger, false for single muon trigger
@@ -51,6 +51,8 @@ public:
   string trigPath;    // name of trigger path
   int trigLevel;      // Trigger level
   int trig;           // Trigger bit : 1 for fired, 0 for not fired
+  string refTrigPath; // Trigger name for reference trigger
+  int refTrig;        // Trigger bit for reference trigger
 
   // Trigger cut parameters
   bool doDimuMassCut;     // cut off dimuons below mass < mCut (with true)
@@ -74,6 +76,8 @@ FLAG::FLAG(void) {
   trigPath = "";
   trigLevel = 2;
   trig = 0;
+  refTrigPath = "";
+  refTrig = 0;
   doDimuMassCut = false;
   mCut = 2;
   doSinglemuPtCut = false;
@@ -114,7 +118,6 @@ INFO::INFO(int init) {
 struct MATCH {
   // deltaR or deltaEta from reference muon and candidate muon
   std::vector<float> deltaR;
-  std::vector<float> deltaEta;
   // Used as reference during matching 
   std::vector<float> ref_eta;
   std::vector<float> ref_phi;
@@ -125,6 +128,8 @@ struct MATCH {
   std::vector<float> cand_phi;
   std::vector<float> cand_pt;
   std::vector<float> cand_chg;
+  // Cand index number for already matched muons
+  std::vector<int> cand_idx;
 };
 
 struct MUTREE {
@@ -148,43 +153,41 @@ struct MUTREE {
 };
 
 
-// Find best matching between reference and candidate muon by getting the loweset deltaR/deltaEta
+// Find best matching between reference and candidate muon by getting the loweset deltaR
 // 'a' is index number of MATCH *mat
 // eta, phi, pt, chg are candidate's properties
-void matching (bool match_dR, MATCH *mat, unsigned int a, float eta, float phi, float pt, int chg=0) {
+void matching (MATCH *mat, unsigned int a, unsigned int b, float eta, float phi) {
   float dR_t = deltaR(mat->ref_eta[a],mat->ref_phi[a],eta,phi);
-  float dEta_t = fabs(mat->ref_eta[a]-eta);
-  if ( (match_dR && mat->deltaR.size() == a) ||
-       (!match_dR && mat->deltaEta.size() ==a) ) {
+  if (mat->deltaR.size() == a) {
       mat->deltaR.push_back(dR_t);
-      mat->deltaEta.push_back(dEta_t);
       mat->cand_eta.push_back(eta);
-      mat->cand_pt.push_back(pt);
       mat->cand_phi.push_back(phi);
-      mat->cand_chg.push_back(chg);
-  } else if ( (match_dR && dR_t < mat->deltaR[a]) ||
-              (!match_dR && dEta_t < mat->deltaEta[a]) ) {
+      mat->cand_idx.push_back(b);
+  } else if (dR_t < mat->deltaR[a]) {
       mat->deltaR[a] = dR_t;
-      mat->deltaEta[a] = dEta_t;
       mat->cand_eta[a] = eta;
-      mat->cand_pt[a] = pt;
       mat->cand_phi[a] = phi;
-      mat->cand_chg[a] = chg;
+      mat->cand_idx[a] = b;
   }
+
   return;
 }
 
+
 // Muon id cuts used for Quakonia analysis
-bool isMuInAcc(float eta, float pt){
-  return ( fabs(eta) < 2.4 &&
-         ( (fabs(eta) < 1.0 && pt >= 3.4) ||
-            (1.0 <= fabs(eta) && fabs(eta) < 1.5 && pt >= 5.8-2.4*fabs(eta)) ||
-            (1.5 <= fabs(eta) && pt >= 3.3667-7.0/9.0*fabs(eta)) ) 
-         );
+bool isMuInAcc(FLAG *flag, float eta, float pt){
+  if (flag->doGlb || flag->doGen)
+    return ( fabs(eta) < 2.4 &&
+           ( (fabs(eta) < 1.0 && pt >= 3.4) ||
+              (1.0 <= fabs(eta) && fabs(eta) < 1.5 && pt >= 5.8-2.4*fabs(eta)) ||
+              (1.5 <= fabs(eta) && pt >= 3.3667-7.0/9.0*fabs(eta)) ) 
+           );
+  if (flag->doSta)
+    return (fabs(eta) < 2.4);
 }
 
-bool isValidMu(MUTREE *mutree, int idx) {
-    return (isMuInAcc(mutree->eta[idx], mutree->pt[idx]) &&
+bool isValidMu(FLAG *flag,MUTREE *mutree, int idx) {
+    return (isMuInAcc(flag,mutree->eta[idx], mutree->pt[idx]) &&
             mutree->nTrkFound[idx] > 10 &&
             mutree->glbChi2_ndof[idx] < 20.0 &&
             mutree->trkChi2_ndof[idx] < 4.0 &&

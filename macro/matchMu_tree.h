@@ -55,6 +55,29 @@ public :
    Float_t         Sta_phi[nmax];   //[Sta_nptl]
    Float_t         Sta_dxy[nmax];   //[Sta_nptl]
    Float_t         Sta_dz[nmax];   //[Sta_nptl]
+   Int_t           NohMuL2;
+   Float_t         ohMuL2Pt[nmax];   //[NohMuL2]
+   Float_t         ohMuL2Phi[nmax];   //[NohMuL2]
+   Float_t         ohMuL2Eta[nmax];   //[NohMuL2]
+   Int_t           ohMuL2Chg[nmax];   //[NohMuL2]
+   Float_t         ohMuL2PtErr[nmax];   //[NohMuL2]
+   Int_t           ohMuL2Iso[nmax];   //[NohMuL2]
+   Float_t         ohMuL2Dr[nmax];   //[NohMuL2]
+   Float_t         ohMuL2Dz[nmax];   //[NohMuL2]
+   Int_t           NohMuL3;
+   Float_t         ohMuL3Pt[nmax];   //[NohMuL3]
+   Float_t         ohMuL3Phi[nmax];   //[NohMuL3]
+   Float_t         ohMuL3Eta[nmax];   //[NohMuL3]
+   Int_t           ohMuL3Chg[nmax];   //[NohMuL3]
+   Float_t         ohMuL3PtErr[nmax];   //[NohMuL3]
+   Int_t           ohMuL3Iso[nmax];   //[NohMuL3]
+   Float_t         ohMuL3Dr[nmax];   //[NohMuL3]
+   Float_t         ohMuL3Dz[nmax];   //[NohMuL3]
+   Float_t         ohMuL3VtxZ[nmax];
+   Int_t           ohMuL3Nhits[nmax];
+   Float_t         ohMuL3NormChi2[nmax];
+   Int_t           ohMuL3Ntrackerhits[nmax];
+   Int_t           ohMuL3Nmuonhits[nmax];
 
    // List of branches
    TBranch        *b_run;   //!
@@ -96,47 +119,52 @@ public :
    TBranch        *b_Sta_phi;   //!
    TBranch        *b_Sta_dxy;   //!
    TBranch        *b_Sta_dz;   //!
+   TBranch        *b_NohMuL2;   //!
+   TBranch        *b_ohMuL2Pt;   //!
+   TBranch        *b_ohMuL2Phi;   //!
+   TBranch        *b_ohMuL2Eta;   //!
+   TBranch        *b_ohMuL2Chg;   //!
+   TBranch        *b_ohMuL2PtErr;   //!
+   TBranch        *b_ohMuL2Iso;   //!
+   TBranch        *b_ohMuL2Dr;   //!
+   TBranch        *b_ohMuL2Dz;   //!
+   TBranch        *b_NohMuL3;
+   TBranch        *b_ohMuL3Pt;
+   TBranch        *b_ohMuL3Phi;
+   TBranch        *b_ohMuL3Eta;
+   TBranch        *b_ohMuL3Chg;
+   TBranch        *b_ohMuL3PtErr;
+   TBranch        *b_ohMuL3Iso;
+   TBranch        *b_ohMuL3Dr;
+   TBranch        *b_ohMuL3Dz;
+   TBranch        *b_ohMuL3VtxZ;
+   TBranch        *b_ohMuL3Nhits;
+   TBranch        *b_ohMuL3NormChi2;
+   TBranch        *b_ohMuL3Ntrackerhits;
+   TBranch        *b_ohMuL3Nmuonhits;
 
-   FriendMuTree(const char *fin="muTree.root", bool castor = false);
+   FriendMuTree(TCastorFile *f, bool castor);
    virtual ~FriendMuTree();
    virtual Int_t    GetEntry(Long64_t entry);
    virtual void     Init(TTree *tree);
-   virtual void     Loop(void);
    virtual void     Show(Long64_t entry = -1);
 };
 
 
 
-FriendMuTree::FriendMuTree(const char *fin, bool castor)
+FriendMuTree::FriendMuTree(TCastorFile *f, bool castor)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
-   string ftmp = "muTree.root";
-   TCastorFile *f;
-   TFile *f2;
    if (castor) {
-     if (fin == 0) {
-       f = (TCastorFile*)gROOT->GetListOfFiles()->FindObject(ftmp.c_str());
-     } else { ftmp = fin; }
+     if (f == 0) { std::cout << "Cannot load file\n"; }
 
-     f = new TCastorFile(fin);
-     if (!f) { std::cout << "Cannot load root file: " << ftmp << "\n"; }
-     
+//     fChain = (TTree*)f->Get("analysis/HLTMuTree");
      fChain = (TTree*)f->Get("hltMuTree/HLTMuTree");
-     if (!fChain) { std::cout << "Cannot load tree in : " << ftmp << "\n"; }
+     if (!fChain) { std::cout << "Cannot load HLTMuTree\n"; }
      else Init(fChain);
    } else {
-     if (fin == 0) {
-       f2 = (TFile*)gROOT->GetListOfFiles()->FindObject(ftmp.c_str());
-     } else { ftmp = fin; }
-     std::cout << fin << std::endl;
-
-     f2 = new TFile(fin);
-     if (!f2) { std::cout << "Cannot load root file: " << fin << "\n"; }
-     
-     fChain = (TTree*)f2->Get("hltMuTree/HLTMuTree");
-     if (!fChain) { std::cout << "Cannot load tree in : " << fin << "\n"; }
-     else Init(fChain);
+     std::cout << "Cannot load HLTMuTree\n";
    }
 }
 
@@ -208,6 +236,29 @@ void FriendMuTree::Init(TTree *tree)
    fChain->SetBranchAddress("Sta_phi", Sta_phi, &b_Sta_phi);
    fChain->SetBranchAddress("Sta_dxy", Sta_dxy, &b_Sta_dxy);
    fChain->SetBranchAddress("Sta_dz", Sta_dz, &b_Sta_dz);
+   fChain->SetBranchAddress("NohMuL2", &NohMuL2, &b_NohMuL2);
+   fChain->SetBranchAddress("ohMuL2Pt", &ohMuL2Pt, &b_ohMuL2Pt);
+   fChain->SetBranchAddress("ohMuL2Phi", &ohMuL2Phi, &b_ohMuL2Phi);
+   fChain->SetBranchAddress("ohMuL2Eta", &ohMuL2Eta, &b_ohMuL2Eta);
+   fChain->SetBranchAddress("ohMuL2Chg", &ohMuL2Chg, &b_ohMuL2Chg);
+   fChain->SetBranchAddress("ohMuL2PtErr", &ohMuL2PtErr, &b_ohMuL2PtErr);
+   fChain->SetBranchAddress("ohMuL2Iso", &ohMuL2Iso, &b_ohMuL2Iso);
+   fChain->SetBranchAddress("ohMuL2Dr", &ohMuL2Dr, &b_ohMuL2Dr);
+   fChain->SetBranchAddress("ohMuL2Dz", &ohMuL2Dz, &b_ohMuL2Dz);
+   fChain->SetBranchAddress("NohMuL3",&NohMuL3,&b_NohMuL3);
+   fChain->SetBranchAddress("ohMuL3Pt",&ohMuL3Pt,&b_ohMuL3Pt);
+   fChain->SetBranchAddress("ohMuL3Phi",&ohMuL3Phi,&b_ohMuL3Phi);
+   fChain->SetBranchAddress("ohMuL3Eta",&ohMuL3Eta,&b_ohMuL3Eta);
+   fChain->SetBranchAddress("ohMuL3Chg",&ohMuL3Chg,&b_ohMuL3Chg);
+   fChain->SetBranchAddress("ohMuL3PtErr",&ohMuL3PtErr,&b_ohMuL3PtErr);
+   fChain->SetBranchAddress("ohMuL3Iso",&ohMuL3Iso,&b_ohMuL3Iso);
+   fChain->SetBranchAddress("ohMuL3Dr",&ohMuL3Dr,&b_ohMuL3Dr);
+   fChain->SetBranchAddress("ohMuL3Dz",&ohMuL3Dz,&b_ohMuL3Dz);
+   fChain->SetBranchAddress("ohMuL3VtxZ",&ohMuL3VtxZ,&b_ohMuL3VtxZ);
+   fChain->SetBranchAddress("ohMuL3Nhits",&ohMuL3Nhits,&b_ohMuL3Nhits);
+   fChain->SetBranchAddress("ohMuL3NormChi2",&ohMuL3NormChi2,&b_ohMuL3NormChi2);
+   fChain->SetBranchAddress("ohMuL3Ntrackerhits",&ohMuL3Ntrackerhits,&b_ohMuL3Ntrackerhits);
+   fChain->SetBranchAddress("ohMuL3Nmuonhits",&ohMuL3Nmuonhits,&b_ohMuL3Nmuonhits);
 }
 
 void FriendMuTree::Show(Long64_t entry)
@@ -216,17 +267,6 @@ void FriendMuTree::Show(Long64_t entry)
 // If entry is not specified, print current entry
    if (!fChain) return;
    fChain->Show(entry);
-}
-
-void FriendMuTree::Loop(void) {
-  if (fChain == 0) {std::cout << "Tree cannot be read. Something is wrong." << std::endl; return;}
-  
-  fChain = (TTree*)gDirectory->Get("hltMuTree/HLTMuTree");
-  Long64_t nentries = fChain->GetEntriesFast();
-
-  for (Long64_t ent=0; ent<nentries; ent++) {
-    fChain->GetEntry(ent);
-    }
 }
 
 
@@ -261,7 +301,6 @@ public :
    Int_t           ohMuL2Iso[nmax];   //[NohMuL2]
    Float_t         ohMuL2Dr[nmax];   //[NohMuL2]
    Float_t         ohMuL2Dz[nmax];   //[NohMuL2]
-   Int_t           ohMuL2L1idx[nmax];   //[NohMuL2]
    Int_t           NohMuL3;
    Float_t         ohMuL3Pt[nmax];   //[NohMuL3]
    Float_t         ohMuL3Phi[nmax];   //[NohMuL3]
@@ -276,7 +315,6 @@ public :
    Float_t         ohMuL3NormChi2[nmax];
    Int_t           ohMuL3Ntrackerhits[nmax];
    Int_t           ohMuL3Nmuonhits[nmax];
-   Int_t           ohMuL3L2idx[nmax];   //[NohMuL3]
    Int_t           NL1Mu;
    Float_t         L1MuPt[nmax];   //[NL1Mu]
    Float_t         L1MuE[nmax];   //[NL1Mu]
@@ -300,6 +338,21 @@ public :
    Int_t           Bx;
    Int_t           Orbit;
    Float_t         AvgInstLumi;
+   Int_t           HLT_HIL3DoubleMuOpen;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_SS;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2;
+   Int_t           HLT_HIL2DoubleMu0_NHitQ;
+   Int_t           HLT_HIL2DoubleMu0_L1HighQL2NHitQ;
+   Int_t           HLT_HIL2DoubleMu0;
+   Int_t           HLT_HIL2DoubleMu3;
+   Int_t           HLT_HIL1DoubleMuOpen;
+   Int_t           HLT_HIL1DoubleMu0_HighQ;
+   Int_t           HLT_HIL3Mu3;
+   Int_t           HLT_HIL2Mu3;
+   Int_t           HLT_HIL2Mu7;
+   Int_t           HLT_HIL2Mu15;
    Int_t           HLT_HIL3DoubleMuOpen_v1;
    Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1;
    Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_v1;
@@ -361,7 +414,6 @@ public :
    TBranch        *b_ohMuL2Iso;   //!
    TBranch        *b_ohMuL2Dr;   //!
    TBranch        *b_ohMuL2Dz;   //!
-   TBranch        *b_ohMuL2L1idx;   //!
    TBranch        *b_NohMuL3;
    TBranch        *b_ohMuL3Pt;
    TBranch        *b_ohMuL3Phi;
@@ -376,7 +428,6 @@ public :
    TBranch        *b_ohMuL3NormChi2;
    TBranch        *b_ohMuL3Ntrackerhits;
    TBranch        *b_ohMuL3Nmuonhits;
-   TBranch        *b_ohMuL3L2idx;
    TBranch        *b_NL1Mu;   //!
    TBranch        *b_L1MuPt;   //!
    TBranch        *b_L1MuE;   //!
@@ -400,6 +451,21 @@ public :
    TBranch        *b_Bx;   //!
    TBranch        *b_Orbit;   //!
    TBranch        *b_AvgInstLumi;   //!
+   TBranch        *b_HLT_HIL3DoubleMuOpen;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_SS;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2;
+   TBranch        *b_HLT_HIL2DoubleMu0_NHitQ;
+   TBranch        *b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ;
+   TBranch        *b_HLT_HIL2DoubleMu0;   //!
+   TBranch        *b_HLT_HIL2DoubleMu3;   //!
+   TBranch        *b_HLT_HIL1DoubleMuOpen;
+   TBranch        *b_HLT_HIL1DoubleMu0_HighQ;
+   TBranch        *b_HLT_HIL3Mu3;
+   TBranch        *b_HLT_HIL2Mu3;   //!
+   TBranch        *b_HLT_HIL2Mu7;   //!
+   TBranch        *b_HLT_HIL2Mu15;   //!
    TBranch        *b_HLT_HIL3DoubleMuOpen_v1;
    TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1;
    TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v1;
@@ -429,49 +495,30 @@ public :
    TBranch        *b_L1_SingleMuBeamHalo;   //!
    TBranch        *b_L1_SingleMuOpen;   //!
 
-   HltTree(const char *fin="hltana.root", bool castor = false);
+   HltTree(TCastorFile *f, bool castor = true);
    virtual ~HltTree();
    virtual Int_t    GetEntry(Long64_t entry);
    virtual bool     Exceed();
    virtual void     Init(TTree *tree);
-   virtual void     Loop();
    virtual void     Show(Long64_t entry = -1);
 };
 
-HltTree::HltTree(const char *fin, bool castor)
+HltTree::HltTree(TCastorFile *f, bool castor)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
-   string ftmp = "hltana.root";
-   TCastorFile *f;
-   TFile *f2;
 
    if (castor) {
-     if (fin == 0) {
-        f = (TCastorFile*)gROOT->GetListOfFiles()->FindObject(ftmp.c_str());
-     } else { ftmp = fin; }
+     if (f == 0) { std::cout << "Cannot load file\n"; }
 
-     f = new TCastorFile(fin);
-     if (!f) { std::cout << "Cannot load root file: " << ftmp << "\n"; }
-
+//     fChain = (TTree*)f->Get("hltanalysis/HltTree");
      fChain = (TTree*)f->Get("hltana/HltTree");
-     if (!fChain) { std::cout << "Cannot load tree in : " << ftmp << "\n"; }
+     if (!fChain) { std::cout << "Cannot load HltTree\n"; }
      else Init(fChain);
    } else {
-
-       if (fin == 0) {
-         f2 = (TFile*)gROOT->GetListOfFiles()->FindObject(ftmp.c_str());
-       } else { ftmp = fin; }
-       std::cout << fin << std::endl;
-
-       f2 = new TFile(fin);
-       if (!f2) { std::cout << "Cannot load root file: " << fin << "\n"; }
-
-       fChain = (TTree*)f2->Get("hltana/HltTree");
-       if (!fChain) { std::cout << "Cannot load tree in : " << fin << "\n"; }
-       else Init(fChain);
-
+     std::cout << "Cannot load HltTree\n";
    }
+
 }
 
 HltTree::~HltTree()
@@ -537,7 +584,6 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("ohMuL2Iso", &ohMuL2Iso, &b_ohMuL2Iso);
    fChain->SetBranchAddress("ohMuL2Dr", &ohMuL2Dr, &b_ohMuL2Dr);
    fChain->SetBranchAddress("ohMuL2Dz", &ohMuL2Dz, &b_ohMuL2Dz);
-   fChain->SetBranchAddress("ohMuL2L1idx", &ohMuL2L1idx, &b_ohMuL2L1idx);
    fChain->SetBranchAddress("NohMuL3",&NohMuL3,&b_NohMuL3);
    fChain->SetBranchAddress("ohMuL3Pt",&ohMuL3Pt,&b_ohMuL3Pt);
    fChain->SetBranchAddress("ohMuL3Phi",&ohMuL3Phi,&b_ohMuL3Phi);
@@ -552,7 +598,6 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("ohMuL3NormChi2",&ohMuL3NormChi2,&b_ohMuL3NormChi2);
    fChain->SetBranchAddress("ohMuL3Ntrackerhits",&ohMuL3Ntrackerhits,&b_ohMuL3Ntrackerhits);
    fChain->SetBranchAddress("ohMuL3Nmuonhits",&ohMuL3Nmuonhits,&b_ohMuL3Nmuonhits);
-   fChain->SetBranchAddress("ohMuL3L2idx",&ohMuL3L2idx,&b_ohMuL3L2idx);
    fChain->SetBranchAddress("NL1Mu", &NL1Mu, &b_NL1Mu);
    fChain->SetBranchAddress("L1MuPt", &L1MuPt, &b_L1MuPt);
    fChain->SetBranchAddress("L1MuE", &L1MuE, &b_L1MuE);
@@ -576,6 +621,21 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("Bx", &Bx, &b_Bx);
    fChain->SetBranchAddress("Orbit", &Orbit, &b_Orbit);
    fChain->SetBranchAddress("AvgInstLumi", &AvgInstLumi, &b_AvgInstLumi);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen",&HLT_HIL3DoubleMuOpen,&b_HLT_HIL3DoubleMuOpen);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy",&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS",&HLT_HIL3DoubleMuOpen_Mgt2_OS,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_SS",&HLT_HIL3DoubleMuOpen_Mgt2_SS,&b_HLT_HIL3DoubleMuOpen_Mgt2_SS);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2",&HLT_HIL3DoubleMuOpen_Mgt2,&b_HLT_HIL3DoubleMuOpen_Mgt2);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_NHitQ",&HLT_HIL2DoubleMu0_NHitQ,&b_HLT_HIL2DoubleMu0_NHitQ);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_L1HighQL2NHitQ",&HLT_HIL2DoubleMu0_L1HighQL2NHitQ,&b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0",&HLT_HIL2DoubleMu0,&b_HLT_HIL2DoubleMu0);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu3",&HLT_HIL2DoubleMu3,&b_HLT_HIL2DoubleMu3);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMuOpen",&HLT_HIL1DoubleMuOpen,&b_HLT_HIL1DoubleMuOpen);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMu0_HighQ",&HLT_HIL1DoubleMu0_HighQ,&b_HLT_HIL1DoubleMu0_HighQ);
+   fChain->SetBranchAddress("HLT_HIL3Mu3",&HLT_HIL3Mu3,&b_HLT_HIL3Mu3);
+   fChain->SetBranchAddress("HLT_HIL2Mu3",&HLT_HIL2Mu3,&b_HLT_HIL2Mu3);
+   fChain->SetBranchAddress("HLT_HIL2Mu7",&HLT_HIL2Mu7,&b_HLT_HIL2Mu7);
+   fChain->SetBranchAddress("HLT_HIL2Mu15",&HLT_HIL2Mu15,&b_HLT_HIL2Mu15);
    fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_v1",&HLT_HIL3DoubleMuOpen_v1,&b_HLT_HIL3DoubleMuOpen_v1);
    fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1",&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1);
    fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",&HLT_HIL3DoubleMuOpen_Mgt2_OS_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v1);
@@ -606,14 +666,6 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("L1_SingleMuOpen", &L1_SingleMuOpen, &b_L1_SingleMuOpen);
 }
 
-void HltTree::Loop()
-{
-   if (fChain == 0) return;
-   Long64_t nentries = fChain->GetEntries();
-   for (Long64_t jentry=0; jentry<nentries;jentry++) {
-      fChain->GetEntry(jentry);
-   }
-}
 
 void HltTree::Show(Long64_t entry)
 {

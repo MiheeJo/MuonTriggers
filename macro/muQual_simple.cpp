@@ -199,8 +199,10 @@ int muQual_simple() {
   TCanvas *canv = new TCanvas("canv","canv",800,600);
   canv->Draw();
   SingleGlb_Etapt_2010->Draw("colz");
-  SingleGlb_Etapt_2011->Draw("colz,same");
-  canv->SaveAs("SingleGlb_Etapt.png");
+  canv->SaveAs("SingleGlb_Etapt_2010.png");
+  canv->Clear();  canv->Draw();
+  SingleGlb_Etapt_2011->Draw("colz");
+  canv->SaveAs("SingleGlb_Etapt_2011.png");
 
   return 0;
 }

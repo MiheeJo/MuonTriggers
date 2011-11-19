@@ -25,8 +25,7 @@ int muQual_simple() {
   FLAG *flag = new FLAG;
   flag->doSta = true;
   flag->doGlb = false;
-  flag->match_dR = false;
-  flag->fdir = "/castor/cern.ch/user/m/miheejo/openHLT/cms442p5/HICorePhysics_Skim_MinimumBias_RAW/openhlt_2010HICorePhysicsMB";
+  flag->fdir = "/castor/cern.ch/user/m/miheejo/openHLT/cms442p5/HICorePhysics_Skim_MinimumBias_RAW/openhlt_2010HICorePhysicsMB.root";
 
   // Check trigger list
   vector<string> *triglist = new vector<string>;
@@ -40,7 +39,6 @@ int muQual_simple() {
   triglist->push_back("HLT_HIL2Mu3_NHitQ_v1");
   triglist->push_back("HLT_HIL3Mu3_v1");
 
-
   // Histograms
   TH2F *SingleGlb_Etapt = new TH2F("SingleGlb_etapt","SingleGlb_etapt;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,PT,0,20);
 
@@ -53,27 +51,25 @@ int muQual_simple() {
   MUTREE        *muTree = new MUTREE;
 
 
+  const int ntrig = triglist.size();
+  int trig[ntrig] = {0};                                // Trigger bits for muons
   open_tree = ohTree->fChain;                           // Get TTree for trigger bits
-  open_tree->SetBranchAddress(flag->trigPath.c_str(),&flag->trig);    // SetBranchAddress for trigger bits
+  for (unsigned int i=0; i < triglist.size(); i++) {
+    string tmptrig = triglist[i]->c_str();
+    open_tree->SetBranchAddress(tmptrig.c_str(),trig[i]);    // SetBranchAddress for trigger bits
+  }
+
 
   muon_tree = mutree->fChain;                           // Get TTree for muon objects
   muon_tree->SetBranchAddress("Run",&muTree->run);
   muon_tree->SetBranchAddress("Event",&muTree->event);
-  if (flag->doGen && !flag->doSta && !flag->doGlb) {
-   muon_tree->SetBranchAddress("Gen_eta",muTree->eta);
-   muon_tree->SetBranchAddress("Gen_pt",muTree->pt);
-   muon_tree->SetBranchAddress("Gen_phi",muTree->phi);
-   muon_tree->SetBranchAddress("Gen_nptl",&muTree->nptl);
-   muon_tree->SetBranchAddress("Gen_pid",muTree->charge);
-   muon_tree->SetBranchAddress("Gen_mom",muTree->mom);
-   muon_tree->SetBranchAddress("Gen_status",muTree->status);
-  } else if (flag->doSta && !flag->doGen && !flag->doGlb) {
+  if (flag->doSta && !flag->doGlb) {
    muon_tree->SetBranchAddress("Sta_eta",muTree->eta);
    muon_tree->SetBranchAddress("Sta_pt",muTree->pt);
    muon_tree->SetBranchAddress("Sta_phi",muTree->phi);
    muon_tree->SetBranchAddress("Sta_nptl",&muTree->nptl);
    muon_tree->SetBranchAddress("Sta_charge",muTree->charge);
-  } else if (flag->doGlb && !flag->doGen && !flag->doSta) {
+  } else if (flag->doGlb && !flag->doSta) {
    muon_tree->SetBranchAddress("Glb_eta",muTree->eta);
    muon_tree->SetBranchAddress("Glb_pt",muTree->pt);
    muon_tree->SetBranchAddress("Glb_phi",muTree->phi);
@@ -101,7 +97,14 @@ int muQual_simple() {
     open_tree->GetEntry(i);
 
     ////////// Check muon trigger list
-    
+    flag->trig = false;
+    for (int tidx=0; tidx<ntrig; tidx++) {
+      if (trig[tidx]) {         // At least one of the muon trigger is fired.
+        flag->trig = true;
+        break;
+      }
+    }
+    if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!
     
     ////////// Load muons and fill up histograms
     for (int a=0; a < muTree->nptl; a++) {

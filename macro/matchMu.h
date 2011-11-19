@@ -68,7 +68,7 @@ FLAG::FLAG(void) {
   doSim = false;
   doSta = false;
   doGlb = true;
-  match_dR = true;
+  match_dR = false;
   dCut = 0.4;
   jpsi = true;
   dimuTrig = true;
@@ -176,14 +176,20 @@ void matching (MATCH *mat, unsigned int a, unsigned int b, float eta, float phi)
 
 // Muon id cuts used for Quakonia analysis
 bool isMuInAcc(FLAG *flag, float eta, float pt){
-  if (flag->doGlb || flag->doGen)
-    return ( fabs(eta) < 2.4 &&
+  bool value = false;
+  if (flag->doGlb || flag->doGen) {
+    if ( fabs(eta) < 2.4 &&
            ( (fabs(eta) < 1.0 && pt >= 3.4) ||
               (1.0 <= fabs(eta) && fabs(eta) < 1.5 && pt >= 5.8-2.4*fabs(eta)) ||
               (1.5 <= fabs(eta) && pt >= 3.3667-7.0/9.0*fabs(eta)) ) 
-           );
-  if (flag->doSta)
-    return (fabs(eta) < 2.4);
+           )
+      value = true;
+  }
+  if (flag->doSta) {
+    if (fabs(eta) < 2.4) value = true;
+  }
+
+  return value;
 }
 
 bool isValidMu(FLAG *flag,MUTREE *mutree, int idx) {

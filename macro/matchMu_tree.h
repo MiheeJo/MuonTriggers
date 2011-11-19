@@ -298,7 +298,6 @@ public :
    Float_t         ohMuL2Eta[nmax];   //[NohMuL2]
    Int_t           ohMuL2Chg[nmax];   //[NohMuL2]
    Float_t         ohMuL2PtErr[nmax];   //[NohMuL2]
-   Int_t           ohMuL2Iso[nmax];   //[NohMuL2]
    Float_t         ohMuL2Dr[nmax];   //[NohMuL2]
    Float_t         ohMuL2Dz[nmax];   //[NohMuL2]
    Int_t           NohMuL3;
@@ -307,7 +306,6 @@ public :
    Float_t         ohMuL3Eta[nmax];   //[NohMuL3]
    Int_t           ohMuL3Chg[nmax];   //[NohMuL3]
    Float_t         ohMuL3PtErr[nmax];   //[NohMuL3]
-   Int_t           ohMuL3Iso[nmax];   //[NohMuL3]
    Float_t         ohMuL3Dr[nmax];   //[NohMuL3]
    Float_t         ohMuL3Dz[nmax];   //[NohMuL3]
    Float_t         ohMuL3VtxZ[nmax];
@@ -411,7 +409,6 @@ public :
    TBranch        *b_ohMuL2Eta;   //!
    TBranch        *b_ohMuL2Chg;   //!
    TBranch        *b_ohMuL2PtErr;   //!
-   TBranch        *b_ohMuL2Iso;   //!
    TBranch        *b_ohMuL2Dr;   //!
    TBranch        *b_ohMuL2Dz;   //!
    TBranch        *b_NohMuL3;
@@ -420,7 +417,6 @@ public :
    TBranch        *b_ohMuL3Eta;
    TBranch        *b_ohMuL3Chg;
    TBranch        *b_ohMuL3PtErr;
-   TBranch        *b_ohMuL3Iso;
    TBranch        *b_ohMuL3Dr;
    TBranch        *b_ohMuL3Dz;
    TBranch        *b_ohMuL3VtxZ;
@@ -581,7 +577,6 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("ohMuL2Eta", &ohMuL2Eta, &b_ohMuL2Eta);
    fChain->SetBranchAddress("ohMuL2Chg", &ohMuL2Chg, &b_ohMuL2Chg);
    fChain->SetBranchAddress("ohMuL2PtErr", &ohMuL2PtErr, &b_ohMuL2PtErr);
-   fChain->SetBranchAddress("ohMuL2Iso", &ohMuL2Iso, &b_ohMuL2Iso);
    fChain->SetBranchAddress("ohMuL2Dr", &ohMuL2Dr, &b_ohMuL2Dr);
    fChain->SetBranchAddress("ohMuL2Dz", &ohMuL2Dz, &b_ohMuL2Dz);
    fChain->SetBranchAddress("NohMuL3",&NohMuL3,&b_NohMuL3);
@@ -590,7 +585,6 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("ohMuL3Eta",&ohMuL3Eta,&b_ohMuL3Eta);
    fChain->SetBranchAddress("ohMuL3Chg",&ohMuL3Chg,&b_ohMuL3Chg);
    fChain->SetBranchAddress("ohMuL3PtErr",&ohMuL3PtErr,&b_ohMuL3PtErr);
-   fChain->SetBranchAddress("ohMuL3Iso",&ohMuL3Iso,&b_ohMuL3Iso);
    fChain->SetBranchAddress("ohMuL3Dr",&ohMuL3Dr,&b_ohMuL3Dr);
    fChain->SetBranchAddress("ohMuL3Dz",&ohMuL3Dz,&b_ohMuL3Dz);
    fChain->SetBranchAddress("ohMuL3VtxZ",&ohMuL3VtxZ,&b_ohMuL3VtxZ);

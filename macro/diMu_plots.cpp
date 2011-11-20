@@ -173,14 +173,14 @@ int diMu_plots() {
 			if(!isMuInAcc(flag,muTree_2010->eta[b], muTree_2010->pt[b])) continue;    //Check sta muons are within acceptance range
 		  }
 
-          mu1.SetPtEtaPhiM(muTree_2010->pt[a],muTree_2010->eta[a],muTree_2010->phi[a],Mmu);
+			mu1.SetPtEtaPhiM(muTree_2010->pt[a],muTree_2010->eta[a],muTree_2010->phi[a],Mmu);
 		  mu2.SetPtEtaPhiM(muTree_2010->pt[b],muTree_2010->eta[b],muTree_2010->phi[b],Mmu);
 
           dimu = mu1 + mu2;
 
-		  DoubleGlb_Ypt_2010->Fill(dimu.Y(),dimu.Pt());
+		  DoubleGlb_Ypt_2010->Fill(dimu.Rapidity(),dimu.Pt());
 		  DoubleGlb_Mass_2010->Fill(dimu.M());
-		  DoubleGlb_Y_2010->Fill(dimu.Y());
+		  DoubleGlb_Y_2010->Fill(dimu.Rapidity());
 		  DoubleGlb_Pt_2010->Fill(dimu.Pt());
 		  DoubleGlb_Phi_2010->Fill(dimu.Phi());
 		  
@@ -229,9 +229,9 @@ int diMu_plots() {
 
           dimu = mu1 + mu2;
 
-		  DoubleGlb_Ypt_2011->Fill(dimu.Y(),dimu.Pt());
+		  DoubleGlb_Ypt_2011->Fill(dimu.Rapidity(),dimu.Pt());
 		  DoubleGlb_Mass_2011->Fill(dimu.M());
-		  DoubleGlb_Y_2011->Fill(dimu.Y());
+		  DoubleGlb_Y_2011->Fill(dimu.Rapidity());
 		  DoubleGlb_Pt_2011->Fill(dimu.Pt());
 		  DoubleGlb_Phi_2011->Fill(dimu.Phi());
 		  

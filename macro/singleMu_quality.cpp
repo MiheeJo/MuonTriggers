@@ -14,8 +14,6 @@ using namespace std;
 
 int singleMu_quality() {
 
-	cout << "A" << endl;
-
   // Parameters  
   FLAG *flag = new FLAG;
   flag->doSta = false;
@@ -49,8 +47,6 @@ int singleMu_quality() {
   TH1F *SingleGlb_Pt_2010 = new TH1F("SingleGlb_pt_2010","SingleGlb_pt_2010;single mu p_{T}",PT,0,20);
   TH1F *SingleGlb_Pt_2011 = new TH1F("SingleGlb_pt_2011","SingleGlb_pt_2011;single mu p_{T}",PT,0,20);
 
-	cout << "B" << endl;
-
 	TH2F *SingleGlb_nValMuHits_eta_2010 = new TH2F("SingleGlb_nValMuHits_eta_2010","SingleGlb_nValMuHits_eta_2010;nValMuHits;#eta",55,0,55,ETA,-2.4,2.4);
   TH2F *SingleGlb_nValTrkHits_eta_2010 = new TH2F("SingleGlb_nValTrkHits_eta_2010","SingleGlb_nValTrkHits_eta_2010;nValTrkHits;#eta",27,0,27,ETA,-2.4,2.4);
   TH2F *SingleGlb_glbChi2_ndof_eta_2010 = new TH2F("SingleGlb_glbChi2_ndof_eta_2010","SingleGlb_glbChi2_ndof_eta_2010;glbChi2_ndof;#eta",100,0,25,ETA,-2.4,2.4);
@@ -83,8 +79,6 @@ int singleMu_quality() {
   TH2F *SingleGlb_trkDz_eta_2011 = new TH2F("SingleGlb_trkDz_eta_2011","SingleGlb_trkDz_eta_2011;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2011 = new TH2F("SingleGlb_trkDxy_eta_2011","SingleGlb_trkDxy_eta_2011;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
-	cout << "C" << endl;
-	
 	TH2F *SingleGlb_nValMuHits_phi_2011 = new TH2F("SingleGlb_nValMuHits_phi_2011","SingleGlb_nValMuHits_phi_2011;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2011 = new TH2F("SingleGlb_nValTrkHits_phi_2011","SingleGlb_nValTrkHits_phi_2011;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
   TH2F *SingleGlb_glbChi2_ndof_phi_2011 = new TH2F("SingleGlb_glbChi2_ndof_phi_2011","SingleGlb_glbChi2_ndof_phi_2011;glbChi2_ndof;#phi",100,0,25,PHI,-PI,PI);
@@ -116,8 +110,6 @@ int singleMu_quality() {
   TH2F *SingleGlb_pixLayerWMeas_phi_2010_qual = new TH2F("SingleGlb_pixLayerWMeas_phi_2010_qual","SingleGlb_pixLayerWMeas_phi_2010_qual;pixLayerWMeas;#phi",5,0,5,PHI,-PI,PI);
   TH2F *SingleGlb_trkDz_phi_2010_qual = new TH2F("SingleGlb_trkDz_phi_2010_qual","SingleGlb_trkDz_phi_2010_qual;trkDz;#phi",100,0,2,PHI,-PI,PI);
   TH2F *SingleGlb_trkDxy_phi_2010_qual = new TH2F("SingleGlb_trkDxy_phi_2010_qual","SingleGlb_trkDxy_phi_2010_qual;trkDxy;#phi",100,0,2,PHI,-PI,PI);
-
-	cout << "D" << endl;
 
 	TH1F *SingleGlb_nValMuHits_2010_qual = new TH1F("SingleGlb_nValMuHits_2010_qual","SingleGlb_nValMuHits_2010_qual;nValMuHits",55,0,55);
   TH1F *SingleGlb_nValTrkHits_2010_qual = new TH1F("SingleGlb_nValTrkHits_2010_qual","SingleGlb_nValTrkHits_2010_qual;nValTrkHits",27,0,27);
@@ -186,8 +178,6 @@ int singleMu_quality() {
   TTree         *open_tree_2011;                             // Hold HltTree
   MUTREE        *muTree_2011 = new MUTREE;
 
-	cout << "F" << endl;
-
   const unsigned int ntrig = triglist.size();
   int trig_2010[ntrig];                                // Trigger bits for muons
   int trig_2011[ntrig];                                // Trigger bits for muons
@@ -249,8 +239,6 @@ int singleMu_quality() {
     return -1;
   }
 
-	cout << "G" << endl;
-
   int nevt_2010=0;                  // # of events that has at least 1 muon trigger fired
   int nevt_2010_qual=0;                  // # of events that has at least 1 muon trigger fired
   // Loop over trees over 2010 trees
@@ -264,7 +252,7 @@ int singleMu_quality() {
     bool qual=false;
     ////////// Load muons and fill up histograms
     for (int a=0; a < muTree_2010->nptl; a++) {
-	  if (flag->doGlb) {
+			if (flag->doGlb) {
         if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
       } else if (flag->doSta) {
         if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check sta muons are within acceptance range
@@ -284,8 +272,6 @@ int singleMu_quality() {
 			SingleGlb_trkDz_eta_2010->Fill(muTree_2010->trkDz[a],muTree_2010->eta[a]);
 			SingleGlb_trkDxy_eta_2010->Fill(muTree_2010->trkDxy[a],muTree_2010->eta[a]);
 
-			cout << "H" << endl;
-			
 			SingleGlb_nValMuHits_phi_2010->Fill(muTree_2010->nValMuHits[a],muTree_2010->phi[a]);
 			SingleGlb_nValTrkHits_phi_2010->Fill(muTree_2010->nValMuHits[a],muTree_2010->phi[a]);
 			SingleGlb_glbChi2_ndof_phi_2010->Fill(muTree_2010->glbChi2_ndof[a],muTree_2010->phi[a]);
@@ -305,7 +291,7 @@ int singleMu_quality() {
       flag->trig = false;
 	  for (unsigned int tidx=0; tidx<ntrig; tidx++) {
 	    if (trig_2010[tidx]) {         // At least one of the muon trigger is fired.
-		  flag->trig = true;
+				flag->trig = true;
 		  break;
 	    }
 	  }
@@ -319,8 +305,6 @@ int singleMu_quality() {
       SingleGlb_Eta_2010_qual->Fill(muTree_2010->eta[a]);
       SingleGlb_Pt_2010_qual->Fill(muTree_2010->pt[a]);
       SingleGlb_Phi_2010_qual->Fill(muTree_2010->phi[a]);
-
-			cout << "I" << endl;
 
 			SingleGlb_nValMuHits_eta_2010_qual->Fill(muTree_2010->nValMuHits[a],muTree_2010->eta[a]);
 			SingleGlb_nValTrkHits_eta_2010_qual->Fill(muTree_2010->nValMuHits[a],muTree_2010->eta[a]);
@@ -452,6 +436,10 @@ int singleMu_quality() {
 
   }
 
+	double numerator_2010 = SingleGlb_Eta_2010->GetEntries();
+	double numerator_2010_qual = SingleGlb_Eta_2010_qual->GetEntries();
+	double numerator_2011 = SingleGlb_Eta_2011->GetEntries();
+	double numerator_2011_qual = SingleGlb_Eta_2011_qual->GetEntries();
   double ratio_2010 = SingleGlb_Eta_2010->GetEntries()/nevt_2010;
   double ratio_2011 = SingleGlb_Eta_2011->GetEntries()/nevt_2011;
   double ratio_2010_qual = SingleGlb_Eta_2010_qual->GetEntries()/nevt_2010_qual;
@@ -475,6 +463,7 @@ int singleMu_quality() {
   lax->SetTextSize(0.04);
 	stringstream title;
 	
+	gStyle->SetOptStat("m");
 	gStyle->SetOptTitle(1);
 
 	canv = new TCanvas("canv","canv",1300,1000);
@@ -496,7 +485,7 @@ int singleMu_quality() {
   SingleGlb_trkDxy_phi_2010_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_phi_2010_qual << " and " << SingleGlb_Eta_2010_qual->GetEntries();
+	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010_qual->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
   title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010_qual;
@@ -525,13 +514,13 @@ int singleMu_quality() {
   SingleGlb_trkDxy_eta_2010_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_eta_2010_qual << " and " << SingleGlb_Eta_2010_qual->GetEntries();
+	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010_qual->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
   title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010_qual;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
 
-	canv->SaveAs("SingleGlb_2d_distributions_eta_qual_2010.pdf");
+	canv->SaveAs("SingleGlb_2d_distributions_eta_2010_qual.pdf");
 
   canv->Clear(); 
 	
@@ -554,10 +543,10 @@ int singleMu_quality() {
   SingleGlb_trkDxy_phi_2010->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_phi_2010 << " and " << SingleGlb_Eta_2010->GetEntries();
+	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
-  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010_qual;
+  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_phi_2010.pdf");
@@ -583,10 +572,10 @@ int singleMu_quality() {
   SingleGlb_trkDxy_eta_2010->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_eta_2010 << " and " << SingleGlb_Eta_2010->GetEntries();
+	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
-  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010_qual;
+  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_eta_2010.pdf");
@@ -612,7 +601,7 @@ int singleMu_quality() {
   SingleGlb_trkDxy_phi_2011_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_phi_2011_qual << " and " << SingleGlb_Eta_2011_qual->GetEntries();
+	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011_qual->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
   title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011_qual;
@@ -641,13 +630,13 @@ int singleMu_quality() {
   SingleGlb_trkDxy_eta_2011_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_eta_2011_qual << " and " << SingleGlb_Eta_2011_qual->GetEntries();
+	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011_qual->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
   title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011_qual;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
 
-	canv->SaveAs("SingleGlb_2d_distributions_eta_qual_2011.pdf");
+	canv->SaveAs("SingleGlb_2d_distributions_eta_2011_qual.pdf");
 
   canv->Clear(); 
 	
@@ -670,10 +659,10 @@ int singleMu_quality() {
   SingleGlb_trkDxy_phi_2011->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_phi_2011 << " and " << SingleGlb_Eta_2011->GetEntries();
+	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
-  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011_qual;
+  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_phi_2011.pdf");
@@ -699,10 +688,10 @@ int singleMu_quality() {
   SingleGlb_trkDxy_eta_2011->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_phi_2011_qual << " and " << SingleGlb_Eta_2011_qual->GetEntries();
+	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
-  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011_qual;
+  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_eta_2011.pdf");
@@ -788,13 +777,13 @@ int singleMu_quality() {
 	
 	canv->cd(8);
 	title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_phi_2010_qual << " and " << SingleGlb_Eta_2010_qual->GetEntries();
+	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010_qual->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
   title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010_qual;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
   title.str("");
-  title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_nValMuHits_phi_2011_qual << " and " << SingleGlb_Eta_2011_qual->GetEntries();
+  title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011_qual->GetEntries();
   lax->DrawLatex(0.0,0.85,title.str().c_str());
   title.str("");
   title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011_qual;
@@ -879,13 +868,13 @@ int singleMu_quality() {
 	
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (within |eta| < 2.4): " << SingleGlb_nValMuHits_phi_2010 << " and " << SingleGlb_Eta_2010->GetEntries();
+	title << "2010 # muons (within |eta| < 2.4): " << SingleGlb_Eta_2010->GetEntries();
   lax->DrawLatex(0.0,0.95,title.str().c_str());
   title.str("");
   title << "2010 # events: " << nevt_2010;
   lax->DrawLatex(0.0,0.90,title.str().c_str());
   title.str("");
-  title << "2011 # muons (within |eta| < 2.4): " << SingleGlb_nValMuHits_phi_2011 << " and " << SingleGlb_Eta_2011->GetEntries();
+  title << "2011 # muons (within |eta| < 2.4): " << SingleGlb_Eta_2011->GetEntries();
   lax->DrawLatex(0.0,0.85,title.str().c_str());
   title.str("");
   title << "2011 # events: " << nevt_2011;

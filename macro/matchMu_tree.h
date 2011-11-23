@@ -491,7 +491,7 @@ public :
    TBranch        *b_L1_SingleMuBeamHalo;   //!
    TBranch        *b_L1_SingleMuOpen;   //!
 
-   HltTree(TCastorFile *f, bool castor = true);
+   HltTree(TCastorFile *f, bool castor = true, string dir = "hltanalysis/HltTree");
    virtual ~HltTree();
    virtual Int_t    GetEntry(Long64_t entry);
    virtual bool     Exceed();
@@ -499,7 +499,7 @@ public :
    virtual void     Show(Long64_t entry = -1);
 };
 
-HltTree::HltTree(TCastorFile *f, bool castor)
+HltTree::HltTree(TCastorFile *f, bool castor, string dir)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
@@ -507,8 +507,8 @@ HltTree::HltTree(TCastorFile *f, bool castor)
    if (castor) {
      if (f == 0) { std::cout << "Cannot load file\n"; }
 
-//     fChain = (TTree*)f->Get("hltanalysis/HltTree");
-     fChain = (TTree*)f->Get("hltana/HltTree");
+//     string strdir = dir + "/HltTree";
+     fChain = (TTree*)f->Get(dir.c_str());
      if (!fChain) { std::cout << "Cannot load HltTree\n"; }
      else Init(fChain);
    } else {

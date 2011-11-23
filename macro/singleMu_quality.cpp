@@ -18,9 +18,11 @@ int singleMu_quality() {
   FLAG *flag = new FLAG;
   flag->doSta = false;
   flag->doGlb = true;
-  
-  string data2010  = "/castor/cern.ch/user/m/miheejo/openHLT/cms442p5/HICorePhysics_Skim_MinimumBias_RAW/openhlt_2010HICorePhysicsMB.root";
-  string data2011  = "/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIData2011_rawToRecoV3_LSF/openhlt_HIData2011_rawToRecoV3_LSF.root";
+
+//  string data2010  = "/castor/cern.ch/user/m/miheejo/openHLT/cms442p5/HICorePhysics_Skim_MinimumBias_RAW/openhlt_2010HICorePhysicsMB.root";
+	string data2010 = "/castor/cern.ch/user/m/miheejo/openHLT/cms413p3/HIRun2010-SDmaker_3SD_1CS_PDHIAllPhysicsZSv2_SD_MuHI-v1/openHLT_rootv1.root";
+//  string data2011  = "/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIData2011_rawToRecoV3_LSF/openhlt_HIData2011_rawToRecoV3_LSF.root";
+  string data2011 = "/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIDiMuon_HIRun2011-PromptReco-v1_RECO/openhlt_PromptReco_181611_181758.root";
 
   // Check trigger list
   vector<string> triglist;
@@ -253,8 +255,10 @@ int singleMu_quality() {
     ////////// Load muons and fill up histograms
     for (int a=0; a < muTree_2010->nptl; a++) {
 			if (flag->doGlb) {
-        if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
-      } else if (flag->doSta) {
+//      if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
+//      if(!isValidMu(flag, muTree_2010, a)) continue;    //Check glb muons are within acceptance range
+//				if (muTree_2010->pt[a] >= 3) continue;
+			} else if (flag->doSta) {
         if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check sta muons are within acceptance range
       }
 
@@ -351,7 +355,9 @@ int singleMu_quality() {
     ////////// Load muons and fill up histograms
     for (int a=0; a < muTree_2011->nptl; a++) {
       if (flag->doGlb) {
-        if(!isValidMu(flag, muTree_2011, a)) continue;    //Check glb muons are within acceptance range
+//      if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
+//      if(!isValidMu(flag, muTree_2010, a)) continue;    //Check glb muons are within acceptance range
+//				if (muTree_2011->pt[a] >= 3) continue;
       } else if (flag->doSta) {
         if(!isMuInAcc(flag, muTree_2011->eta[a], muTree_2011->pt[a])) continue;    //Check sta muons are within acceptance range
       }
@@ -702,12 +708,14 @@ int singleMu_quality() {
   canv->Divide(3,3);
 
   canv->cd(1);
+	gPad->SetLogy(0);
+	SingleGlb_nValMuHits_2010_qual->SetMinimum(0);
 	SingleGlb_nValMuHits_2010_qual->Sumw2();
   SingleGlb_nValMuHits_2010_qual->SetMarkerStyle(20);
   SingleGlb_nValMuHits_2010_qual->DrawNormalized("p e",1);
   SingleGlb_nValMuHits_2011_qual->Sumw2();
   SingleGlb_nValMuHits_2011_qual->SetMarkerColor(kRed);
-  SingleGlb_nValMuHits_2011_qual->SetMarkerStyle(20);
+  SingleGlb_nValMuHits_2011_qual->SetMarkerStyle(25);
   SingleGlb_nValMuHits_2011_qual->DrawNormalized("p e same",1);
   leg->AddEntry(SingleGlb_nValMuHits_2010_qual,"2010 data","lp");
   leg->AddEntry(SingleGlb_nValMuHits_2011_qual,"2011 data","lp");
@@ -716,62 +724,74 @@ int singleMu_quality() {
   leg->Draw();
 
 	canv->cd(2);
+	gPad->SetLogy(0);
+	SingleGlb_nValTrkHits_2010_qual->SetMinimum(0);
   SingleGlb_nValTrkHits_2010_qual->Sumw2();
   SingleGlb_nValTrkHits_2010_qual->SetMarkerStyle(20);
   SingleGlb_nValTrkHits_2010_qual->DrawNormalized("p e",1);
   SingleGlb_nValTrkHits_2011_qual->Sumw2();
   SingleGlb_nValTrkHits_2011_qual->SetMarkerColor(kRed);
-  SingleGlb_nValTrkHits_2011_qual->SetMarkerStyle(20);
+  SingleGlb_nValTrkHits_2011_qual->SetMarkerStyle(25);
   SingleGlb_nValTrkHits_2011_qual->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(3);
+	gPad->SetLogy(1);
+	SingleGlb_glbChi2_ndof_2010_qual->SetMinimum(1);
   SingleGlb_glbChi2_ndof_2010_qual->Sumw2();
   SingleGlb_glbChi2_ndof_2010_qual->SetMarkerStyle(20);
   SingleGlb_glbChi2_ndof_2010_qual->DrawNormalized("p e",1);
   SingleGlb_glbChi2_ndof_2011_qual->Sumw2();
   SingleGlb_glbChi2_ndof_2011_qual->SetMarkerColor(kRed);
-  SingleGlb_glbChi2_ndof_2011_qual->SetMarkerStyle(20);
+  SingleGlb_glbChi2_ndof_2011_qual->SetMarkerStyle(25);
   SingleGlb_glbChi2_ndof_2011_qual->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(4);
+	gPad->SetLogy(1);
+	SingleGlb_trkChi2_ndof_2010_qual->SetMinimum(1);
   SingleGlb_trkChi2_ndof_2010_qual->Sumw2();
   SingleGlb_trkChi2_ndof_2010_qual->SetMarkerStyle(20);
   SingleGlb_trkChi2_ndof_2010_qual->DrawNormalized("p e",1);
   SingleGlb_trkChi2_ndof_2011_qual->Sumw2();
   SingleGlb_trkChi2_ndof_2011_qual->SetMarkerColor(kRed);
-  SingleGlb_trkChi2_ndof_2011_qual->SetMarkerStyle(20);
+  SingleGlb_trkChi2_ndof_2011_qual->SetMarkerStyle(25);
   SingleGlb_trkChi2_ndof_2011_qual->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(5);
+	gPad->SetLogy(0);
+	SingleGlb_pixLayerWMeas_2010_qual->SetMinimum(0);
   SingleGlb_pixLayerWMeas_2010_qual->Sumw2();
   SingleGlb_pixLayerWMeas_2010_qual->SetMarkerStyle(20);
   SingleGlb_pixLayerWMeas_2010_qual->DrawNormalized("p e",1);
   SingleGlb_pixLayerWMeas_2011_qual->Sumw2();
   SingleGlb_pixLayerWMeas_2011_qual->SetMarkerColor(kRed);
-  SingleGlb_pixLayerWMeas_2011_qual->SetMarkerStyle(20);
+  SingleGlb_pixLayerWMeas_2011_qual->SetMarkerStyle(25);
   SingleGlb_pixLayerWMeas_2011_qual->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(6);
+	gPad->SetLogy(1);
+	SingleGlb_trkDz_2010_qual->SetMinimum(1);
   SingleGlb_trkDz_2010_qual->Sumw2();
   SingleGlb_trkDz_2010_qual->SetMarkerStyle(20);
   SingleGlb_trkDz_2010_qual->DrawNormalized("p e",1);
   SingleGlb_trkDz_2011_qual->Sumw2();
   SingleGlb_trkDz_2011_qual->SetMarkerColor(kRed);
-  SingleGlb_trkDz_2011_qual->SetMarkerStyle(20);
+  SingleGlb_trkDz_2011_qual->SetMarkerStyle(25);
   SingleGlb_trkDz_2011_qual->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(7);
+	gPad->SetLogy(1);
+	SingleGlb_trkDxy_2010_qual->SetMinimum(1);
   SingleGlb_trkDxy_2010_qual->Sumw2();
   SingleGlb_trkDxy_2010_qual->SetMarkerStyle(20);
   SingleGlb_trkDxy_2010_qual->DrawNormalized("p e",1);
   SingleGlb_trkDxy_2011_qual->Sumw2();
   SingleGlb_trkDxy_2011_qual->SetMarkerColor(kRed);
-  SingleGlb_trkDxy_2011_qual->SetMarkerStyle(20);
+  SingleGlb_trkDxy_2011_qual->SetMarkerStyle(25);
   SingleGlb_trkDxy_2011_qual->DrawNormalized("p e same",1);
   leg->Draw();
 	
@@ -797,72 +817,86 @@ int singleMu_quality() {
   canv->Divide(3,3);
 
   canv->cd(1);
+	gPad->SetLogy(0);
+	SingleGlb_nValMuHits_2010->SetMinimum(0);
 	SingleGlb_nValMuHits_2010->Sumw2();
   SingleGlb_nValMuHits_2010->SetMarkerStyle(20);
   SingleGlb_nValMuHits_2010->DrawNormalized("p e",1);
   SingleGlb_nValMuHits_2011->Sumw2();
   SingleGlb_nValMuHits_2011->SetMarkerColor(kRed);
-  SingleGlb_nValMuHits_2011->SetMarkerStyle(20);
+  SingleGlb_nValMuHits_2011->SetMarkerStyle(25);
   SingleGlb_nValMuHits_2011->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(2);
+	gPad->SetLogy(0);
+	SingleGlb_nValTrkHits_2010->SetMinimum(0);
   SingleGlb_nValTrkHits_2010->Sumw2();
   SingleGlb_nValTrkHits_2010->SetMarkerStyle(20);
   SingleGlb_nValTrkHits_2010->DrawNormalized("p e",1);
   SingleGlb_nValTrkHits_2011->Sumw2();
   SingleGlb_nValTrkHits_2011->SetMarkerColor(kRed);
-  SingleGlb_nValTrkHits_2011->SetMarkerStyle(20);
+  SingleGlb_nValTrkHits_2011->SetMarkerStyle(25);
   SingleGlb_nValTrkHits_2011->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(3);
+	gPad->SetLogy(1);
+	SingleGlb_glbChi2_ndof_2010->SetMinimum(1);
   SingleGlb_glbChi2_ndof_2010->Sumw2();
   SingleGlb_glbChi2_ndof_2010->SetMarkerStyle(20);
   SingleGlb_glbChi2_ndof_2010->DrawNormalized("p e",1);
   SingleGlb_glbChi2_ndof_2011->Sumw2();
   SingleGlb_glbChi2_ndof_2011->SetMarkerColor(kRed);
-  SingleGlb_glbChi2_ndof_2011->SetMarkerStyle(20);
+  SingleGlb_glbChi2_ndof_2011->SetMarkerStyle(25);
   SingleGlb_glbChi2_ndof_2011->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(4);
+	gPad->SetLogy(1);
+	SingleGlb_trkChi2_ndof_2010->SetMinimum(1);
   SingleGlb_trkChi2_ndof_2010->Sumw2();
   SingleGlb_trkChi2_ndof_2010->SetMarkerStyle(20);
   SingleGlb_trkChi2_ndof_2010->DrawNormalized("p e",1);
   SingleGlb_trkChi2_ndof_2011->Sumw2();
   SingleGlb_trkChi2_ndof_2011->SetMarkerColor(kRed);
-  SingleGlb_trkChi2_ndof_2011->SetMarkerStyle(20);
+  SingleGlb_trkChi2_ndof_2011->SetMarkerStyle(25);
   SingleGlb_trkChi2_ndof_2011->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(5);
+	gPad->SetLogy(0);
+	SingleGlb_pixLayerWMeas_2010->SetMinimum(0);
   SingleGlb_pixLayerWMeas_2010->Sumw2();
   SingleGlb_pixLayerWMeas_2010->SetMarkerStyle(20);
   SingleGlb_pixLayerWMeas_2010->DrawNormalized("p e",1);
   SingleGlb_pixLayerWMeas_2011->Sumw2();
   SingleGlb_pixLayerWMeas_2011->SetMarkerColor(kRed);
-  SingleGlb_pixLayerWMeas_2011->SetMarkerStyle(20);
+  SingleGlb_pixLayerWMeas_2011->SetMarkerStyle(25);
   SingleGlb_pixLayerWMeas_2011->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(6);
+	gPad->SetLogy(1);
+	SingleGlb_trkDz_2010->SetMinimum(1);
   SingleGlb_trkDz_2010->Sumw2();
   SingleGlb_trkDz_2010->SetMarkerStyle(20);
   SingleGlb_trkDz_2010->DrawNormalized("p e",1);
   SingleGlb_trkDz_2011->Sumw2();
   SingleGlb_trkDz_2011->SetMarkerColor(kRed);
-  SingleGlb_trkDz_2011->SetMarkerStyle(20);
+  SingleGlb_trkDz_2011->SetMarkerStyle(25);
   SingleGlb_trkDz_2011->DrawNormalized("p e same",1);
   leg->Draw();
 
 	canv->cd(7);
+	gPad->SetLogy(1);
+	SingleGlb_trkDxy_2010->SetMinimum(1);
   SingleGlb_trkDxy_2010->Sumw2();
   SingleGlb_trkDxy_2010->SetMarkerStyle(20);
   SingleGlb_trkDxy_2010->DrawNormalized("p e",1);
   SingleGlb_trkDxy_2011->Sumw2();
   SingleGlb_trkDxy_2011->SetMarkerColor(kRed);
-  SingleGlb_trkDxy_2011->SetMarkerStyle(20);
+  SingleGlb_trkDxy_2011->SetMarkerStyle(25);
   SingleGlb_trkDxy_2011->DrawNormalized("p e same",1);
   leg->Draw();
 	

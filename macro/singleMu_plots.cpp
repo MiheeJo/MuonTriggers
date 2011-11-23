@@ -20,7 +20,8 @@ int singleMu_plots() {
   flag->doGlb = false;
   
   string data2010  = "/castor/cern.ch/user/m/miheejo/openHLT/cms442p5/HICorePhysics_Skim_MinimumBias_RAW/openhlt_2010HICorePhysicsMB.root";
-  string data2011  = "/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIData2011_rawToRecoV3_LSF/openhlt_HIData2011_rawToRecoV3_LSF.root";
+  string data2011  = "/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIDiMuon_HIRun2011-PromptReco-v1_RECO/openhlt_PromptReco_181611_181778.root";
+    //"/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIData2011_rawToRecoV3_LSF/openhlt_HIData2011_rawToRecoV3_LSF.root";
 
   // Check trigger list
   vector<string> triglist;
@@ -64,7 +65,7 @@ int singleMu_plots() {
   // 2010 datafile
   TCastorFile   *input_2010 = new TCastorFile(data2010.c_str());
   FriendMuTree  *mutree_2010 = new FriendMuTree(input_2010,true); // Load HLTMuTree
-  HltTree       *ohTree_2010 = new HltTree(input_2010,true);      // Load HltTree
+  HltTree       *ohTree_2010 = new HltTree(input_2010,true,"hltana/HltTree");      // Load HltTree
 
   TTree         *muon_tree_2010;                             // Hold HLTMuTree
   TTree         *open_tree_2010;                             // Hold HltTree
@@ -73,7 +74,7 @@ int singleMu_plots() {
   // 2011 datafile
   TCastorFile   *input_2011 = new TCastorFile(data2011.c_str());
   FriendMuTree  *mutree_2011 = new FriendMuTree(input_2011,true); // Load HLTMuTree
-  HltTree       *ohTree_2011 = new HltTree(input_2011,true);      // Load HltTree
+  HltTree       *ohTree_2011 = new HltTree(input_2011,true,"hltanalysis/HltTree");      // Load HltTree
 
   TTree         *muon_tree_2011;                             // Hold HLTMuTree
   TTree         *open_tree_2011;                             // Hold HltTree

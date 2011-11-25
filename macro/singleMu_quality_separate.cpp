@@ -35,8 +35,12 @@ int singleMu_quality_separate() {
 
   // Check trigger list
   vector<string> triglist;
+//	triglist.push_back("HLT_HIL1SingleMu3");
+	triglist.push_back("HLT_HIL2Mu3");
+	triglist.push_back("HLT_HIL2Mu3_NHitQ_v1");
+	triglist.push_back("HLT_HIL2Mu3_NHitQ_v2");
 //  triglist.push_back("HLT_HIL1DoubleMu0_HighQ_v1");
-  triglist.push_back("HLT_HIL2DoubleMu3_v1");
+//  triglist.push_back("HLT_HIL2DoubleMu3_v1");
 //  triglist.push_back("HLT_HIL3DoubleMuOpen_v1");
 //  triglist.push_back("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1");
 //  triglist.push_back("HLT_HIL2Mu3_v1");
@@ -67,6 +71,14 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_trkDz_eta_2010 = new TH2F("trkDz_eta_2010","trkDz_eta_2010;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2010 = new TH2F("trkDxy_eta_2010","trkDxy_eta_2010;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
+	TH2F *SingleGlb_nValMuHits_pt_2010 = new TH2F("nValMuHits_pt_2010","nValMuHits_pt_2010;nValMuHits;p_{T}",55,0,55,PT,0,20);
+  TH2F *SingleGlb_nValTrkHits_pt_2010 = new TH2F("nValTrkHits_pt_2010","nValTrkHits_pt_2010;nValTrkHits;p_{T}",27,0,27,PT,0,20);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2010 = new TH2F("glbChi2_ndof_pt_2010","glbChi2_ndof_pt_2010;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2010 = new TH2F("trkChi2_ndof_pt_2010","trkChi2_ndof_pt_2010;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2010 = new TH2F("pixLayerWMeas_pt_2010","pixLayerWMeas_pt_2010;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
+  TH2F *SingleGlb_trkDz_pt_2010 = new TH2F("trkDz_pt_2010","trkDz_pt_2010;trkDz;p_{T}",100,0,2,PT,0,20);
+  TH2F *SingleGlb_trkDxy_pt_2010 = new TH2F("trkDxy_pt_2010","trkDxy_pt_2010;trkDxy;p_{T}",100,0,2,PT,0,20);
+
 	TH2F *SingleGlb_nValMuHits_phi_2010 = new TH2F("nValMuHits_phi_2010","nValMuHits_phi_2010;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2010 = new TH2F("nValTrkHits_phi_2010","nValTrkHits_phi_2010;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
   TH2F *SingleGlb_glbChi2_ndof_phi_2010 = new TH2F("glbChi2_ndof_phi_2010","glbChi2_ndof_phi_2010;glbChi2_ndof;#phi",100,0,25,PHI,-PI,PI);
@@ -90,6 +102,14 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_pixLayerWMeas_eta_2011 = new TH2F("pixLayerWMeas_eta_2011","pixLayerWMeas_eta_2011;pixLayerWMeas;#eta",5,0,5,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDz_eta_2011 = new TH2F("trkDz_eta_2011","trkDz_eta_2011;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2011 = new TH2F("trkDxy_eta_2011","trkDxy_eta_2011;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
+
+	TH2F *SingleGlb_nValMuHits_pt_2011 = new TH2F("nValMuHits_pt_2011","nValMuHits_pt_2011;nValMuHits;p_{T}",55,0,55,PT,0,20);
+  TH2F *SingleGlb_nValTrkHits_pt_2011 = new TH2F("nValTrkHits_pt_2011","nValTrkHits_pt_2011;nValTrkHits;p_{T}",27,0,27,PT,0,20);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2011 = new TH2F("glbChi2_ndof_pt_2011","glbChi2_ndof_pt_2011;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2011 = new TH2F("trkChi2_ndof_pt_2011","trkChi2_ndof_pt_2011;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2011 = new TH2F("pixLayerWMeas_pt_2011","pixLayerWMeas_pt_2011;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
+  TH2F *SingleGlb_trkDz_pt_2011 = new TH2F("trkDz_pt_2011","trkDz_pt_2011;trkDz;p_{T}",100,0,2,PT,0,20);
+  TH2F *SingleGlb_trkDxy_pt_2011 = new TH2F("trkDxy_pt_2011","trkDxy_pt_2011;trkDxy;p_{T}",100,0,2,PT,0,20);
 
 	TH2F *SingleGlb_nValMuHits_phi_2011 = new TH2F("nValMuHits_phi_2011","nValMuHits_phi_2011;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2011 = new TH2F("nValTrkHits_phi_2011","nValTrkHits_phi_2011;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
@@ -115,6 +135,14 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_trkDz_eta_2010_qual = new TH2F("trkDz_eta_2010_qual","trkDz_eta_2010_qual;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2010_qual = new TH2F("trkDxy_eta_2010_qual","trkDxy_eta_2010_qual;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
+	TH2F *SingleGlb_nValMuHits_pt_2010_qual = new TH2F("nValMuHits_pt_2010_qual","nValMuHits_pt_2010_qual;nValMuHits;p_{T}",55,0,55,PT,0,20);
+  TH2F *SingleGlb_nValTrkHits_pt_2010_qual = new TH2F("nValTrkHits_pt_2010_qual","nValTrkHits_pt_2010_qual;nValTrkHits;p_{T}",27,0,27,PT,0,20);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2010_qual = new TH2F("glbChi2_ndof_pt_2010_qual","glbChi2_ndof_pt_2010_qual;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2010_qual = new TH2F("trkChi2_ndof_pt_2010_qual","trkChi2_ndof_pt_2010_qual;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2010_qual = new TH2F("pixLayerWMeas_pt_2010_qual","pixLayerWMeas_pt_2010_qual;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
+  TH2F *SingleGlb_trkDz_pt_2010_qual = new TH2F("trkDz_pt_2010_qual","trkDz_pt_2010_qual;trkDz;p_{T}",100,0,2,PT,0,20);
+  TH2F *SingleGlb_trkDxy_pt_2010_qual = new TH2F("trkDxy_pt_2010_qual","trkDxy_pt_2010_qual;trkDxy;p_{T}",100,0,2,PT,0,20);
+
 	TH2F *SingleGlb_nValMuHits_phi_2010_qual = new TH2F("nValMuHits_phi_2010_qual","nValMuHits_phi_2010_qual;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2010_qual = new TH2F("nValTrkHits_phi_2010_qual","nValTrkHits_phi_2010_qual;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
   TH2F *SingleGlb_glbChi2_ndof_phi_2010_qual = new TH2F("glbChi2_ndof_phi_2010_qual","glbChi2_ndof_phi_2010_qual;glbChi2_ndof;#phi",100,0,25,PHI,-PI,PI);
@@ -139,6 +167,14 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_trkDz_eta_2011_qual = new TH2F("trkDz_eta_2011_qual","trkDz_eta_2011_qual;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2011_qual = new TH2F("trkDxy_eta_2011_qual","trkDxy_eta_2011_qual;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
+	TH2F *SingleGlb_nValMuHits_pt_2011_qual = new TH2F("nValMuHits_pt_2011_qual","nValMuHits_pt_2011_qual;nValMuHits;p_{T}",55,0,55,PT,0,20);
+  TH2F *SingleGlb_nValTrkHits_pt_2011_qual = new TH2F("nValTrkHits_pt_2011_qual","nValTrkHits_pt_2011_qual;nValTrkHits;p_{T}",27,0,27,PT,0,20);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2011_qual = new TH2F("glbChi2_ndof_pt_2011_qual","glbChi2_ndof_pt_2011_qual;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2011_qual = new TH2F("trkChi2_ndof_pt_2011_qual","trkChi2_ndof_pt_2011_qual;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2011_qual = new TH2F("pixLayerWMeas_pt_2011_qual","pixLayerWMeas_pt_2011_qual;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
+  TH2F *SingleGlb_trkDz_pt_2011_qual = new TH2F("trkDz_pt_2011_qual","trkDz_pt_2011_qual;trkDz;p_{T}",100,0,2,PT,0,20);
+  TH2F *SingleGlb_trkDxy_pt_2011_qual = new TH2F("trkDxy_pt_2011_qual","trkDxy_pt_2011_qual;trkDxy;p_{T}",100,0,2,PT,0,20);	
+	
 	TH2F *SingleGlb_nValMuHits_phi_2011_qual = new TH2F("nValMuHits_phi_2011_qual","nValMuHits_phi_2011_qual;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2011_qual = new TH2F("nValTrkHits_phi_2011_qual","nValTrkHits_phi_2011_qual;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
   TH2F *SingleGlb_glbChi2_ndof_phi_2011_qual = new TH2F("glbChi2_ndof_phi_2011_qual","glbChi2_ndof_phi_2011_qual;glbChi2_ndof;#phi",100,0,25,PHI,-PI,PI);
@@ -220,7 +256,7 @@ int singleMu_quality_separate() {
 		 muon_tree_2011->SetBranchAddress("Sta_pt",muTree_2011->pt);
 		 muon_tree_2011->SetBranchAddress("Sta_phi",muTree_2011->phi);
 		 muon_tree_2011->SetBranchAddress("Sta_nptl",&muTree_2011->nptl);
-		 muon_tree_2011->SetBranchAddress("Sta_charge",muTree_2011->charge);
+		muon_tree_2011->SetBranchAddress("Sta_charge",muTree_2011->charge);
   } else if (flag->doGlb && !flag->doSta) {
 		 muon_tree_2011->SetBranchAddress("Glb_eta",muTree_2011->eta);
 		 muon_tree_2011->SetBranchAddress("Glb_pt",muTree_2011->pt);
@@ -259,8 +295,8 @@ int singleMu_quality_separate() {
   // Loop over trees over 2010 trees
 	int max_event_2010 = muon_tree_2010->GetEntries();
 	int max_event_2011 = muon_tree_2011->GetEntries();
-//	int max_event_2010 = 100;
-//	int max_event_2011 = 1000;
+//	int max_event_2010 = 10000;
+//	int max_event_2011 = 10000;
 
   for (int i=0; i<max_event_2010; i++) {
     muon_tree_2010->GetEntry(i);
@@ -272,13 +308,28 @@ int singleMu_quality_separate() {
     bool qual=false;
     ////////// Load muons and fill up histograms
     for (int a=0; a < muTree_2010->nptl; a++) {
-			if (flag->doGlb) {
+
+      flag->trig = false;
+			for (unsigned int tidx=0; tidx<ntrig; tidx++) {
+				if (trig_2010[tidx]) {         // At least one of the muon trigger is fired.
+					flag->trig = true;
+				break;
+				}
+			}
+
+      qual = true;
+	  
+	  if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!    
+
+		if (flag->doGlb) {
 //      if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
 //      if(!isValidMu(flag, muTree_2010, a)) continue;    //Check glb muons are within acceptance range
 //				if (muTree_2010->pt[a] >= 3) continue;
 			} else if (flag->doSta) {
         if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check sta muons are within acceptance range
       }
+			
+			if (muTree_2010->pt[a] < 3) continue;
 
       SingleGlb_Etapt_2010->Fill(muTree_2010->eta[a],muTree_2010->pt[a]);
       SingleGlb_Etaphi_2010->Fill(muTree_2010->eta[a],muTree_2010->phi[a]);
@@ -287,15 +338,23 @@ int singleMu_quality_separate() {
       SingleGlb_Phi_2010->Fill(muTree_2010->phi[a]);
 
 			SingleGlb_nValMuHits_eta_2010->Fill(muTree_2010->nValMuHits[a],muTree_2010->eta[a]);
-			SingleGlb_nValTrkHits_eta_2010->Fill(muTree_2010->nValMuHits[a],muTree_2010->eta[a]);
+			SingleGlb_nValTrkHits_eta_2010->Fill(muTree_2010->nValTrkHits[a],muTree_2010->eta[a]);
 			SingleGlb_glbChi2_ndof_eta_2010->Fill(muTree_2010->glbChi2_ndof[a],muTree_2010->eta[a]);
 			SingleGlb_trkChi2_ndof_eta_2010->Fill(muTree_2010->trkChi2_ndof[a],muTree_2010->eta[a]);
 			SingleGlb_pixLayerWMeas_eta_2010->Fill(muTree_2010->pixLayerWMeas[a],muTree_2010->eta[a]);
 			SingleGlb_trkDz_eta_2010->Fill(muTree_2010->trkDz[a],muTree_2010->eta[a]);
 			SingleGlb_trkDxy_eta_2010->Fill(muTree_2010->trkDxy[a],muTree_2010->eta[a]);
 
+			SingleGlb_nValMuHits_pt_2010->Fill(muTree_2010->nValMuHits[a],muTree_2010->pt[a]);
+			SingleGlb_nValTrkHits_pt_2010->Fill(muTree_2010->nValTrkHits[a],muTree_2010->pt[a]);
+			SingleGlb_glbChi2_ndof_pt_2010->Fill(muTree_2010->glbChi2_ndof[a],muTree_2010->pt[a]);
+			SingleGlb_trkChi2_ndof_pt_2010->Fill(muTree_2010->trkChi2_ndof[a],muTree_2010->pt[a]);
+			SingleGlb_pixLayerWMeas_pt_2010->Fill(muTree_2010->pixLayerWMeas[a],muTree_2010->pt[a]);
+			SingleGlb_trkDz_pt_2010->Fill(muTree_2010->trkDz[a],muTree_2010->pt[a]);
+			SingleGlb_trkDxy_pt_2010->Fill(muTree_2010->trkDxy[a],muTree_2010->pt[a]);
+
 			SingleGlb_nValMuHits_phi_2010->Fill(muTree_2010->nValMuHits[a],muTree_2010->phi[a]);
-			SingleGlb_nValTrkHits_phi_2010->Fill(muTree_2010->nValMuHits[a],muTree_2010->phi[a]);
+			SingleGlb_nValTrkHits_phi_2010->Fill(muTree_2010->nValTrkHits[a],muTree_2010->phi[a]);
 			SingleGlb_glbChi2_ndof_phi_2010->Fill(muTree_2010->glbChi2_ndof[a],muTree_2010->phi[a]);
 			SingleGlb_trkChi2_ndof_phi_2010->Fill(muTree_2010->trkChi2_ndof[a],muTree_2010->phi[a]);
 			SingleGlb_pixLayerWMeas_phi_2010->Fill(muTree_2010->pixLayerWMeas[a],muTree_2010->phi[a]);
@@ -303,35 +362,29 @@ int singleMu_quality_separate() {
 			SingleGlb_trkDxy_phi_2010->Fill(muTree_2010->trkDxy[a],muTree_2010->phi[a]);
 			
 			SingleGlb_nValMuHits_2010->Fill(muTree_2010->nValMuHits[a]);
-			SingleGlb_nValTrkHits_2010->Fill(muTree_2010->nValMuHits[a]);
+			SingleGlb_nValTrkHits_2010->Fill(muTree_2010->nValTrkHits[a]);
 			SingleGlb_glbChi2_ndof_2010->Fill(muTree_2010->glbChi2_ndof[a]);
 			SingleGlb_trkChi2_ndof_2010->Fill(muTree_2010->trkChi2_ndof[a]);
 			SingleGlb_pixLayerWMeas_2010->Fill(muTree_2010->pixLayerWMeas[a]);
 			SingleGlb_trkDz_2010->Fill(muTree_2010->trkDz[a]);
 			SingleGlb_trkDxy_2010->Fill(muTree_2010->trkDxy[a]);
-	
-
-      flag->trig = false;
-	  for (unsigned int tidx=0; tidx<ntrig; tidx++) {
-	    if (trig_2010[tidx]) {         // At least one of the muon trigger is fired.
-				flag->trig = true;
-		  break;
-	    }
-	  }
-
-      qual = true;
-	  
-	  if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!    
-		
+			
       SingleGlb_Etapt_2010_qual->Fill(muTree_2010->eta[a],muTree_2010->pt[a]);
       SingleGlb_Etaphi_2010_qual->Fill(muTree_2010->eta[a],muTree_2010->phi[a]);
       SingleGlb_Eta_2010_qual->Fill(muTree_2010->eta[a]);
       SingleGlb_Pt_2010_qual->Fill(muTree_2010->pt[a]);
       SingleGlb_Phi_2010_qual->Fill(muTree_2010->phi[a]);
 
+			SingleGlb_nValMuHits_pt_2010_qual->Fill(muTree_2010->nValMuHits[a],muTree_2010->pt[a]);
+			SingleGlb_nValTrkHits_pt_2010_qual->Fill(muTree_2010->nValTrkHits[a],muTree_2010->pt[a]);
+			SingleGlb_glbChi2_ndof_pt_2010_qual->Fill(muTree_2010->glbChi2_ndof[a],muTree_2010->pt[a]);
+			SingleGlb_trkChi2_ndof_pt_2010_qual->Fill(muTree_2010->trkChi2_ndof[a],muTree_2010->pt[a]);
+			SingleGlb_pixLayerWMeas_pt_2010_qual->Fill(muTree_2010->pixLayerWMeas[a],muTree_2010->pt[a]);
+			SingleGlb_trkDz_pt_2010_qual->Fill(muTree_2010->trkDz[a],muTree_2010->pt[a]);
+			SingleGlb_trkDxy_pt_2010_qual->Fill(muTree_2010->trkDxy[a],muTree_2010->pt[a]);
 
 			SingleGlb_nValMuHits_eta_2010_qual->Fill(muTree_2010->nValMuHits[a],muTree_2010->eta[a]);
-			SingleGlb_nValTrkHits_eta_2010_qual->Fill(muTree_2010->nValMuHits[a],muTree_2010->eta[a]);
+			SingleGlb_nValTrkHits_eta_2010_qual->Fill(muTree_2010->nValTrkHits[a],muTree_2010->eta[a]);
 			SingleGlb_glbChi2_ndof_eta_2010_qual->Fill(muTree_2010->glbChi2_ndof[a],muTree_2010->eta[a]);
 			SingleGlb_trkChi2_ndof_eta_2010_qual->Fill(muTree_2010->trkChi2_ndof[a],muTree_2010->eta[a]);
 			SingleGlb_pixLayerWMeas_eta_2010_qual->Fill(muTree_2010->pixLayerWMeas[a],muTree_2010->eta[a]);
@@ -339,7 +392,7 @@ int singleMu_quality_separate() {
 			SingleGlb_trkDxy_eta_2010_qual->Fill(muTree_2010->trkDxy[a],muTree_2010->eta[a]);
 
 			SingleGlb_nValMuHits_phi_2010_qual->Fill(muTree_2010->nValMuHits[a],muTree_2010->phi[a]);
-			SingleGlb_nValTrkHits_phi_2010_qual->Fill(muTree_2010->nValMuHits[a],muTree_2010->phi[a]);
+			SingleGlb_nValTrkHits_phi_2010_qual->Fill(muTree_2010->nValTrkHits[a],muTree_2010->phi[a]);
 			SingleGlb_glbChi2_ndof_phi_2010_qual->Fill(muTree_2010->glbChi2_ndof[a],muTree_2010->phi[a]);
 			SingleGlb_trkChi2_ndof_phi_2010_qual->Fill(muTree_2010->trkChi2_ndof[a],muTree_2010->phi[a]);
 			SingleGlb_pixLayerWMeas_phi_2010_qual->Fill(muTree_2010->pixLayerWMeas[a],muTree_2010->phi[a]);
@@ -347,7 +400,7 @@ int singleMu_quality_separate() {
 			SingleGlb_trkDxy_phi_2010_qual->Fill(muTree_2010->trkDxy[a],muTree_2010->phi[a]);
 			
 			SingleGlb_nValMuHits_2010_qual->Fill(muTree_2010->nValMuHits[a]);
-			SingleGlb_nValTrkHits_2010_qual->Fill(muTree_2010->nValMuHits[a]);
+			SingleGlb_nValTrkHits_2010_qual->Fill(muTree_2010->nValTrkHits[a]);
 			SingleGlb_glbChi2_ndof_2010_qual->Fill(muTree_2010->glbChi2_ndof[a]);
 			SingleGlb_trkChi2_ndof_2010_qual->Fill(muTree_2010->trkChi2_ndof[a]);
 			SingleGlb_pixLayerWMeas_2010_qual->Fill(muTree_2010->pixLayerWMeas[a]);
@@ -382,37 +435,7 @@ int singleMu_quality_separate() {
       } else if (flag->doSta) {
         if(!isMuInAcc(flag, muTree_2011->eta[a], muTree_2011->pt[a])) continue;    //Check sta muons are within acceptance range
       }
-
-      SingleGlb_Etapt_2011->Fill(muTree_2011->eta[a],muTree_2011->pt[a]);
-      SingleGlb_Etaphi_2011->Fill(muTree_2011->eta[a],muTree_2011->phi[a]);
-      SingleGlb_Eta_2011->Fill(muTree_2011->eta[a]);
-      SingleGlb_Pt_2011->Fill(muTree_2011->pt[a]);
-      SingleGlb_Phi_2011->Fill(muTree_2011->phi[a]);
-
-			SingleGlb_nValMuHits_eta_2011->Fill(muTree_2011->nValMuHits[a],muTree_2011->eta[a]);
-			SingleGlb_nValTrkHits_eta_2011->Fill(muTree_2011->nValMuHits[a],muTree_2011->eta[a]);
-			SingleGlb_glbChi2_ndof_eta_2011->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->eta[a]);
-			SingleGlb_trkChi2_ndof_eta_2011->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->eta[a]);
-			SingleGlb_pixLayerWMeas_eta_2011->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->eta[a]);
-			SingleGlb_trkDz_eta_2011->Fill(muTree_2011->trkDz[a],muTree_2011->eta[a]);
-			SingleGlb_trkDxy_eta_2011->Fill(muTree_2011->trkDxy[a],muTree_2011->eta[a]);
-
-			SingleGlb_nValMuHits_phi_2011->Fill(muTree_2011->nValMuHits[a],muTree_2011->phi[a]);
-			SingleGlb_nValTrkHits_phi_2011->Fill(muTree_2011->nValMuHits[a],muTree_2011->phi[a]);
-			SingleGlb_glbChi2_ndof_phi_2011->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->phi[a]);
-			SingleGlb_trkChi2_ndof_phi_2011->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->phi[a]);
-			SingleGlb_pixLayerWMeas_phi_2011->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->phi[a]);
-			SingleGlb_trkDz_phi_2011->Fill(muTree_2011->trkDz[a],muTree_2011->phi[a]);
-			SingleGlb_trkDxy_phi_2011->Fill(muTree_2011->trkDxy[a],muTree_2011->phi[a]);
-			
-			SingleGlb_nValMuHits_2011->Fill(muTree_2011->nValMuHits[a]);
-			SingleGlb_nValTrkHits_2011->Fill(muTree_2011->nValMuHits[a]);
-			SingleGlb_glbChi2_ndof_2011->Fill(muTree_2011->glbChi2_ndof[a]);
-			SingleGlb_trkChi2_ndof_2011->Fill(muTree_2011->trkChi2_ndof[a]);
-			SingleGlb_pixLayerWMeas_2011->Fill(muTree_2011->pixLayerWMeas[a]);
-			SingleGlb_trkDz_2011->Fill(muTree_2011->trkDz[a]);
-			SingleGlb_trkDxy_2011->Fill(muTree_2011->trkDxy[a]);
-			
+						
 			////////// Check muon trigger list
 			flag->trig = false;
 			for (unsigned int tidx=0; tidx<ntrig; tidx++) {
@@ -424,6 +447,46 @@ int singleMu_quality_separate() {
 			if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!
 
       qual = true;
+
+			if (muTree_2011->pt[a] < 3) continue;
+			
+      SingleGlb_Etapt_2011->Fill(muTree_2011->eta[a],muTree_2011->pt[a]);
+      SingleGlb_Etaphi_2011->Fill(muTree_2011->eta[a],muTree_2011->phi[a]);
+      SingleGlb_Eta_2011->Fill(muTree_2011->eta[a]);
+      SingleGlb_Pt_2011->Fill(muTree_2011->pt[a]);
+      SingleGlb_Phi_2011->Fill(muTree_2011->phi[a]);
+
+			SingleGlb_nValMuHits_eta_2011->Fill(muTree_2011->nValMuHits[a],muTree_2011->eta[a]);
+			SingleGlb_nValTrkHits_eta_2011->Fill(muTree_2011->nValTrkHits[a],muTree_2011->eta[a]);
+			SingleGlb_glbChi2_ndof_eta_2011->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->eta[a]);
+			SingleGlb_trkChi2_ndof_eta_2011->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->eta[a]);
+			SingleGlb_pixLayerWMeas_eta_2011->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->eta[a]);
+			SingleGlb_trkDz_eta_2011->Fill(muTree_2011->trkDz[a],muTree_2011->eta[a]);
+			SingleGlb_trkDxy_eta_2011->Fill(muTree_2011->trkDxy[a],muTree_2011->eta[a]);
+
+			SingleGlb_nValMuHits_pt_2011->Fill(muTree_2011->nValMuHits[a],muTree_2011->pt[a]);
+			SingleGlb_nValTrkHits_pt_2011->Fill(muTree_2011->nValTrkHits[a],muTree_2011->pt[a]);
+			SingleGlb_glbChi2_ndof_pt_2011->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->pt[a]);
+			SingleGlb_trkChi2_ndof_pt_2011->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->pt[a]);
+			SingleGlb_pixLayerWMeas_pt_2011->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->pt[a]);
+			SingleGlb_trkDz_pt_2011->Fill(muTree_2011->trkDz[a],muTree_2011->pt[a]);
+			SingleGlb_trkDxy_pt_2011->Fill(muTree_2011->trkDxy[a],muTree_2011->pt[a]);
+
+			SingleGlb_nValMuHits_phi_2011->Fill(muTree_2011->nValMuHits[a],muTree_2011->phi[a]);
+			SingleGlb_nValTrkHits_phi_2011->Fill(muTree_2011->nValTrkHits[a],muTree_2011->phi[a]);
+			SingleGlb_glbChi2_ndof_phi_2011->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->phi[a]);
+			SingleGlb_trkChi2_ndof_phi_2011->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->phi[a]);
+			SingleGlb_pixLayerWMeas_phi_2011->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->phi[a]);
+			SingleGlb_trkDz_phi_2011->Fill(muTree_2011->trkDz[a],muTree_2011->phi[a]);
+			SingleGlb_trkDxy_phi_2011->Fill(muTree_2011->trkDxy[a],muTree_2011->phi[a]);
+			
+			SingleGlb_nValMuHits_2011->Fill(muTree_2011->nValMuHits[a]);
+			SingleGlb_nValTrkHits_2011->Fill(muTree_2011->nValTrkHits[a]);
+			SingleGlb_glbChi2_ndof_2011->Fill(muTree_2011->glbChi2_ndof[a]);
+			SingleGlb_trkChi2_ndof_2011->Fill(muTree_2011->trkChi2_ndof[a]);
+			SingleGlb_pixLayerWMeas_2011->Fill(muTree_2011->pixLayerWMeas[a]);
+			SingleGlb_trkDz_2011->Fill(muTree_2011->trkDz[a]);
+			SingleGlb_trkDxy_2011->Fill(muTree_2011->trkDxy[a]);
       
       SingleGlb_Etapt_2011_qual->Fill(muTree_2011->eta[a],muTree_2011->pt[a]);
       SingleGlb_Etaphi_2011_qual->Fill(muTree_2011->eta[a],muTree_2011->phi[a]);
@@ -431,8 +494,16 @@ int singleMu_quality_separate() {
       SingleGlb_Pt_2011_qual->Fill(muTree_2011->pt[a]);
       SingleGlb_Phi_2011_qual->Fill(muTree_2011->phi[a]);
 
+			SingleGlb_nValMuHits_pt_2011_qual->Fill(muTree_2011->nValMuHits[a],muTree_2011->pt[a]);
+			SingleGlb_nValTrkHits_pt_2011_qual->Fill(muTree_2011->nValTrkHits[a],muTree_2011->pt[a]);
+			SingleGlb_glbChi2_ndof_pt_2011_qual->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->pt[a]);
+			SingleGlb_trkChi2_ndof_pt_2011_qual->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->pt[a]);
+			SingleGlb_pixLayerWMeas_pt_2011_qual->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->pt[a]);
+			SingleGlb_trkDz_pt_2011_qual->Fill(muTree_2011->trkDz[a],muTree_2011->pt[a]);
+			SingleGlb_trkDxy_pt_2011_qual->Fill(muTree_2011->trkDxy[a],muTree_2011->pt[a]);
+			
 			SingleGlb_nValMuHits_eta_2011_qual->Fill(muTree_2011->nValMuHits[a],muTree_2011->eta[a]);
-			SingleGlb_nValTrkHits_eta_2011_qual->Fill(muTree_2011->nValMuHits[a],muTree_2011->eta[a]);
+			SingleGlb_nValTrkHits_eta_2011_qual->Fill(muTree_2011->nValTrkHits[a],muTree_2011->eta[a]);
 			SingleGlb_glbChi2_ndof_eta_2011_qual->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->eta[a]);
 			SingleGlb_trkChi2_ndof_eta_2011_qual->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->eta[a]);
 			SingleGlb_pixLayerWMeas_eta_2011_qual->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->eta[a]);
@@ -440,7 +511,7 @@ int singleMu_quality_separate() {
 			SingleGlb_trkDxy_eta_2011_qual->Fill(muTree_2011->trkDxy[a],muTree_2011->eta[a]);
 
 			SingleGlb_nValMuHits_phi_2011_qual->Fill(muTree_2011->nValMuHits[a],muTree_2011->phi[a]);
-			SingleGlb_nValTrkHits_phi_2011_qual->Fill(muTree_2011->nValMuHits[a],muTree_2011->phi[a]);
+			SingleGlb_nValTrkHits_phi_2011_qual->Fill(muTree_2011->nValTrkHits[a],muTree_2011->phi[a]);
 			SingleGlb_glbChi2_ndof_phi_2011_qual->Fill(muTree_2011->glbChi2_ndof[a],muTree_2011->phi[a]);
 			SingleGlb_trkChi2_ndof_phi_2011_qual->Fill(muTree_2011->trkChi2_ndof[a],muTree_2011->phi[a]);
 			SingleGlb_pixLayerWMeas_phi_2011_qual->Fill(muTree_2011->pixLayerWMeas[a],muTree_2011->phi[a]);
@@ -448,7 +519,7 @@ int singleMu_quality_separate() {
 			SingleGlb_trkDxy_phi_2011_qual->Fill(muTree_2011->trkDxy[a],muTree_2011->phi[a]);
 			
 			SingleGlb_nValMuHits_2011_qual->Fill(muTree_2011->nValMuHits[a]);
-			SingleGlb_nValTrkHits_2011_qual->Fill(muTree_2011->nValMuHits[a]);
+			SingleGlb_nValTrkHits_2011_qual->Fill(muTree_2011->nValTrkHits[a]);
 			SingleGlb_glbChi2_ndof_2011_qual->Fill(muTree_2011->glbChi2_ndof[a]);
 			SingleGlb_trkChi2_ndof_2011_qual->Fill(muTree_2011->trkChi2_ndof[a]);
 			SingleGlb_pixLayerWMeas_2011_qual->Fill(muTree_2011->pixLayerWMeas[a]);
@@ -478,7 +549,7 @@ int singleMu_quality_separate() {
   leg->SetTextSize(0.05);
 
   TLatex *lax = new TLatex();
-  lax->SetTextSize(0.04);
+  lax->SetTextSize(0.1);
 	stringstream title;
 	
 	TPad *pad1;
@@ -497,7 +568,7 @@ int singleMu_quality_separate() {
 	gStyle->SetPalette(1,0);
 	gStyle->SetPadLeftMargin(0.05);
 	gStyle->SetPadBottomMargin(0.2);
-	gStyle->SetPadTopMargin(0.05);
+	gStyle->SetPadTopMargin(0.2);
 	gStyle->SetPadRightMargin(0.02);
 	gStyle->SetOptTitle(1);
 	gStyle->SetTextSize(0.03);
@@ -514,6 +585,7 @@ int singleMu_quality_separate() {
 	canv = new TCanvas("canv","canv",1300,1000);
 	
 	pad1 = new TPad("pad1", "The pad 70% of the height",0.0,0.3,1.0,1.0,0);
+	pad1->SetTopMargin(0.0);
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
@@ -574,7 +646,7 @@ int singleMu_quality_separate() {
 	ratio_2011->GetXaxis()->SetLabelSize(0.1);
 	ratio_2011->GetXaxis()->SetLabelSize(0.1);
 	ratio_2011->GetXaxis()->SetTitleSize(0.1);
-	ratio_2011->GetXaxis()->SetTitle("Number of Valid Muon Hits");
+	ratio_2011->GetXaxis()->SetTitle("#eta");
 	
 	gStyle->SetOptTitle(0);
 	gPad->SetLogy(0);
@@ -655,7 +727,7 @@ int singleMu_quality_separate() {
 	ratio_2011->GetXaxis()->SetLabelSize(0.1);
 	ratio_2011->GetXaxis()->SetLabelSize(0.1);
 	ratio_2011->GetXaxis()->SetTitleSize(0.1);
-	ratio_2011->GetXaxis()->SetTitle("Number of Valid Muon Hits");
+	ratio_2011->GetXaxis()->SetTitle("p_{T}");
 	
 	gStyle->SetOptTitle(0);
 	gPad->SetLogy(0);
@@ -736,7 +808,7 @@ int singleMu_quality_separate() {
 	ratio_2011->GetXaxis()->SetLabelSize(0.1);
 	ratio_2011->GetXaxis()->SetLabelSize(0.1);
 	ratio_2011->GetXaxis()->SetTitleSize(0.1);
-	ratio_2011->GetXaxis()->SetTitle("Number of Valid Muon Hits");
+	ratio_2011->GetXaxis()->SetTitle("#phi");
 	
 	gStyle->SetOptTitle(0);
 	gPad->SetLogy(0);
@@ -1319,10 +1391,21 @@ int singleMu_quality_separate() {
 	canv->SaveAs("SingleGlb_trkDxy.pdf");
 	canv->Clear(); canv->Draw();
 // END trkDxy
-/*
-	gStyle->SetOptStat("m");
-	gStyle->SetOptTitle(1);
 
+//	gStyle->SetOptStat("emn");
+//	gStyle->SetOptTitle(1);
+
+	gStyle->SetPadTopMargin(0.10);
+	gStyle->SetPadRightMargin(0.15);
+	gStyle->SetPadLeftMargin(0.15);
+	gStyle->SetPadBottomMargin(0.1);
+
+	gStyle->SetStatX(1.0);
+	gStyle->SetStatY(1.0);
+	gStyle->SetStatW(0.3);
+	gStyle->SetStatH(0.2);
+	gStyle->SetOptStat("m");
+	
 	canv = new TCanvas("canv","canv",1300,1000);
   canv->Divide(3,3);
 	
@@ -1342,13 +1425,42 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_phi_2010_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010_qual->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010_qual;
+	title << "2010 # muons: " << SingleGlb_Eta_2010_qual->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2010 # events: " << nevt_2010_qual;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_phi_2010_qual.pdf");
+	
+  canv->Clear(); 
+
+	canv = new TCanvas("canv","canv",1300,1000);
+  canv->Divide(3,3);
+	
+  canv->cd(1);
+  SingleGlb_nValMuHits_pt_2010_qual->DrawNormalized("colz",1);
+	canv->cd(2);
+  SingleGlb_nValTrkHits_pt_2010_qual->DrawNormalized("colz",1);
+	canv->cd(3);
+  SingleGlb_glbChi2_ndof_pt_2010_qual->DrawNormalized("colz",1);
+	canv->cd(4);
+  SingleGlb_trkChi2_ndof_pt_2010_qual->DrawNormalized("colz",1);
+	canv->cd(5);
+  SingleGlb_pixLayerWMeas_pt_2010_qual->DrawNormalized("colz",1);
+	canv->cd(6);
+  SingleGlb_trkDz_pt_2010_qual->DrawNormalized("colz",1);
+	canv->cd(7);
+  SingleGlb_trkDxy_pt_2010_qual->DrawNormalized("colz",1);
+	canv->cd(8);
+  title.str("");
+	title << "2010 # muons: " << SingleGlb_Eta_2010_qual->GetEntries();
+  lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2010 # events: " << nevt_2010_qual;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
+
+	canv->SaveAs("SingleGlb_2d_distributions_pt_2010_qual.pdf");
 	
   canv->Clear(); 
 	
@@ -1371,11 +1483,11 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_eta_2010_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010_qual->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010_qual;
+	title << "2010 # muons: " << SingleGlb_Eta_2010_qual->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2010 # events: " << nevt_2010_qual;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_eta_2010_qual.pdf");
 
@@ -1400,13 +1512,42 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_phi_2010->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010;
+	title << "2010 # muons: " << SingleGlb_Eta_2010->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2010 # events: " << nevt_2010;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_phi_2010.pdf");
+	
+  canv->Clear(); 
+
+	canv = new TCanvas("canv","canv",1300,1000);
+  canv->Divide(3,3);
+	
+  canv->cd(1);
+  SingleGlb_nValMuHits_pt_2010->DrawNormalized("colz",1);
+	canv->cd(2);
+  SingleGlb_nValTrkHits_pt_2010->DrawNormalized("colz",1);
+	canv->cd(3);
+  SingleGlb_glbChi2_ndof_pt_2010->DrawNormalized("colz",1);
+	canv->cd(4);
+  SingleGlb_trkChi2_ndof_pt_2010->DrawNormalized("colz",1);
+	canv->cd(5);
+  SingleGlb_pixLayerWMeas_pt_2010->DrawNormalized("colz",1);
+	canv->cd(6);
+  SingleGlb_trkDz_pt_2010->DrawNormalized("colz",1);
+	canv->cd(7);
+  SingleGlb_trkDxy_pt_2010->DrawNormalized("colz",1);
+	canv->cd(8);
+  title.str("");
+	title << "2010 # muons: " << SingleGlb_Eta_2010->GetEntries();
+  lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2010 # events: " << nevt_2010;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
+
+	canv->SaveAs("SingleGlb_2d_distributions_pt_2010.pdf");
 	
   canv->Clear(); 
 	
@@ -1429,11 +1570,11 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_eta_2010->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2010 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2010->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2010 # events (pass L2_DoubleMu3): " << nevt_2010;
+	title << "2010 # muons: " << SingleGlb_Eta_2010->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2010 # events: " << nevt_2010;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_eta_2010.pdf");
 
@@ -1458,13 +1599,42 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_phi_2011_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011_qual->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011_qual;
+	title << "2011 # muons: " << SingleGlb_Eta_2011_qual->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2011 # events: " << nevt_2011_qual;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_phi_2011_qual.pdf");
+	
+  canv->Clear(); 
+
+	canv = new TCanvas("canv","canv",1300,1000);
+  canv->Divide(3,3);
+	
+  canv->cd(1);
+  SingleGlb_nValMuHits_pt_2011_qual->DrawNormalized("colz",1);
+	canv->cd(2);
+  SingleGlb_nValTrkHits_pt_2011_qual->DrawNormalized("colz",1);
+	canv->cd(3);
+  SingleGlb_glbChi2_ndof_pt_2011_qual->DrawNormalized("colz",1);
+	canv->cd(4);
+  SingleGlb_trkChi2_ndof_pt_2011_qual->DrawNormalized("colz",1);
+	canv->cd(5);
+  SingleGlb_pixLayerWMeas_pt_2011_qual->DrawNormalized("colz",1);
+	canv->cd(6);
+  SingleGlb_trkDz_pt_2011_qual->DrawNormalized("colz",1);
+	canv->cd(7);
+  SingleGlb_trkDxy_pt_2011_qual->DrawNormalized("colz",1);
+	canv->cd(8);
+  title.str("");
+	title << "2011 # muons: " << SingleGlb_Eta_2011_qual->GetEntries();
+  lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2011 # events: " << nevt_2011_qual;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
+
+	canv->SaveAs("SingleGlb_2d_distributions_pt_2011_qual.pdf");
 	
   canv->Clear(); 
 	
@@ -1487,11 +1657,11 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_eta_2011_qual->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011_qual->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011_qual;
+	title << "2011 # muons: " << SingleGlb_Eta_2011_qual->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2011 # events: " << nevt_2011_qual;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_eta_2011_qual.pdf");
 
@@ -1516,13 +1686,42 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_phi_2011->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011;
+	title << "2011 # muons: " << SingleGlb_Eta_2011->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2011 # events: " << nevt_2011;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_phi_2011.pdf");
+	
+  canv->Clear(); 
+
+	canv = new TCanvas("canv","canv",1300,1000);
+  canv->Divide(3,3);
+	
+  canv->cd(1);
+  SingleGlb_nValMuHits_pt_2011->DrawNormalized("colz",1);
+	canv->cd(2);
+  SingleGlb_nValTrkHits_pt_2011->DrawNormalized("colz",1);
+	canv->cd(3);
+  SingleGlb_glbChi2_ndof_pt_2011->DrawNormalized("colz",1);
+	canv->cd(4);
+  SingleGlb_trkChi2_ndof_pt_2011->DrawNormalized("colz",1);
+	canv->cd(5);
+  SingleGlb_pixLayerWMeas_pt_2011->DrawNormalized("colz",1);
+	canv->cd(6);
+  SingleGlb_trkDz_pt_2011->DrawNormalized("colz",1);
+	canv->cd(7);
+  SingleGlb_trkDxy_pt_2011->DrawNormalized("colz",1);
+	canv->cd(8);
+  title.str("");
+	title << "2011 # muons: " << SingleGlb_Eta_2011->GetEntries();
+  lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2011 # events: " << nevt_2011;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
+
+	canv->SaveAs("SingleGlb_2d_distributions_pt_2011.pdf");
 	
   canv->Clear(); 
 	
@@ -1545,15 +1744,15 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_eta_2011->DrawNormalized("colz",1);
 	canv->cd(8);
   title.str("");
-	title << "2011 # muons (pass L2_DoubleMu3): " << SingleGlb_Eta_2011->GetEntries();
-  lax->DrawLatex(0.0,0.95,title.str().c_str());
-  title.str("");
-  title << "2011 # events (pass L2_DoubleMu3): " << nevt_2011;
+	title << "2011 # muons: " << SingleGlb_Eta_2011->GetEntries();
   lax->DrawLatex(0.0,0.90,title.str().c_str());
+  title.str("");
+  title << "2011 # events: " << nevt_2011;
+  lax->DrawLatex(0.0,0.8,title.str().c_str());
 
 	canv->SaveAs("SingleGlb_2d_distributions_eta_2011.pdf");
 
   canv->Clear(); 
-*/  
+  
   return 0;
 }

@@ -351,6 +351,7 @@ public :
    Int_t           HLT_HIL2Mu3;
    Int_t           HLT_HIL2Mu7;
    Int_t           HLT_HIL2Mu15;
+   Int_t           HLT_HIL1SingleMu3;
    Int_t           HLT_HIL3DoubleMuOpen_v1;
    Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1;
    Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_v1;
@@ -366,6 +367,21 @@ public :
    Int_t           HLT_HIL2Mu3_v1;
    Int_t           HLT_HIL2Mu7_v1;
    Int_t           HLT_HIL2Mu15_v1;
+   Int_t           HLT_HIL3DoubleMuOpen_v2;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v2;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_OS_v2;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_SS_v2;
+   Int_t           HLT_HIL3DoubleMuOpen_Mgt2_v2;
+   Int_t           HLT_HIL2DoubleMu0_NHitQ_v2;
+   Int_t           HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v2;
+   Int_t           HLT_HIL2DoubleMu0_v2;
+   Int_t           HLT_HIL2DoubleMu3_v2;
+   Int_t           HLT_HIL1DoubleMuOpen_v2;
+   Int_t           HLT_HIL1DoubleMu0_HighQ_v2;
+   Int_t           HLT_HIL3Mu3_v2;
+   Int_t           HLT_HIL2Mu3_v2;
+   Int_t           HLT_HIL2Mu7_v2;
+   Int_t           HLT_HIL2Mu15_v2;
    Int_t           L1_DoubleMu3;
    Int_t           L1_DoubleMuOpen;
    Int_t           L1_DoubleMuOpen_BptxAND;
@@ -462,6 +478,7 @@ public :
    TBranch        *b_HLT_HIL2Mu3;   //!
    TBranch        *b_HLT_HIL2Mu7;   //!
    TBranch        *b_HLT_HIL2Mu15;   //!
+   TBranch        *b_HLT_HIL1SingleMu3;   //!
    TBranch        *b_HLT_HIL3DoubleMuOpen_v1;
    TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1;
    TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v1;
@@ -477,6 +494,21 @@ public :
    TBranch        *b_HLT_HIL2Mu3_v1;   //!
    TBranch        *b_HLT_HIL2Mu7_v1;   //!
    TBranch        *b_HLT_HIL2Mu15_v1;   //!
+   TBranch        *b_HLT_HIL3DoubleMuOpen_v2;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v2;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v2;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_SS_v2;
+   TBranch        *b_HLT_HIL3DoubleMuOpen_Mgt2_v2;
+   TBranch        *b_HLT_HIL2DoubleMu0_NHitQ_v2;
+   TBranch        *b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v2;
+   TBranch        *b_HLT_HIL2DoubleMu0_v2;   //!
+   TBranch        *b_HLT_HIL2DoubleMu3_v2;   //!
+   TBranch        *b_HLT_HIL1DoubleMuOpen_v2;
+   TBranch        *b_HLT_HIL1DoubleMu0_HighQ_v2;
+   TBranch        *b_HLT_HIL3Mu3_v2;
+   TBranch        *b_HLT_HIL2Mu3_v2;   //!
+   TBranch        *b_HLT_HIL2Mu7_v2;   //!
+   TBranch        *b_HLT_HIL2Mu15_v2;   //!
    TBranch        *b_L1_DoubleMu3;   //!
    TBranch        *b_L1_DoubleMuOpen;   //!
    TBranch        *b_L1_DoubleMuOpen_BptxAND;   //!
@@ -630,6 +662,7 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("HLT_HIL2Mu3",&HLT_HIL2Mu3,&b_HLT_HIL2Mu3);
    fChain->SetBranchAddress("HLT_HIL2Mu7",&HLT_HIL2Mu7,&b_HLT_HIL2Mu7);
    fChain->SetBranchAddress("HLT_HIL2Mu15",&HLT_HIL2Mu15,&b_HLT_HIL2Mu15);
+   fChain->SetBranchAddress("HLT_HIL1SingleMu3",&HLT_HIL1SingleMu3,&b_HLT_HIL1SingleMu3);
    fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_v1",&HLT_HIL3DoubleMuOpen_v1,&b_HLT_HIL3DoubleMuOpen_v1);
    fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1",&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1);
    fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_v1",&HLT_HIL3DoubleMuOpen_Mgt2_OS_v1,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v1);
@@ -645,6 +678,21 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("HLT_HIL2Mu3_v1",&HLT_HIL2Mu3_v1,&b_HLT_HIL2Mu3_v1);
    fChain->SetBranchAddress("HLT_HIL2Mu7_v1",&HLT_HIL2Mu7_v1,&b_HLT_HIL2Mu7_v1);
    fChain->SetBranchAddress("HLT_HIL2Mu15_v1",&HLT_HIL2Mu15_v1,&b_HLT_HIL2Mu15_v1);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_v2",&HLT_HIL3DoubleMuOpen_v2,&b_HLT_HIL3DoubleMuOpen_v2);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v2",&HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v2,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v2);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_OS_v2",&HLT_HIL3DoubleMuOpen_Mgt2_OS_v2,&b_HLT_HIL3DoubleMuOpen_Mgt2_OS_v2);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_SS_v2",&HLT_HIL3DoubleMuOpen_Mgt2_SS_v2,&b_HLT_HIL3DoubleMuOpen_Mgt2_SS_v2);
+   fChain->SetBranchAddress("HLT_HIL3DoubleMuOpen_Mgt2_v2",&HLT_HIL3DoubleMuOpen_Mgt2_v2,&b_HLT_HIL3DoubleMuOpen_Mgt2_v2);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_NHitQ_v2",&HLT_HIL2DoubleMu0_NHitQ_v2,&b_HLT_HIL2DoubleMu0_NHitQ_v2);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v2",&HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v2,&b_HLT_HIL2DoubleMu0_L1HighQL2NHitQ_v2);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu0_v2",&HLT_HIL2DoubleMu0_v2,&b_HLT_HIL2DoubleMu0_v2);
+   fChain->SetBranchAddress("HLT_HIL2DoubleMu3_v2",&HLT_HIL2DoubleMu3_v2,&b_HLT_HIL2DoubleMu3_v2);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMuOpen_v2",&HLT_HIL1DoubleMuOpen_v2,&b_HLT_HIL1DoubleMuOpen_v2);
+   fChain->SetBranchAddress("HLT_HIL1DoubleMu0_HighQ_v2",&HLT_HIL1DoubleMu0_HighQ_v2,&b_HLT_HIL1DoubleMu0_HighQ_v2);
+   fChain->SetBranchAddress("HLT_HIL3Mu3_v2",&HLT_HIL3Mu3_v2,&b_HLT_HIL3Mu3_v2);
+   fChain->SetBranchAddress("HLT_HIL2Mu3_v2",&HLT_HIL2Mu3_v2,&b_HLT_HIL2Mu3_v2);
+   fChain->SetBranchAddress("HLT_HIL2Mu7_v2",&HLT_HIL2Mu7_v2,&b_HLT_HIL2Mu7_v2);
+   fChain->SetBranchAddress("HLT_HIL2Mu15_v2",&HLT_HIL2Mu15_v2,&b_HLT_HIL2Mu15_v2);
    fChain->SetBranchAddress("L1_DoubleMu3", &L1_DoubleMu3, &b_L1_DoubleMu3);
    fChain->SetBranchAddress("L1_DoubleMuOpen", &L1_DoubleMuOpen, &b_L1_DoubleMuOpen);
    fChain->SetBranchAddress("L1_DoubleMuOpen_BptxAND", &L1_DoubleMuOpen_BptxAND, &b_L1_DoubleMuOpen_BptxAND);

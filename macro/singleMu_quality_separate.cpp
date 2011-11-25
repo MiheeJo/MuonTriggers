@@ -51,8 +51,8 @@ int singleMu_quality_separate() {
 
 
   // Histograms
-  TH2F *SingleGlb_Etapt_2010 = new TH2F("etapt_2010","etapt_2010;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,PT,0,20);
-  TH2F *SingleGlb_Etapt_2011 = new TH2F("etapt_2011","etapt_2011;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,PT,0,20);
+  TH2F *SingleGlb_Etapt_2010 = new TH2F("etapt_2010","etapt_2010;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,60,0,60);
+  TH2F *SingleGlb_Etapt_2011 = new TH2F("etapt_2011","etapt_2011;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,60,0,60);
   TH2F *SingleGlb_Etaphi_2010 = new TH2F("etaphi_2010","etaphi_2010;single mu #eta;single mu #phi",ETA,-2.4,2.4,20,-PI,PI);
   TH2F *SingleGlb_Etaphi_2011 = new TH2F("etaphi_2011","etaphi_2011;single mu #eta;single mu #phi",ETA,-2.4,2.4,20,-PI,PI);
 
@@ -60,8 +60,8 @@ int singleMu_quality_separate() {
   TH1F *SingleGlb_Eta_2011 = new TH1F("eta_2011","eta_2011;single mu #eta",ETA,-2.4,2.4);
   TH1F *SingleGlb_Phi_2010 = new TH1F("phi_2010","phi_2010;single mu #phi",20,-PI,PI);
   TH1F *SingleGlb_Phi_2011 = new TH1F("phi_2011","phi_2011;single mu #phi",20,-PI,PI);
-  TH1F *SingleGlb_Pt_2010 = new TH1F("pt_2010","pt_2010;single mu p_{T}",PT,0,20);
-  TH1F *SingleGlb_Pt_2011 = new TH1F("pt_2011","pt_2011;single mu p_{T}",PT,0,20);
+  TH1F *SingleGlb_Pt_2010 = new TH1F("pt_2010","pt_2010;single mu p_{T}",60,0,60);
+  TH1F *SingleGlb_Pt_2011 = new TH1F("pt_2011","pt_2011;single mu p_{T}",60,0,60);
 
 	TH2F *SingleGlb_nValMuHits_eta_2010 = new TH2F("nValMuHits_eta_2010","nValMuHits_eta_2010;nValMuHits;#eta",55,0,55,ETA,-2.4,2.4);
   TH2F *SingleGlb_nValTrkHits_eta_2010 = new TH2F("nValTrkHits_eta_2010","nValTrkHits_eta_2010;nValTrkHits;#eta",27,0,27,ETA,-2.4,2.4);
@@ -71,13 +71,13 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_trkDz_eta_2010 = new TH2F("trkDz_eta_2010","trkDz_eta_2010;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2010 = new TH2F("trkDxy_eta_2010","trkDxy_eta_2010;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
-	TH2F *SingleGlb_nValMuHits_pt_2010 = new TH2F("nValMuHits_pt_2010","nValMuHits_pt_2010;nValMuHits;p_{T}",55,0,55,PT,0,20);
-  TH2F *SingleGlb_nValTrkHits_pt_2010 = new TH2F("nValTrkHits_pt_2010","nValTrkHits_pt_2010;nValTrkHits;p_{T}",27,0,27,PT,0,20);
-  TH2F *SingleGlb_glbChi2_ndof_pt_2010 = new TH2F("glbChi2_ndof_pt_2010","glbChi2_ndof_pt_2010;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
-  TH2F *SingleGlb_trkChi2_ndof_pt_2010 = new TH2F("trkChi2_ndof_pt_2010","trkChi2_ndof_pt_2010;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
-  TH2F *SingleGlb_pixLayerWMeas_pt_2010 = new TH2F("pixLayerWMeas_pt_2010","pixLayerWMeas_pt_2010;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
-  TH2F *SingleGlb_trkDz_pt_2010 = new TH2F("trkDz_pt_2010","trkDz_pt_2010;trkDz;p_{T}",100,0,2,PT,0,20);
-  TH2F *SingleGlb_trkDxy_pt_2010 = new TH2F("trkDxy_pt_2010","trkDxy_pt_2010;trkDxy;p_{T}",100,0,2,PT,0,20);
+	TH2F *SingleGlb_nValMuHits_pt_2010 = new TH2F("nValMuHits_pt_2010","nValMuHits_pt_2010;nValMuHits;p_{T}",55,0,55,60,0,60);
+  TH2F *SingleGlb_nValTrkHits_pt_2010 = new TH2F("nValTrkHits_pt_2010","nValTrkHits_pt_2010;nValTrkHits;p_{T}",27,0,27,60,0,60);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2010 = new TH2F("glbChi2_ndof_pt_2010","glbChi2_ndof_pt_2010;glbChi2_ndof;p_{T}",100,0,25,60,0,60);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2010 = new TH2F("trkChi2_ndof_pt_2010","trkChi2_ndof_pt_2010;trkChi2_ndof;p_{T}",100,0,10,60,0,60);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2010 = new TH2F("pixLayerWMeas_pt_2010","pixLayerWMeas_pt_2010;pixLayerWMeas;p_{T}",5,0,5,60,0,60);
+  TH2F *SingleGlb_trkDz_pt_2010 = new TH2F("trkDz_pt_2010","trkDz_pt_2010;trkDz;p_{T}",100,0,2,60,0,60);
+  TH2F *SingleGlb_trkDxy_pt_2010 = new TH2F("trkDxy_pt_2010","trkDxy_pt_2010;trkDxy;p_{T}",100,0,2,60,0,60);
 
 	TH2F *SingleGlb_nValMuHits_phi_2010 = new TH2F("nValMuHits_phi_2010","nValMuHits_phi_2010;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2010 = new TH2F("nValTrkHits_phi_2010","nValTrkHits_phi_2010;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
@@ -103,13 +103,13 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_trkDz_eta_2011 = new TH2F("trkDz_eta_2011","trkDz_eta_2011;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2011 = new TH2F("trkDxy_eta_2011","trkDxy_eta_2011;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
-	TH2F *SingleGlb_nValMuHits_pt_2011 = new TH2F("nValMuHits_pt_2011","nValMuHits_pt_2011;nValMuHits;p_{T}",55,0,55,PT,0,20);
-  TH2F *SingleGlb_nValTrkHits_pt_2011 = new TH2F("nValTrkHits_pt_2011","nValTrkHits_pt_2011;nValTrkHits;p_{T}",27,0,27,PT,0,20);
-  TH2F *SingleGlb_glbChi2_ndof_pt_2011 = new TH2F("glbChi2_ndof_pt_2011","glbChi2_ndof_pt_2011;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
-  TH2F *SingleGlb_trkChi2_ndof_pt_2011 = new TH2F("trkChi2_ndof_pt_2011","trkChi2_ndof_pt_2011;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
-  TH2F *SingleGlb_pixLayerWMeas_pt_2011 = new TH2F("pixLayerWMeas_pt_2011","pixLayerWMeas_pt_2011;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
-  TH2F *SingleGlb_trkDz_pt_2011 = new TH2F("trkDz_pt_2011","trkDz_pt_2011;trkDz;p_{T}",100,0,2,PT,0,20);
-  TH2F *SingleGlb_trkDxy_pt_2011 = new TH2F("trkDxy_pt_2011","trkDxy_pt_2011;trkDxy;p_{T}",100,0,2,PT,0,20);
+	TH2F *SingleGlb_nValMuHits_pt_2011 = new TH2F("nValMuHits_pt_2011","nValMuHits_pt_2011;nValMuHits;p_{T}",55,0,55,60,0,60);
+  TH2F *SingleGlb_nValTrkHits_pt_2011 = new TH2F("nValTrkHits_pt_2011","nValTrkHits_pt_2011;nValTrkHits;p_{T}",27,0,27,60,0,60);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2011 = new TH2F("glbChi2_ndof_pt_2011","glbChi2_ndof_pt_2011;glbChi2_ndof;p_{T}",100,0,25,60,0,60);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2011 = new TH2F("trkChi2_ndof_pt_2011","trkChi2_ndof_pt_2011;trkChi2_ndof;p_{T}",100,0,10,60,0,60);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2011 = new TH2F("pixLayerWMeas_pt_2011","pixLayerWMeas_pt_2011;pixLayerWMeas;p_{T}",5,0,5,60,0,60);
+  TH2F *SingleGlb_trkDz_pt_2011 = new TH2F("trkDz_pt_2011","trkDz_pt_2011;trkDz;p_{T}",100,0,2,60,0,60);
+  TH2F *SingleGlb_trkDxy_pt_2011 = new TH2F("trkDxy_pt_2011","trkDxy_pt_2011;trkDxy;p_{T}",100,0,2,60,0,60);
 
 	TH2F *SingleGlb_nValMuHits_phi_2011 = new TH2F("nValMuHits_phi_2011","nValMuHits_phi_2011;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2011 = new TH2F("nValTrkHits_phi_2011","nValTrkHits_phi_2011;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
@@ -135,13 +135,13 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_trkDz_eta_2010_qual = new TH2F("trkDz_eta_2010_qual","trkDz_eta_2010_qual;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2010_qual = new TH2F("trkDxy_eta_2010_qual","trkDxy_eta_2010_qual;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
-	TH2F *SingleGlb_nValMuHits_pt_2010_qual = new TH2F("nValMuHits_pt_2010_qual","nValMuHits_pt_2010_qual;nValMuHits;p_{T}",55,0,55,PT,0,20);
-  TH2F *SingleGlb_nValTrkHits_pt_2010_qual = new TH2F("nValTrkHits_pt_2010_qual","nValTrkHits_pt_2010_qual;nValTrkHits;p_{T}",27,0,27,PT,0,20);
-  TH2F *SingleGlb_glbChi2_ndof_pt_2010_qual = new TH2F("glbChi2_ndof_pt_2010_qual","glbChi2_ndof_pt_2010_qual;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
-  TH2F *SingleGlb_trkChi2_ndof_pt_2010_qual = new TH2F("trkChi2_ndof_pt_2010_qual","trkChi2_ndof_pt_2010_qual;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
-  TH2F *SingleGlb_pixLayerWMeas_pt_2010_qual = new TH2F("pixLayerWMeas_pt_2010_qual","pixLayerWMeas_pt_2010_qual;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
-  TH2F *SingleGlb_trkDz_pt_2010_qual = new TH2F("trkDz_pt_2010_qual","trkDz_pt_2010_qual;trkDz;p_{T}",100,0,2,PT,0,20);
-  TH2F *SingleGlb_trkDxy_pt_2010_qual = new TH2F("trkDxy_pt_2010_qual","trkDxy_pt_2010_qual;trkDxy;p_{T}",100,0,2,PT,0,20);
+	TH2F *SingleGlb_nValMuHits_pt_2010_qual = new TH2F("nValMuHits_pt_2010_qual","nValMuHits_pt_2010_qual;nValMuHits;p_{T}",55,0,55,60,0,60);
+  TH2F *SingleGlb_nValTrkHits_pt_2010_qual = new TH2F("nValTrkHits_pt_2010_qual","nValTrkHits_pt_2010_qual;nValTrkHits;p_{T}",27,0,27,60,0,60);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2010_qual = new TH2F("glbChi2_ndof_pt_2010_qual","glbChi2_ndof_pt_2010_qual;glbChi2_ndof;p_{T}",100,0,25,60,0,60);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2010_qual = new TH2F("trkChi2_ndof_pt_2010_qual","trkChi2_ndof_pt_2010_qual;trkChi2_ndof;p_{T}",100,0,10,60,0,60);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2010_qual = new TH2F("pixLayerWMeas_pt_2010_qual","pixLayerWMeas_pt_2010_qual;pixLayerWMeas;p_{T}",5,0,5,60,0,60);
+  TH2F *SingleGlb_trkDz_pt_2010_qual = new TH2F("trkDz_pt_2010_qual","trkDz_pt_2010_qual;trkDz;p_{T}",100,0,2,60,0,60);
+  TH2F *SingleGlb_trkDxy_pt_2010_qual = new TH2F("trkDxy_pt_2010_qual","trkDxy_pt_2010_qual;trkDxy;p_{T}",100,0,2,60,0,60);
 
 	TH2F *SingleGlb_nValMuHits_phi_2010_qual = new TH2F("nValMuHits_phi_2010_qual","nValMuHits_phi_2010_qual;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2010_qual = new TH2F("nValTrkHits_phi_2010_qual","nValTrkHits_phi_2010_qual;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
@@ -167,13 +167,13 @@ int singleMu_quality_separate() {
   TH2F *SingleGlb_trkDz_eta_2011_qual = new TH2F("trkDz_eta_2011_qual","trkDz_eta_2011_qual;trkDz;#eta",100,0,2,ETA,-2.4,2.4);
   TH2F *SingleGlb_trkDxy_eta_2011_qual = new TH2F("trkDxy_eta_2011_qual","trkDxy_eta_2011_qual;trkDxy;#eta",100,0,2,ETA,-2.4,2.4);
 
-	TH2F *SingleGlb_nValMuHits_pt_2011_qual = new TH2F("nValMuHits_pt_2011_qual","nValMuHits_pt_2011_qual;nValMuHits;p_{T}",55,0,55,PT,0,20);
-  TH2F *SingleGlb_nValTrkHits_pt_2011_qual = new TH2F("nValTrkHits_pt_2011_qual","nValTrkHits_pt_2011_qual;nValTrkHits;p_{T}",27,0,27,PT,0,20);
-  TH2F *SingleGlb_glbChi2_ndof_pt_2011_qual = new TH2F("glbChi2_ndof_pt_2011_qual","glbChi2_ndof_pt_2011_qual;glbChi2_ndof;p_{T}",100,0,25,PT,0,20);
-  TH2F *SingleGlb_trkChi2_ndof_pt_2011_qual = new TH2F("trkChi2_ndof_pt_2011_qual","trkChi2_ndof_pt_2011_qual;trkChi2_ndof;p_{T}",100,0,10,PT,0,20);
-  TH2F *SingleGlb_pixLayerWMeas_pt_2011_qual = new TH2F("pixLayerWMeas_pt_2011_qual","pixLayerWMeas_pt_2011_qual;pixLayerWMeas;p_{T}",5,0,5,PT,0,20);
-  TH2F *SingleGlb_trkDz_pt_2011_qual = new TH2F("trkDz_pt_2011_qual","trkDz_pt_2011_qual;trkDz;p_{T}",100,0,2,PT,0,20);
-  TH2F *SingleGlb_trkDxy_pt_2011_qual = new TH2F("trkDxy_pt_2011_qual","trkDxy_pt_2011_qual;trkDxy;p_{T}",100,0,2,PT,0,20);	
+	TH2F *SingleGlb_nValMuHits_pt_2011_qual = new TH2F("nValMuHits_pt_2011_qual","nValMuHits_pt_2011_qual;nValMuHits;p_{T}",55,0,55,60,0,60);
+  TH2F *SingleGlb_nValTrkHits_pt_2011_qual = new TH2F("nValTrkHits_pt_2011_qual","nValTrkHits_pt_2011_qual;nValTrkHits;p_{T}",27,0,27,60,0,60);
+  TH2F *SingleGlb_glbChi2_ndof_pt_2011_qual = new TH2F("glbChi2_ndof_pt_2011_qual","glbChi2_ndof_pt_2011_qual;glbChi2_ndof;p_{T}",100,0,25,60,0,60);
+  TH2F *SingleGlb_trkChi2_ndof_pt_2011_qual = new TH2F("trkChi2_ndof_pt_2011_qual","trkChi2_ndof_pt_2011_qual;trkChi2_ndof;p_{T}",100,0,10,60,0,60);
+  TH2F *SingleGlb_pixLayerWMeas_pt_2011_qual = new TH2F("pixLayerWMeas_pt_2011_qual","pixLayerWMeas_pt_2011_qual;pixLayerWMeas;p_{T}",5,0,5,60,0,60);
+  TH2F *SingleGlb_trkDz_pt_2011_qual = new TH2F("trkDz_pt_2011_qual","trkDz_pt_2011_qual;trkDz;p_{T}",100,0,2,60,0,60);
+  TH2F *SingleGlb_trkDxy_pt_2011_qual = new TH2F("trkDxy_pt_2011_qual","trkDxy_pt_2011_qual;trkDxy;p_{T}",100,0,2,60,0,60);	
 	
 	TH2F *SingleGlb_nValMuHits_phi_2011_qual = new TH2F("nValMuHits_phi_2011_qual","nValMuHits_phi_2011_qual;nValMuHits;#phi",55,0,55,PHI,-PI,PI);
   TH2F *SingleGlb_nValTrkHits_phi_2011_qual = new TH2F("nValTrkHits_phi_2011_qual","nValTrkHits_phi_2011_qual;nValTrkHits;#phi",27,0,27,PHI,-PI,PI);
@@ -191,8 +191,8 @@ int singleMu_quality_separate() {
   TH1F *SingleGlb_trkDz_2011_qual = new TH1F("trkDz_2011_qual","trkDz_2011_qual;trkDz",100,0,2);
   TH1F *SingleGlb_trkDxy_2011_qual = new TH1F("trkDxy_2011_qual","trkDxy_2011_qual;trkDxy",100,0,2);
 	
-  TH2F *SingleGlb_Etapt_2010_qual = new TH2F("etapt_2010_qual","etapt_2010_qual;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,PT,0,20);
-  TH2F *SingleGlb_Etapt_2011_qual = new TH2F("etapt_2011_qual","etapt_2011_qual;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,PT,0,20);
+  TH2F *SingleGlb_Etapt_2010_qual = new TH2F("etapt_2010_qual","etapt_2010_qual;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,60,0,60);
+  TH2F *SingleGlb_Etapt_2011_qual = new TH2F("etapt_2011_qual","etapt_2011_qual;single mu #eta;single mu p_{T}",ETA,-2.4,2.4,60,0,60);
   TH2F *SingleGlb_Etaphi_2010_qual = new TH2F("etaphi_2010_qual","etaphi_2010_qual;single mu #eta;single mu #phi",ETA,-2.4,2.4,20,-PI,PI);
   TH2F *SingleGlb_Etaphi_2011_qual = new TH2F("etaphi_2011_qual","etaphi_2011_qual;single mu #eta;single mu #phi",ETA,-2.4,2.4,20,-PI,PI);
 
@@ -200,8 +200,8 @@ int singleMu_quality_separate() {
   TH1F *SingleGlb_Eta_2011_qual = new TH1F("eta_2011_qual","eta_2011_qual;single mu #eta",ETA,-2.4,2.4);
   TH1F *SingleGlb_Phi_2010_qual = new TH1F("phi_2010_qual","phi_2010_qual;single mu #phi",20,-PI,PI);
   TH1F *SingleGlb_Phi_2011_qual = new TH1F("phi_2011_qual","phi_2011_qual;single mu #phi",20,-PI,PI);
-  TH1F *SingleGlb_Pt_2010_qual = new TH1F("pt_2010_qual","pt_2010_qual;single mu p_{T}",PT,0,20);
-  TH1F *SingleGlb_Pt_2011_qual = new TH1F("pt_2011_qual","pt_2011_qual;single mu p_{T}",PT,0,20);
+  TH1F *SingleGlb_Pt_2010_qual = new TH1F("pt_2010_qual","pt_2010_qual;single mu p_{T}",60,0,60);
+  TH1F *SingleGlb_Pt_2011_qual = new TH1F("pt_2011_qual","pt_2011_qual;single mu p_{T}",60,0,60);
 	
   // Input files
   // 2010 datafile
@@ -295,7 +295,7 @@ int singleMu_quality_separate() {
   // Loop over trees over 2010 trees
 	int max_event_2010 = muon_tree_2010->GetEntries();
 	int max_event_2011 = muon_tree_2011->GetEntries();
-//	int max_event_2010 = 10000;
+//	int max_event_2010 = 1000;
 //	int max_event_2011 = 10000;
 
   for (int i=0; i<max_event_2010; i++) {
@@ -317,10 +317,8 @@ int singleMu_quality_separate() {
 				}
 			}
 
-      qual = true;
-	  
 	  if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!    
-
+			  
 		if (flag->doGlb) {
 //      if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
 //      if(!isValidMu(flag, muTree_2010, a)) continue;    //Check glb muons are within acceptance range
@@ -329,8 +327,10 @@ int singleMu_quality_separate() {
         if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check sta muons are within acceptance range
       }
 			
-			if (muTree_2010->pt[a] < 3) continue;
+		if (muTree_2010->pt[a] < 3) continue;
 
+		qual = true;
+			
       SingleGlb_Etapt_2010->Fill(muTree_2010->eta[a],muTree_2010->pt[a]);
       SingleGlb_Etaphi_2010->Fill(muTree_2010->eta[a],muTree_2010->phi[a]);
       SingleGlb_Eta_2010->Fill(muTree_2010->eta[a]);
@@ -428,14 +428,6 @@ int singleMu_quality_separate() {
     bool qual=false;
     ////////// Load muons and fill up histograms
     for (int a=0; a < muTree_2011->nptl; a++) {
-      if (flag->doGlb) {
-//      if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
-//      if(!isValidMu(flag, muTree_2010, a)) continue;    //Check glb muons are within acceptance range
-//				if (muTree_2011->pt[a] >= 3) continue;
-      } else if (flag->doSta) {
-        if(!isMuInAcc(flag, muTree_2011->eta[a], muTree_2011->pt[a])) continue;    //Check sta muons are within acceptance range
-      }
-						
 			////////// Check muon trigger list
 			flag->trig = false;
 			for (unsigned int tidx=0; tidx<ntrig; tidx++) {
@@ -444,12 +436,21 @@ int singleMu_quality_separate() {
 				break;
 				}
 			}
+
 			if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!
+
+      if (flag->doGlb) {
+//      if(!isMuInAcc(flag, muTree_2010->eta[a], muTree_2010->pt[a])) continue;    //Check glb muons are within acceptance range
+//      if(!isValidMu(flag, muTree_2010, a)) continue;    //Check glb muons are within acceptance range
+//				if (muTree_2011->pt[a] >= 3) continue;
+      } else if (flag->doSta) {
+        if(!isMuInAcc(flag, muTree_2011->eta[a], muTree_2011->pt[a])) continue;    //Check sta muons are within acceptance range
+      }
+			
+			if (muTree_2011->pt[a] < 3) continue;
 
       qual = true;
 
-			if (muTree_2011->pt[a] < 3) continue;
-			
       SingleGlb_Etapt_2011->Fill(muTree_2011->eta[a],muTree_2011->pt[a]);
       SingleGlb_Etaphi_2011->Fill(muTree_2011->eta[a],muTree_2011->phi[a]);
       SingleGlb_Eta_2011->Fill(muTree_2011->eta[a]);
@@ -543,11 +544,14 @@ int singleMu_quality_separate() {
   gROOT->Macro("~miheejo/public/HIMuTrig/TrigStyle.C");    //For plot style
   TCanvas *canv = new TCanvas("canv","canv",800,600);
 
-  TLegend *leg = new TLegend(0.3,0.70,0.45,0.83);
+  TLegend *leg = new TLegend(0.15,0.90,0.2,1.0);
   leg->SetFillColor(0);
   leg->SetBorderSize(0);
   leg->SetTextSize(0.05);
 
+	double marker_size = 2.0;
+	double label_size = 0.05;
+	
   TLatex *lax = new TLatex();
   lax->SetTextSize(0.1);
 	stringstream title;
@@ -566,13 +570,13 @@ int singleMu_quality_separate() {
 	TLine* l3a;
 	
 	gStyle->SetPalette(1,0);
-	gStyle->SetPadLeftMargin(0.05);
+	gStyle->SetPadLeftMargin(0.07);
 	gStyle->SetPadBottomMargin(0.2);
-	gStyle->SetPadTopMargin(0.2);
+	gStyle->SetPadTopMargin(0.1);
 	gStyle->SetPadRightMargin(0.02);
 	gStyle->SetOptTitle(1);
 	gStyle->SetTextSize(0.03);
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
 
 	gStyle->SetOptTitle(0);
 	gStyle->SetStatX(0.8);
@@ -585,20 +589,27 @@ int singleMu_quality_separate() {
 	canv = new TCanvas("canv","canv",1300,1000);
 	
 	pad1 = new TPad("pad1", "The pad 70% of the height",0.0,0.3,1.0,1.0,0);
-	pad1->SetTopMargin(0.0);
+	pad1->SetTopMargin(0.1);
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(0);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_Eta_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_Eta_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_Eta_2010->SetMinimum(0);
 	SingleGlb_Eta_2010->Sumw2();
   SingleGlb_Eta_2010->SetMarkerStyle(25);
+  SingleGlb_Eta_2010->SetMarkerSize(marker_size);
 	SingleGlb_Eta_2010->Scale(1.0/SingleGlb_Eta_2010->GetEntries());
   SingleGlb_Eta_2010->DrawNormalized("p e",1);
 	gStyle->SetStatX(0.8);
@@ -611,13 +622,14 @@ int singleMu_quality_separate() {
   SingleGlb_Eta_2011->Sumw2();
   SingleGlb_Eta_2011->SetMarkerColor(kRed);
   SingleGlb_Eta_2011->SetMarkerStyle(20);
+  SingleGlb_Eta_2011->SetMarkerSize(marker_size);
 	SingleGlb_Eta_2011->Scale(1.0/SingleGlb_Eta_2011->GetEntries());
   SingleGlb_Eta_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_Eta_2010->GetEntries();
 	entries_2011 = SingleGlb_Eta_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_Eta_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_Eta_2011,count_2011,"lp");
@@ -630,6 +642,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_Eta_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -639,13 +653,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("#eta");
 	
 	gStyle->SetOptTitle(0);
@@ -670,16 +684,21 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(1);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_Pt_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_Pt_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_Pt_2010->SetMinimum(1);
 	SingleGlb_Pt_2010->Sumw2();
   SingleGlb_Pt_2010->SetMarkerStyle(25);
+  SingleGlb_Pt_2010->SetMarkerSize(marker_size);
 	SingleGlb_Pt_2010->Scale(1.0/SingleGlb_Pt_2010->GetEntries());
   SingleGlb_Pt_2010->DrawNormalized("p e",1);
 	gStyle->SetStatX(0.8);
@@ -692,13 +711,14 @@ int singleMu_quality_separate() {
   SingleGlb_Pt_2011->Sumw2();
   SingleGlb_Pt_2011->SetMarkerColor(kRed);
   SingleGlb_Pt_2011->SetMarkerStyle(20);
+  SingleGlb_Pt_2011->SetMarkerSize(marker_size);
 	SingleGlb_Pt_2011->Scale(1.0/SingleGlb_Pt_2011->GetEntries());
   SingleGlb_Pt_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_Pt_2010->GetEntries();
 	entries_2011 = SingleGlb_Pt_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_Pt_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_Pt_2011,count_2011,"lp");
@@ -711,6 +731,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_Pt_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -720,13 +742,12 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("p_{T}");
 	
 	gStyle->SetOptTitle(0);
@@ -734,10 +755,10 @@ int singleMu_quality_separate() {
 	
 	ratio_2011->Draw();
 
-	l3a = new TLine(0,1.0,20,1.0);
+	l3a = new TLine(0,1.0,60,1.0);
 	l3a->SetHorizontal(1);
 	l3a->SetLineStyle(2);
-	l3a->SetX2(20);
+	l3a->SetX2(60);
 	l3a->Draw("same");
 	
 	canv->SaveAs("SingleGlb_Pt.pdf");
@@ -751,16 +772,22 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(0);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_Phi_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_Phi_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_Phi_2010->SetMinimum(0);
 	SingleGlb_Phi_2010->Sumw2();
   SingleGlb_Phi_2010->SetMarkerStyle(25);
+  SingleGlb_Phi_2010->SetMarkerSize(marker_size);
 	SingleGlb_Phi_2010->Scale(1.0/SingleGlb_Phi_2010->GetEntries());
   SingleGlb_Phi_2010->DrawNormalized("p e",1);
 	gStyle->SetStatX(0.8);
@@ -773,13 +800,14 @@ int singleMu_quality_separate() {
   SingleGlb_Phi_2011->Sumw2();
   SingleGlb_Phi_2011->SetMarkerColor(kRed);
   SingleGlb_Phi_2011->SetMarkerStyle(20);
+  SingleGlb_Phi_2011->SetMarkerSize(marker_size);
 	SingleGlb_Phi_2011->Scale(1.0/SingleGlb_Phi_2011->GetEntries());
   SingleGlb_Phi_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_Phi_2010->GetEntries();
 	entries_2011 = SingleGlb_Phi_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_Phi_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_Phi_2011,count_2011,"lp");
@@ -792,6 +820,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_Phi_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -801,13 +831,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("#phi");
 	
 	gStyle->SetOptTitle(0);
@@ -832,16 +862,23 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(0);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_nValMuHits_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_nValMuHits_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_nValMuHits_2010->SetMinimum(0);
 	SingleGlb_nValMuHits_2010->Sumw2();
   SingleGlb_nValMuHits_2010->SetMarkerStyle(25);
+  SingleGlb_nValMuHits_2010->SetMarkerSize(marker_size);
 	SingleGlb_nValMuHits_2010->Scale(1.0/SingleGlb_nValMuHits_2010->GetEntries());
   SingleGlb_nValMuHits_2010->DrawNormalized("p e",1);
 	gStyle->SetStatX(0.8);
@@ -854,13 +891,14 @@ int singleMu_quality_separate() {
   SingleGlb_nValMuHits_2011->Sumw2();
   SingleGlb_nValMuHits_2011->SetMarkerColor(kRed);
   SingleGlb_nValMuHits_2011->SetMarkerStyle(20);
+  SingleGlb_nValMuHits_2011->SetMarkerSize(marker_size);
 	SingleGlb_nValMuHits_2011->Scale(1.0/SingleGlb_nValMuHits_2011->GetEntries());
   SingleGlb_nValMuHits_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_nValMuHits_2010->GetEntries();
 	entries_2011 = SingleGlb_nValMuHits_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_nValMuHits_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_nValMuHits_2011,count_2011,"lp");
@@ -873,6 +911,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_nValMuHits_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -882,13 +922,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("Number of Valid Muon Hits");
 	
 	gStyle->SetOptTitle(0);
@@ -913,16 +953,23 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(0);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_nValTrkHits_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_nValTrkHits_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_nValTrkHits_2010->SetMinimum(0);
 	SingleGlb_nValTrkHits_2010->Sumw2();
   SingleGlb_nValTrkHits_2010->SetMarkerStyle(25);
+  SingleGlb_nValTrkHits_2010->SetMarkerSize(marker_size);
 	SingleGlb_nValTrkHits_2010->Scale(1.0/SingleGlb_nValTrkHits_2010->GetEntries());
   SingleGlb_nValTrkHits_2010->DrawNormalized("p e",1);
 	canv->Update();
@@ -936,13 +983,14 @@ int singleMu_quality_separate() {
   SingleGlb_nValTrkHits_2011->Sumw2();
   SingleGlb_nValTrkHits_2011->SetMarkerColor(kRed);
   SingleGlb_nValTrkHits_2011->SetMarkerStyle(20);
+  SingleGlb_nValTrkHits_2011->SetMarkerSize(marker_size);
 	SingleGlb_nValTrkHits_2011->Scale(1.0/SingleGlb_nValTrkHits_2011->GetEntries());
   SingleGlb_nValTrkHits_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_nValTrkHits_2010->GetEntries();
 	entries_2011 = SingleGlb_nValTrkHits_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_nValTrkHits_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_nValTrkHits_2011,count_2011,"lp");
@@ -955,6 +1003,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_nValTrkHits_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -964,13 +1014,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("Number of Valid Tracker Hits");
 	
 	gStyle->SetOptTitle(0);
@@ -994,16 +1044,23 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(1);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_glbChi2_ndof_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_glbChi2_ndof_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_glbChi2_ndof_2010->SetMinimum(1);
 	SingleGlb_glbChi2_ndof_2010->Sumw2();
   SingleGlb_glbChi2_ndof_2010->SetMarkerStyle(25);
+  SingleGlb_glbChi2_ndof_2010->SetMarkerSize(marker_size);
 	SingleGlb_glbChi2_ndof_2010->Scale(1.0/SingleGlb_glbChi2_ndof_2010->GetEntries());
   SingleGlb_glbChi2_ndof_2010->DrawNormalized("p e",1);
 	canv->Update();
@@ -1017,13 +1074,14 @@ int singleMu_quality_separate() {
   SingleGlb_glbChi2_ndof_2011->Sumw2();
   SingleGlb_glbChi2_ndof_2011->SetMarkerColor(kRed);
   SingleGlb_glbChi2_ndof_2011->SetMarkerStyle(20);
+  SingleGlb_glbChi2_ndof_2011->SetMarkerSize(marker_size);
 	SingleGlb_glbChi2_ndof_2011->Scale(1.0/SingleGlb_glbChi2_ndof_2011->GetEntries());
   SingleGlb_glbChi2_ndof_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_glbChi2_ndof_2010->GetEntries();
 	entries_2011 = SingleGlb_glbChi2_ndof_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_glbChi2_ndof_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_glbChi2_ndof_2011,count_2011,"lp");
@@ -1036,6 +1094,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_glbChi2_ndof_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -1045,13 +1105,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("Global #chi^{2}");
 	
 	gStyle->SetOptTitle(0);
@@ -1075,16 +1135,23 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(1);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_trkChi2_ndof_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_trkChi2_ndof_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_trkChi2_ndof_2010->SetMinimum(1);
 	SingleGlb_trkChi2_ndof_2010->Sumw2();
   SingleGlb_trkChi2_ndof_2010->SetMarkerStyle(25);
+  SingleGlb_trkChi2_ndof_2010->SetMarkerSize(marker_size);
 	SingleGlb_trkChi2_ndof_2010->Scale(1.0/SingleGlb_trkChi2_ndof_2010->GetEntries());
   SingleGlb_trkChi2_ndof_2010->DrawNormalized("p e",1);
 	canv->Update();
@@ -1098,13 +1165,14 @@ int singleMu_quality_separate() {
   SingleGlb_trkChi2_ndof_2011->Sumw2();
   SingleGlb_trkChi2_ndof_2011->SetMarkerColor(kRed);
   SingleGlb_trkChi2_ndof_2011->SetMarkerStyle(20);
+  SingleGlb_trkChi2_ndof_2011->SetMarkerSize(marker_size);
 	SingleGlb_trkChi2_ndof_2011->Scale(1.0/SingleGlb_trkChi2_ndof_2011->GetEntries());
   SingleGlb_trkChi2_ndof_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_trkChi2_ndof_2010->GetEntries();
 	entries_2011 = SingleGlb_trkChi2_ndof_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_trkChi2_ndof_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_trkChi2_ndof_2011,count_2011,"lp");
@@ -1117,6 +1185,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_trkChi2_ndof_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -1126,13 +1196,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("Tracker #chi^{2}");
 	
 	gStyle->SetOptTitle(0);
@@ -1156,16 +1226,23 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(0);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_pixLayerWMeas_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_pixLayerWMeas_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_pixLayerWMeas_2010->SetMinimum(0);
 	SingleGlb_pixLayerWMeas_2010->Sumw2();
   SingleGlb_pixLayerWMeas_2010->SetMarkerStyle(25);
+  SingleGlb_pixLayerWMeas_2010->SetMarkerSize(marker_size);
 	SingleGlb_pixLayerWMeas_2010->Scale(1.0/SingleGlb_pixLayerWMeas_2010->GetEntries());
   SingleGlb_pixLayerWMeas_2010->DrawNormalized("p e",1);
 	canv->Update();
@@ -1179,13 +1256,14 @@ int singleMu_quality_separate() {
   SingleGlb_pixLayerWMeas_2011->Sumw2();
   SingleGlb_pixLayerWMeas_2011->SetMarkerColor(kRed);
   SingleGlb_pixLayerWMeas_2011->SetMarkerStyle(20);
+  SingleGlb_pixLayerWMeas_2011->SetMarkerSize(marker_size);
 	SingleGlb_pixLayerWMeas_2011->Scale(1.0/SingleGlb_pixLayerWMeas_2011->GetEntries());
   SingleGlb_pixLayerWMeas_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_pixLayerWMeas_2010->GetEntries();
 	entries_2011 = SingleGlb_pixLayerWMeas_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_pixLayerWMeas_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_pixLayerWMeas_2011,count_2011,"lp");
@@ -1197,7 +1275,9 @@ int singleMu_quality_separate() {
 	ratio_2011 = (TH1F*)SingleGlb_pixLayerWMeas_2011->Clone("ratio_2011");
 	ratio_2011->Divide(SingleGlb_pixLayerWMeas_2010);
 	ratio_2011->SetMarkerColor(kViolet);
-	ratio_2011->SetMarkerStyle(29);
+		ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -1207,13 +1287,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("Number of Pixel Layers with Measurement");
 	
 	gStyle->SetOptTitle(0);
@@ -1237,16 +1317,23 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(1);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_trkDz_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_trkDz_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_trkDz_2010->SetMinimum(1);
 	SingleGlb_trkDz_2010->Sumw2();
   SingleGlb_trkDz_2010->SetMarkerStyle(25);
+  SingleGlb_trkDz_2010->SetMarkerSize(marker_size);
 	SingleGlb_trkDz_2010->Scale(1.0/SingleGlb_trkDz_2010->GetEntries());
   SingleGlb_trkDz_2010->DrawNormalized("p e",1);
 	canv->Update();
@@ -1260,13 +1347,14 @@ int singleMu_quality_separate() {
   SingleGlb_trkDz_2011->Sumw2();
   SingleGlb_trkDz_2011->SetMarkerColor(kRed);
   SingleGlb_trkDz_2011->SetMarkerStyle(20);
+  SingleGlb_trkDz_2011->SetMarkerSize(marker_size);
 	SingleGlb_trkDz_2011->Scale(1.0/SingleGlb_trkDz_2011->GetEntries());
   SingleGlb_trkDz_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_trkDz_2010->GetEntries();
 	entries_2011 = SingleGlb_trkDz_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_trkDz_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_trkDz_2011,count_2011,"lp");
@@ -1279,6 +1367,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_trkDz_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -1288,13 +1378,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("Track Dz (cm)");
 	
 	gStyle->SetOptTitle(0);
@@ -1318,16 +1408,24 @@ int singleMu_quality_separate() {
 	pad1->SetBottomMargin(0.0);
 	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
 	pad2->SetTopMargin(0.0);
+	pad2->SetBottomMargin(0.35);
+
+
+
+	pad2->SetBottomMargin(0.1);
 	pad1->Draw();
 	pad2->Draw();
 
 	pad1->cd();
 	pad1->SetLogy(1);
 
-	gStyle->SetMarkerSize(2.0);
+	gStyle->SetMarkerSize(1);
+	SingleGlb_trkDxy_2010->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_trkDxy_2010->GetYaxis()->SetLabelSize(label_size);
 	SingleGlb_trkDxy_2010->SetMinimum(1);
 	SingleGlb_trkDxy_2010->Sumw2();
   SingleGlb_trkDxy_2010->SetMarkerStyle(25);
+  SingleGlb_trkDxy_2010->SetMarkerSize(marker_size);
 	SingleGlb_trkDxy_2010->Scale(1.0/SingleGlb_trkDxy_2010->GetEntries());
   SingleGlb_trkDxy_2010->DrawNormalized("p e",1);
 	canv->Update();
@@ -1341,13 +1439,14 @@ int singleMu_quality_separate() {
   SingleGlb_trkDxy_2011->Sumw2();
   SingleGlb_trkDxy_2011->SetMarkerColor(kRed);
   SingleGlb_trkDxy_2011->SetMarkerStyle(20);
+  SingleGlb_trkDxy_2011->SetMarkerStyle(marker_size);
 	SingleGlb_trkDxy_2011->Scale(1.0/SingleGlb_trkDxy_2011->GetEntries());
   SingleGlb_trkDxy_2011->DrawNormalized("p e sames",1);
 	gStyle->SetStatX(1.0);
 	entries_2010 = SingleGlb_trkDxy_2010->GetEntries();
 	entries_2011 = SingleGlb_trkDxy_2011->GetEntries();
-	sprintf(count_2010,"2010 Data - %i Events", entries_2010);
-	sprintf(count_2011,"2011 Data - %i Events", entries_2011);
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
 	leg->Clear();
 	leg->AddEntry(SingleGlb_trkDxy_2010,count_2010,"lp");
 	leg->AddEntry(SingleGlb_trkDxy_2011,count_2011,"lp");
@@ -1360,6 +1459,8 @@ int singleMu_quality_separate() {
 	ratio_2011->Divide(SingleGlb_trkDxy_2010);
 	ratio_2011->SetMarkerColor(kViolet);
 	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
 	ratio_2011->SetMinimum(0);
 	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
 
@@ -1369,13 +1470,13 @@ int singleMu_quality_separate() {
 	gStyle->SetStatH(0.3);
 	gStyle->SetOptStat("");
 
-	gStyle->SetMarkerSize(3.0);
-	ratio_2011->GetYaxis()->SetLabelSize(0.1);
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
 	ratio_2011->GetYaxis()->SetNdivisions(505);
 
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetLabelSize(0.1);
-	ratio_2011->GetXaxis()->SetTitleSize(0.1);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
 	ratio_2011->GetXaxis()->SetTitle("Track Dxy (cm)");
 	
 	gStyle->SetOptTitle(0);
@@ -1397,7 +1498,7 @@ int singleMu_quality_separate() {
 
 	gStyle->SetPadTopMargin(0.10);
 	gStyle->SetPadRightMargin(0.15);
-	gStyle->SetPadLeftMargin(0.15);
+	gStyle->SetPadLeftMargin(0.10);
 	gStyle->SetPadBottomMargin(0.1);
 
 	gStyle->SetStatX(1.0);

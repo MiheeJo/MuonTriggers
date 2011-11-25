@@ -395,6 +395,9 @@ public :
    Int_t           L1_SingleMu7;
    Int_t           L1_SingleMuBeamHalo;
    Int_t           L1_SingleMuOpen;
+   Int_t           L1_HcalHfCoincPmORBscMinBiasThresh1_BptxAND_instance1;
+   Int_t           L1_NotBsc2_BscMinBiasOR;
+   Int_t           L1_NotBsc2_HcalHfMmOrPpOrPm;
 
    // List of branches
    TBranch        *b_Npart;   //!
@@ -522,6 +525,9 @@ public :
    TBranch        *b_L1_SingleMu7;   //!
    TBranch        *b_L1_SingleMuBeamHalo;   //!
    TBranch        *b_L1_SingleMuOpen;   //!
+   TBranch        *b_L1_HcalHfCoincPmORBscMinBiasThresh1_BptxAND_instance1;
+   TBranch        *b_L1_NotBsc2_BscMinBiasOR;
+   TBranch        *b_L1_NotBsc2_HcalHfMmOrPpOrPm;
 
    HltTree(TCastorFile *f, bool castor = true, string dir = "hltanalysis/HltTree");
    virtual ~HltTree();
@@ -706,6 +712,9 @@ void HltTree::Init(TTree *tree)
    fChain->SetBranchAddress("L1_SingleMu7", &L1_SingleMu7, &b_L1_SingleMu7);
    fChain->SetBranchAddress("L1_SingleMuBeamHalo", &L1_SingleMuBeamHalo, &b_L1_SingleMuBeamHalo);
    fChain->SetBranchAddress("L1_SingleMuOpen", &L1_SingleMuOpen, &b_L1_SingleMuOpen);
+   fChain->SetBranchAddress("L1_HcalHfCoincPmORBscMinBiasThresh1_BptxAND_instance1",&L1_HcalHfCoincPmORBscMinBiasThresh1_BptxAND_instance1,&b_L1_HcalHfCoincPmORBscMinBiasThresh1_BptxAND_instance1);
+   fChain->SetBranchAddress("L1_NotBsc2_BscMinBiasOR",&L1_NotBsc2_BscMinBiasOR,&b_L1_NotBsc2_BscMinBiasOR);
+   fChain->SetBranchAddress("L1_NotBsc2_HcalHfMmOrPpOrPm",&L1_NotBsc2_HcalHfMmOrPpOrPm,&b_L1_NotBsc2_HcalHfMmOrPpOrPm);
 }
 
 

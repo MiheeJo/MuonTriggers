@@ -27,9 +27,8 @@ int diMu_plots() {
   flag->doSta = false;
   flag->doGlb = true;
 
-  string data2010  = "/castor/cern.ch/user/m/miheejo/openHLT/cms442p5/HICorePhysics_Skim_MinimumBias_RAW/openhlt_2010HICorePhysicsMB.root";
-  // 2011 file will be updated.
-  string data2011  = "/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIData2011_rawToRecoV3_LSF/openhlt_HIData2011_rawToRecoV3_LSF.root";
+  string data2010 = "/castor/cern.ch/user/m/miheejo/openHLT/cms413p3/HIRun2010-SDmaker_3SD_1CS_PDHIAllPhysicsZSv2_SD_MuHI-v1/openHLT_L1SingleMu3_L2Mu3.root";
+	string data2011 = "/castor/cern.ch/user/m/miheejo/openHLT/RD2011/HIDiMuon_HIRun2011-PromptReco-v1_RECO/openhlt_PromptReco_181611_182099_L2Mu3_NHitQ.root";
   
   // Check trigger list
   vector<string> triglist;
@@ -46,7 +45,44 @@ int diMu_plots() {
   int MASS = 20;
   double Xaxis[20] = {0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100};
 
+	char title[256];
+	char sub_title[256];
+
+	char* particle_names[] = {"J/Psi","Upsilon","Z"};
+	
   // Histograms
+	TH1F *SingleGlb_Eta_2010[3];
+	TH1F *SingleGlb_Phi_2010[3];
+	TH1F *SingleGlb_Pt_2010[3];
+
+	TH1F *SingleGlb_Eta_2011[3];
+	TH1F *SingleGlb_Phi_2011[3];
+	TH1F *SingleGlb_Pt_2011[3];
+	
+	for (int i = 0; i < 3; i++) {
+
+		sprintf(title,"SingleGlb_eta_2010_%s",particle_names[i]);
+		sprintf(sub_title,"%s;#eta;counts",title);
+		SingleGlb_Eta_2010[i] = new TH1F(title,sub_title,ETA,-2.4,2.4);
+		sprintf(title,"SingleGlb_phi_2010_%s",particle_names[i]);
+		sprintf(sub_title,"%s;#phi;counts",title);
+		SingleGlb_Phi_2010[i] = new TH1F(title,sub_title,PHI,-PI,PI);
+		sprintf(title,"SingleGlb_pt_2010_%s",particle_names[i]);
+		sprintf(sub_title,"%s;p_{T};counts",title);
+		SingleGlb_Pt_2010[i] = new TH1F(title,sub_title,60,0,60);	
+
+		sprintf(title,"SingleGlb_eta_2011_%s",particle_names[i]);
+		sprintf(sub_title,"%s;#eta;counts",title);
+		SingleGlb_Eta_2011[i] = new TH1F(title,sub_title,ETA,-2.4,2.4);
+		sprintf(title,"SingleGlb_phi_2011_%s",particle_names[i]);
+		sprintf(sub_title,"%s;#phi;counts",title);
+		SingleGlb_Phi_2011[i] = new TH1F(title,sub_title,PHI,-PI,PI);
+		sprintf(title,"SingleGlb_pt_2011_%s",particle_names[i]);
+		sprintf(sub_title,"%s;p_{T};counts",title);
+		SingleGlb_Pt_2011[i] = new TH1F(title,sub_title,60,0,60);	
+
+	}
+
   TH2F *DoubleGlb_Ypt_2010 = new TH2F("DoubleGlb_ypt_2010","DoubleGlb_ypt_2010;double mu y;double mu p_{T}",ETA,-3.0,3.0,PT,0,20);
   TH1F *DoubleGlb_Mass_2010 = new TH1F("DoubleGlb_mass_2010","DoubleGlb_mass_2010;double mu mass;counts",MASS,0,20);
   TH1F *DoubleGlb_Y_2010 = new TH1F("DoubleGlb_y_2010","DoubleGlb_y_2010;double mu y;counts",ETA,-3.0,3.0);
@@ -62,7 +98,7 @@ int diMu_plots() {
   // 2010 datafile 
   TCastorFile   *input_2010 = new TCastorFile(data2010.c_str());
   FriendMuTree  *mutree_2010 = new FriendMuTree(input_2010,true); // Load HLTMuTree
-  HltTree       *ohTree_2010 = new HltTree(input_2010,true);      // Load HltTree
+  HltTree       *ohTree_2010 = new HltTree(input_2010,true,"hltana/HltTree");      // Load HltTree
 
   TTree         *muon_tree_2010;                             // Hold HLTMuTree
   TTree         *open_tree_2010;                             // Hold HltTree
@@ -71,7 +107,7 @@ int diMu_plots() {
   // 2011 datafile 
   TCastorFile   *input_2011 = new TCastorFile(data2011.c_str());
   FriendMuTree  *mutree_2011 = new FriendMuTree(input_2011,true); // Load HLTMuTree
-  HltTree       *ohTree_2011 = new HltTree(input_2011,true);      // Load HltTree
+  HltTree       *ohTree_2011 = new HltTree(input_2011,true,"hltanalysis/HltTree");      // Load HltTree
 
   TTree         *muon_tree_2011;                             // Hold HLTMuTree
   TTree         *open_tree_2011;                             // Hold HltTree
@@ -139,9 +175,14 @@ int diMu_plots() {
     return -1;
   }
 
+//	int max_event_2010 = muon_tree_2010->GetEntries();
+//	int max_event_2011 = muon_tree_2011->GetEntries();
+	int max_event_2010 = 1000;
+	int max_event_2011 = 10000;
 
+	
   // Loop over trees over 2010 trees
-  for (int i=0; i<muon_tree_2010->GetEntries(); i++) {
+  for (int i=0; i<max_event_2010; i++) {
     muon_tree_2010->GetEntry(i);
     ohTree_2010->GetEntry(i);
     open_tree_2010->GetEntry(i);
@@ -173,17 +214,50 @@ int diMu_plots() {
 			if(!isMuInAcc(flag,muTree_2010->eta[b], muTree_2010->pt[b])) continue;    //Check sta muons are within acceptance range
 		  }
 
+			if (muTree_2010->charge[a] + muTree_2010->charge[b] != 0) continue;
+			
 			mu1.SetPtEtaPhiM(muTree_2010->pt[a],muTree_2010->eta[a],muTree_2010->phi[a],Mmu);
 		  mu2.SetPtEtaPhiM(muTree_2010->pt[b],muTree_2010->eta[b],muTree_2010->phi[b],Mmu);
 
-          dimu = mu1 + mu2;
+			dimu = mu1 + mu2;
 
 		  DoubleGlb_Ypt_2010->Fill(dimu.Rapidity(),dimu.Pt());
 		  DoubleGlb_Mass_2010->Fill(dimu.M());
 		  DoubleGlb_Y_2010->Fill(dimu.Rapidity());
 		  DoubleGlb_Pt_2010->Fill(dimu.Pt());
 		  DoubleGlb_Phi_2010->Fill(dimu.Phi());
-		  
+
+			if (dimu.M() > 3 && dimu.M() < 3.2) {
+				SingleGlb_Eta_2010[0]->Fill(muTree_2010->eta[a]);
+				SingleGlb_Eta_2010[0]->Fill(muTree_2010->eta[b]);
+				SingleGlb_Phi_2010[0]->Fill(muTree_2010->phi[a]);
+				SingleGlb_Phi_2010[0]->Fill(muTree_2010->phi[b]);
+				SingleGlb_Pt_2010[0]->Fill(muTree_2010->pt[a]);
+				SingleGlb_Pt_2010[0]->Fill(muTree_2010->pt[b]);
+			}
+
+			if (dimu.M() > 9 && dimu.M() < 10) {
+				SingleGlb_Eta_2010[1]->Fill(muTree_2010->eta[a]);
+				SingleGlb_Eta_2010[1]->Fill(muTree_2010->eta[b]);
+				SingleGlb_Phi_2010[1]->Fill(muTree_2010->phi[a]);
+				SingleGlb_Phi_2010[1]->Fill(muTree_2010->phi[b]);
+				SingleGlb_Pt_2010[1]->Fill(muTree_2010->pt[a]);
+				SingleGlb_Pt_2010[1]->Fill(muTree_2010->pt[b]);
+			}
+
+			if (dimu.M() > 85 && dimu.M() < 95) {
+				SingleGlb_Eta_2010[2]->Fill(muTree_2010->eta[a]);
+				SingleGlb_Eta_2010[2]->Fill(muTree_2010->eta[b]);
+				SingleGlb_Phi_2010[2]->Fill(muTree_2010->phi[a]);
+				SingleGlb_Phi_2010[2]->Fill(muTree_2010->phi[b]);
+				SingleGlb_Pt_2010[2]->Fill(muTree_2010->pt[a]);
+				SingleGlb_Pt_2010[2]->Fill(muTree_2010->pt[b]);
+			}
+
+			
+// we want to cut on the mass between 3 and 3.2, and for the upsilon, cut off mass between 9 and 10, for the z, cut off mass between 85 and 95.
+// we want to look at the single mu quality distributions, for these mass ranges. we will apply all of the quality cuts for the muons, and check the sign of
+// the dimuon
 	    }
     }
 	if (i%10000 ==0)
@@ -192,7 +266,7 @@ int diMu_plots() {
   }
 
   // Loop over trees over 2011 trees
-  for (int i=0; i<muon_tree_2011->GetEntries(); i++) {
+  for (int i=0; i<max_event_2011; i++) {
     muon_tree_2011->GetEntry(i);
     ohTree_2011->GetEntry(i);
     open_tree_2011->GetEntry(i);
@@ -224,16 +298,45 @@ int diMu_plots() {
 			if(!isMuInAcc(flag,muTree_2011->eta[b], muTree_2011->pt[b])) continue;    //Check sta muons are within acceptance range
 		  }
 
-          mu1.SetPtEtaPhiM(muTree_2011->pt[a],muTree_2011->eta[a],muTree_2011->phi[a],Mmu);
+			if (muTree_2010->charge[a] + muTree_2010->charge[b] != 0) continue;
+			
+			mu1.SetPtEtaPhiM(muTree_2011->pt[a],muTree_2011->eta[a],muTree_2011->phi[a],Mmu);
 		  mu2.SetPtEtaPhiM(muTree_2011->pt[b],muTree_2011->eta[b],muTree_2011->phi[b],Mmu);
 
-          dimu = mu1 + mu2;
+			dimu = mu1 + mu2;
 
 		  DoubleGlb_Ypt_2011->Fill(dimu.Rapidity(),dimu.Pt());
 		  DoubleGlb_Mass_2011->Fill(dimu.M());
 		  DoubleGlb_Y_2011->Fill(dimu.Rapidity());
 		  DoubleGlb_Pt_2011->Fill(dimu.Pt());
 		  DoubleGlb_Phi_2011->Fill(dimu.Phi());
+
+			if (dimu.M() > 3 && dimu.M() < 3.2) {
+				SingleGlb_Eta_2011[0]->Fill(muTree_2011->eta[a]);
+				SingleGlb_Eta_2011[0]->Fill(muTree_2011->eta[b]);
+				SingleGlb_Phi_2011[0]->Fill(muTree_2011->phi[a]);
+				SingleGlb_Phi_2011[0]->Fill(muTree_2011->phi[b]);
+				SingleGlb_Pt_2011[0]->Fill(muTree_2011->pt[a]);
+				SingleGlb_Pt_2011[0]->Fill(muTree_2011->pt[b]);
+			}
+
+			if (dimu.M() > 9 && dimu.M() < 10) {
+				SingleGlb_Eta_2011[1]->Fill(muTree_2011->eta[a]);
+				SingleGlb_Eta_2011[1]->Fill(muTree_2011->eta[b]);
+				SingleGlb_Phi_2011[1]->Fill(muTree_2011->phi[a]);
+				SingleGlb_Phi_2011[1]->Fill(muTree_2011->phi[b]);
+				SingleGlb_Pt_2011[1]->Fill(muTree_2011->pt[a]);
+				SingleGlb_Pt_2011[1]->Fill(muTree_2011->pt[b]);
+			}
+
+			if (dimu.M() > 85 && dimu.M() < 95) {
+				SingleGlb_Eta_2011[2]->Fill(muTree_2011->eta[a]);
+				SingleGlb_Eta_2011[2]->Fill(muTree_2011->eta[b]);
+				SingleGlb_Phi_2011[2]->Fill(muTree_2011->phi[a]);
+				SingleGlb_Phi_2011[2]->Fill(muTree_2011->phi[b]);
+				SingleGlb_Pt_2011[2]->Fill(muTree_2011->pt[a]);
+				SingleGlb_Pt_2011[2]->Fill(muTree_2011->pt[b]);
+			}
 		  
 	    }
     }

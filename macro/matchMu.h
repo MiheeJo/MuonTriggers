@@ -194,12 +194,12 @@ bool isMuInAcc(FLAG *flag, float eta, float pt){
 
 bool isValidMu(FLAG *flag,MUTREE *mutree, int idx, string quality = "") {
 
-		double nTrkFound = (quality.compare("nTrkFound")) ? -1 : 10;
-		double glbChi2_ndof = (quality.compare("glbChi2_ndof")) ? 999 : 20.0;
-		double trkChi2_ndof = (quality.compare("trkChi2_ndof")) ? 999 : 4.0;
-		double pixLayerWMeas = (quality.compare("pixLayerWMeas")) ? -1 : 0;
-		double trkDxy = (quality.compare("trkDxy")) ? 999 : 3.0;
-		double trkDz = (quality.compare("trkDz")) ? 999 : 15.0;
+		double nTrkFound = !(quality.compare("nValTrkHits")) ? -1 : 10;
+		double glbChi2_ndof = !(quality.compare("glbChi2_ndof")) ? 999 : 20.0;
+		double trkChi2_ndof = !(quality.compare("trkChi2_ndof")) ? 999 : 4.0;
+		double pixLayerWMeas = !(quality.compare("pixLayerWMeas")) ? -1 : 0;
+		double trkDxy = !(quality.compare("trkDxy")) ? 999 : 3.0;
+		double trkDz = !(quality.compare("trkDz")) ? 999 : 15.0;
 
     return (isMuInAcc(flag,mutree->eta[idx], mutree->pt[idx]) &&
             mutree->nTrkFound[idx] > nTrkFound &&

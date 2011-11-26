@@ -192,12 +192,20 @@ bool isMuInAcc(FLAG *flag, float eta, float pt){
   return value;
 }
 
-bool isValidMu(FLAG *flag,MUTREE *mutree, int idx) {
+bool isValidMu(FLAG *flag,MUTREE *mutree, int idx, string quality = "") {
+
+		double nTrkFound = (quality.compare("nTrkFound")) ? -1 : 10;
+		double glbChi2_ndof = (quality.compare("glbChi2_ndof")) ? 999 : 20.0;
+		double trkChi2_ndof = (quality.compare("trkChi2_ndof")) ? 999 : 4.0;
+		double pixLayerWMeas = (quality.compare("pixLayerWMeas")) ? -1 : 0;
+		double trkDxy = (quality.compare("trkDxy")) ? 999 : 3.0;
+		double trkDz = (quality.compare("trkDz")) ? 999 : 15.0;
+
     return (isMuInAcc(flag,mutree->eta[idx], mutree->pt[idx]) &&
-            mutree->nTrkFound[idx] > 10 &&
-            mutree->glbChi2_ndof[idx] < 20.0 &&
-            mutree->trkChi2_ndof[idx] < 4.0 &&
-            mutree->pixLayerWMeas[idx] > 0 &&
-            mutree->trkDxy[idx] < 3.0 &&
-            mutree->trkDz[idx] < 15.0 );
+            mutree->nTrkFound[idx] > nTrkFound &&
+            mutree->glbChi2_ndof[idx] < glbChi2_ndof &&
+            mutree->trkChi2_ndof[idx] < trkChi2_ndof &&
+            mutree->pixLayerWMeas[idx] > pixLayerWMeas &&
+            mutree->trkDxy[idx] < trkDxy &&
+            mutree->trkDz[idx] < trkDz );
 }

@@ -17,6 +17,7 @@
 #include <TGraphAsymmErrors.h>
 #include <TMultiGraph.h>
 #include <TSystem.h>
+#include <TLine.h>
 
 using namespace std;
 
@@ -32,23 +33,20 @@ int diMu_plots() {
   
   // Check trigger list
   vector<string> triglist;
-  triglist.push_back("HLT_HIL1DoubleMu0_HighQ_v1");
-  triglist.push_back("HLT_HIL2DoubleMu3_v1");
-  triglist.push_back("HLT_HIL3DoubleMuOpen_v1");
-  triglist.push_back("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1");
-  triglist.push_back("HLT_HIL2Mu3_v1");
-  triglist.push_back("HLT_HIL2Mu7_v1");
-  triglist.push_back("HLT_HIL2Mu15_v1");
-  triglist.push_back("HLT_HIL2Mu3_NHitQ_v1");
-  triglist.push_back("HLT_HIL3Mu3_v1");
-
-  int MASS = 20;
-  double Xaxis[20] = {0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100};
+//  triglist.push_back("HLT_HIL1DoubleMu0_HighQ_v1");
+//  triglist.push_back("HLT_HIL2DoubleMu3_v1");
+//  triglist.push_back("HLT_HIL3DoubleMuOpen_v1");
+//  triglist.push_back("HLT_HIL3DoubleMuOpen_Mgt2_OS_NoCowboy_v1");
+//  triglist.push_back("HLT_HIL2Mu3_v1");
+//  triglist.push_back("HLT_HIL2Mu7_v1");
+//  triglist.push_back("HLT_HIL2Mu15_v1");
+//  triglist.push_back("HLT_HIL2Mu3_NHitQ_v1");
+//  triglist.push_back("HLT_HIL3Mu3_v1");
 
 	char title[256];
 	char sub_title[256];
 
-	char* particle_names[] = {"J/Psi","Upsilon","Z"};
+	char* particle_names[] = {"J-Psi","Upsilon","Z"};
 	
   // Histograms
 	TH1F *SingleGlb_Eta_2010[3];
@@ -59,41 +57,50 @@ int diMu_plots() {
 	TH1F *SingleGlb_Phi_2011[3];
 	TH1F *SingleGlb_Pt_2011[3];
 	
+	TFile *output = new TFile("2011_histos.root","recreate");
+	output->cd();
+	
 	for (int i = 0; i < 3; i++) {
 
 		sprintf(title,"SingleGlb_eta_2010_%s",particle_names[i]);
-		sprintf(sub_title,"%s;#eta;counts",title);
+		sprintf(sub_title,"%s;#eta",title);
 		SingleGlb_Eta_2010[i] = new TH1F(title,sub_title,ETA,-2.4,2.4);
+		SingleGlb_Eta_2010[i]->SetMarkerStyle(25);
 		sprintf(title,"SingleGlb_phi_2010_%s",particle_names[i]);
-		sprintf(sub_title,"%s;#phi;counts",title);
+		sprintf(sub_title,"%s;#phi",title);
 		SingleGlb_Phi_2010[i] = new TH1F(title,sub_title,PHI,-PI,PI);
+		SingleGlb_Phi_2010[i]->SetMarkerStyle(25);
 		sprintf(title,"SingleGlb_pt_2010_%s",particle_names[i]);
-		sprintf(sub_title,"%s;p_{T};counts",title);
+		sprintf(sub_title,"%s;p_{T}",title);
 		SingleGlb_Pt_2010[i] = new TH1F(title,sub_title,60,0,60);	
+		SingleGlb_Pt_2010[i]->SetMarkerStyle(25);
 
 		sprintf(title,"SingleGlb_eta_2011_%s",particle_names[i]);
-		sprintf(sub_title,"%s;#eta;counts",title);
+		sprintf(sub_title,"%s;#eta",title);
 		SingleGlb_Eta_2011[i] = new TH1F(title,sub_title,ETA,-2.4,2.4);
+		SingleGlb_Eta_2011[i]->SetMarkerStyle(20);
 		sprintf(title,"SingleGlb_phi_2011_%s",particle_names[i]);
-		sprintf(sub_title,"%s;#phi;counts",title);
+		sprintf(sub_title,"%s;#phi",title);
 		SingleGlb_Phi_2011[i] = new TH1F(title,sub_title,PHI,-PI,PI);
+		SingleGlb_Phi_2011[i]->SetMarkerStyle(20);
 		sprintf(title,"SingleGlb_pt_2011_%s",particle_names[i]);
-		sprintf(sub_title,"%s;p_{T};counts",title);
+		sprintf(sub_title,"%s;p_{T}",title);
 		SingleGlb_Pt_2011[i] = new TH1F(title,sub_title,60,0,60);	
+		SingleGlb_Pt_2011[i]->SetMarkerStyle(20);
 
 	}
 
-  TH2F *DoubleGlb_Ypt_2010 = new TH2F("DoubleGlb_ypt_2010","DoubleGlb_ypt_2010;double mu y;double mu p_{T}",ETA,-3.0,3.0,PT,0,20);
-  TH1F *DoubleGlb_Mass_2010 = new TH1F("DoubleGlb_mass_2010","DoubleGlb_mass_2010;double mu mass;counts",MASS,0,20);
-  TH1F *DoubleGlb_Y_2010 = new TH1F("DoubleGlb_y_2010","DoubleGlb_y_2010;double mu y;counts",ETA,-3.0,3.0);
-  TH1F *DoubleGlb_Pt_2010 = new TH1F("DoubleGlb_pt_2010","DoubleGlb_pt_2010;double mu p_{T};counts",PT,0,20);
-  TH1F *DoubleGlb_Phi_2010 = new TH1F("DoubleGlb_phi_2010","DoubleGlb_phi_2010;double mu #phi;counts",PHI,-PI,PI);
+  TH2F *DoubleGlb_Ypt_2010 = new TH2F("DoubleGlb_ypt_2010","DoubleGlb_ypt_2010;double mu y;double mu p_{T}",ETA,-3.0,3.0,40,0,40);
+  TH1F *DoubleGlb_Mass_2010 = new TH1F("DoubleGlb_mass_2010","DoubleGlb_mass_2010;double mu mass",110,0,110);
+  TH1F *DoubleGlb_Y_2010 = new TH1F("DoubleGlb_y_2010","DoubleGlb_y_2010;double mu y",ETA,-3.0,3.0);
+  TH1F *DoubleGlb_Pt_2010 = new TH1F("DoubleGlb_pt_2010","DoubleGlb_pt_2010;double mu p_{T}",40,0,40);
+  TH1F *DoubleGlb_Phi_2010 = new TH1F("DoubleGlb_phi_2010","DoubleGlb_phi_2010;double mu #phi",PHI,-PI,PI);
 
-  TH2F *DoubleGlb_Ypt_2011 = new TH2F("DoubleGlb_ypt_2011","DoubleGlb_ypt_2011;double mu y;double mu p_{T}",ETA,-3.0,3.0,PT,0,20);
-  TH1F *DoubleGlb_Mass_2011 = new TH1F("DoubleGlb_mass_2011","DoubleGlb_mass_2011;double mu mass;counts",MASS,0,20);
-  TH1F *DoubleGlb_Y_2011 = new TH1F("DoubleGlb_y_2011","DoubleGlb_y_2011;double mu y;counts",ETA,-3.0,3.0);
-  TH1F *DoubleGlb_Pt_2011 = new TH1F("DoubleGlb_pt_2011","DoubleGlb_pt_2011;double mu p_{T};counts",PT,0,20);
-  TH1F *DoubleGlb_Phi_2011 = new TH1F("DoubleGlb_phi_2011","DoubleGlb_phi_2011;double mu #phi;counts",PHI,-PI,PI);
+  TH2F *DoubleGlb_Ypt_2011 = new TH2F("DoubleGlb_ypt_2011","DoubleGlb_ypt_2011;double mu y;double mu p_{T}",ETA,-3.0,3.0,40,0,40);
+  TH1F *DoubleGlb_Mass_2011 = new TH1F("DoubleGlb_mass_2011","DoubleGlb_mass_2011;double mu mass",110,0,110);
+  TH1F *DoubleGlb_Y_2011 = new TH1F("DoubleGlb_y_2011","DoubleGlb_y_2011;double mu y",ETA,-3.0,3.0);
+  TH1F *DoubleGlb_Pt_2011 = new TH1F("DoubleGlb_pt_2011","DoubleGlb_pt_2011;double mu p_{T}",40,0,40);
+  TH1F *DoubleGlb_Phi_2011 = new TH1F("DoubleGlb_phi_2011","DoubleGlb_phi_2011;double mu #phi",PHI,-PI,PI);
 
   // 2010 datafile 
   TCastorFile   *input_2010 = new TCastorFile(data2010.c_str());
@@ -175,10 +182,10 @@ int diMu_plots() {
     return -1;
   }
 
-//	int max_event_2010 = muon_tree_2010->GetEntries();
-//	int max_event_2011 = muon_tree_2011->GetEntries();
-	int max_event_2010 = 1000;
-	int max_event_2011 = 10000;
+	int max_event_2010 = muon_tree_2010->GetEntries();
+	int max_event_2011 = muon_tree_2011->GetEntries();
+//	int max_event_2010 = 10000;
+//	int max_event_2011 = 100000;
 
 	
   // Loop over trees over 2010 trees
@@ -187,7 +194,7 @@ int diMu_plots() {
     ohTree_2010->GetEntry(i);
     open_tree_2010->GetEntry(i);
 
-    ////////// Check muon trigger list
+/*    ////////// Check muon trigger list
     flag->trig = false;
     for (unsigned int tidx=0; tidx<ntrig; tidx++) {
       if (trig_2010[tidx]) {         // At least one of the muon trigger is fired.
@@ -196,7 +203,7 @@ int diMu_plots() {
       }
     }
     if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!
-
+*/
     TLorentzVector mu1, mu2, dimu;
     
     ////////// Load muons and fill up histograms
@@ -209,9 +216,9 @@ int diMu_plots() {
 	
 		for (int b=a+1; b < muTree_2010->nptl; b++) {
 		  if (flag->doGlb) {
-			if(!isValidMu(flag, muTree_2010, b)) continue;    //Check glb muons are within acceptance range
+				if(!isValidMu(flag, muTree_2010, b)) continue;    //Check glb muons are within acceptance range
 		  } else if (flag->doSta) {
-			if(!isMuInAcc(flag,muTree_2010->eta[b], muTree_2010->pt[b])) continue;    //Check sta muons are within acceptance range
+				if(!isMuInAcc(flag,muTree_2010->eta[b], muTree_2010->pt[b])) continue;    //Check sta muons are within acceptance range
 		  }
 
 			if (muTree_2010->charge[a] + muTree_2010->charge[b] != 0) continue;
@@ -271,7 +278,7 @@ int diMu_plots() {
     ohTree_2011->GetEntry(i);
     open_tree_2011->GetEntry(i);
 
-    ////////// Check muon trigger list
+/*    ////////// Check muon trigger list
     flag->trig = false;
     for (unsigned int tidx=0; tidx<ntrig; tidx++) {
       if (trig_2011[tidx]) {         // At least one of the muon trigger is fired.
@@ -280,7 +287,7 @@ int diMu_plots() {
       }
     }
     if (!flag->trig) continue;  // If no muon triggers fired, go to the next event!
-
+*/
     TLorentzVector mu1, mu2, dimu;
     
     ////////// Load muons and fill up histograms
@@ -298,7 +305,7 @@ int diMu_plots() {
 			if(!isMuInAcc(flag,muTree_2011->eta[b], muTree_2011->pt[b])) continue;    //Check sta muons are within acceptance range
 		  }
 
-			if (muTree_2010->charge[a] + muTree_2010->charge[b] != 0) continue;
+			if (muTree_2011->charge[a] + muTree_2011->charge[b] != 0) continue;
 			
 			mu1.SetPtEtaPhiM(muTree_2011->pt[a],muTree_2011->eta[a],muTree_2011->phi[a],Mmu);
 		  mu2.SetPtEtaPhiM(muTree_2011->pt[b],muTree_2011->eta[b],muTree_2011->phi[b],Mmu);
@@ -356,9 +363,11 @@ int diMu_plots() {
   gROOT->Macro("~miheejo/public/HIMuTrig/JpsiStyle.C");    //For plot style
   
   TCanvas* cnv = new TCanvas("cnv","new canvas",1600,1200);
-
-  TLegend* legCent = new TLegend(0.7,0.85,0.9,0.95);//top left
-//  legCent->SetTextSize();
+	gStyle->SetPadRightMargin(0.15);
+	gStyle->SetOptStat("");
+	
+  TLegend* legCent = new TLegend(0.5,0.85,0.9,0.95);//top left
+  legCent->SetTextSize(0.03);
   legCent->SetBorderSize(0);
   legCent->SetFillColor(0);
 
@@ -370,80 +379,80 @@ int diMu_plots() {
   double numerator_2010 = DoubleGlb_Mass_2010->GetEntries();
   double numerator_2011 = DoubleGlb_Mass_2011->GetEntries();
 
-  double ratio_2010 = numerator_2010 / denominator_2010;
-  double ratio_2011 = numerator_2011 / denominator_2011;
-  
-  cout << "Denominator_2010 is " << denominator_2010 << ", Numerator_2010 is " << numerator_2010 << " and Ratio_2010 is " << ratio_2010 << endl;
-  cout << "Denominator_2011 is " << denominator_2011 << ", Numerator_2011 is " << numerator_2011 << " and Ratio_2011 is " << ratio_2011 << endl;
+	int entries_2010;
+	int entries_2011;
   
   cnv->cd(1);
   gStyle->SetPadRightMargin(0.15);
-    DoubleGlb_Ypt_2010->DrawNormalized("COLZ",1);
-//  DoubleGlb_Ypt_2010->Draw("COLZ");
+	gStyle->SetPadTopMargin(0.1);
+	gStyle->SetOptTitle(1);
+	cnv->Update();
+	DoubleGlb_Ypt_2010->DrawNormalized("COLZ",1);
 
   cnv->cd(2);
+  gStyle->SetPadRightMargin(0.15);
+	gStyle->SetPadTopMargin(0.1);
+	gStyle->SetOptTitle(1);
+	cnv->Update();
   DoubleGlb_Ypt_2011->DrawNormalized("COLZ",1);
-//  DoubleGlb_Ypt_2011->Draw("COLZ");
 
   cnv->cd(3);  
+	gStyle->SetOptStat("");
   gStyle->SetPadRightMargin(0.05);
-  legCent->AddEntry(DoubleGlb_Mass_2010,"2010 Data","p");
-  legCent->AddEntry(DoubleGlb_Mass_2011,"2011 Data","p");
+	entries_2010 = DoubleGlb_Mass_2010->GetEntries();
+	entries_2011 = DoubleGlb_Mass_2011->GetEntries();
+	sprintf(title,"2010 Data - %i Dimuons",entries_2010);
+  legCent->AddEntry(DoubleGlb_Mass_2010,title,"p");
+	sprintf(title,"2011 Data - %i Dimuons",entries_2011);
+  legCent->AddEntry(DoubleGlb_Mass_2011,title,"p");
 
-//  DoubleGlb_Mass_2010->Sumw2();
-  DoubleGlb_Mass_2010->SetMarkerStyle(20);
+  DoubleGlb_Mass_2010->Sumw2();
+  DoubleGlb_Mass_2010->SetMarkerStyle(25);
   DoubleGlb_Mass_2010->SetMarkerColor(1);
-//  DoubleGlb_Mass_2010->DrawNormalized("p e",1);
-//  DoubleGlb_Mass_2010->Draw("p e");
+  DoubleGlb_Mass_2010->DrawNormalized("p e",1);
   DoubleGlb_Mass_2011->Sumw2();
   DoubleGlb_Mass_2011->SetMarkerStyle(20);
   DoubleGlb_Mass_2011->SetMarkerColor(2);
-  DoubleGlb_Mass_2011->DrawNormalized("p e",1);
-//  DoubleGlb_Mass_2011->DrawNormalized("p e same",1);
-//  DoubleGlb_Mass_2011->Draw("p e");
+  DoubleGlb_Mass_2011->DrawNormalized("p e same",1);
   legCent->Draw();
   
   cnv->cd(4);
+	gStyle->SetOptStat("");
   DoubleGlb_Y_2010->Sumw2();
-  DoubleGlb_Y_2010->SetMarkerStyle(20);
+  DoubleGlb_Y_2010->SetMarkerStyle(25);
   DoubleGlb_Y_2010->SetMarkerColor(1);
-//  DoubleGlb_Y_2010->DrawNormalized("p e",1);
-//  DoubleGlb_Y_2010->Draw("p e");
+  DoubleGlb_Y_2010->DrawNormalized("p e",1);
   DoubleGlb_Y_2011->Sumw2();
   DoubleGlb_Y_2011->SetMarkerStyle(20);
   DoubleGlb_Y_2011->SetMarkerColor(2);
-  DoubleGlb_Y_2011->DrawNormalized("p e",1);
-//  DoubleGlb_Y_2011->DrawNormalized("p e same",1);
-//  DoubleGlb_Y_2011->Draw("p e");
+  DoubleGlb_Y_2011->DrawNormalized("p e same",1);
   legCent->Draw();
 
   cnv->cd(5);  
+	gStyle->SetOptStat("");
   DoubleGlb_Pt_2010->Sumw2();
-  DoubleGlb_Pt_2010->SetMarkerStyle(20);
+  DoubleGlb_Pt_2010->SetMarkerStyle(25);
   DoubleGlb_Pt_2010->SetMarkerColor(1);
-//  DoubleGlb_Pt_2010->DrawNormalized("p e",1);
-//  DoubleGlb_Pt_2010->Draw("p e");
+  DoubleGlb_Pt_2010->DrawNormalized("p e",1);
   DoubleGlb_Pt_2011->Sumw2();
   DoubleGlb_Pt_2011->SetMarkerStyle(20);
   DoubleGlb_Pt_2011->SetMarkerColor(2);
-  DoubleGlb_Pt_2011->DrawNormalized("p e",1);
-//  DoubleGlb_Pt_2011->DrawNormalized("p e same",1);
-//  DoubleGlb_Pt_2011->Draw("p e");
+  DoubleGlb_Pt_2011->DrawNormalized("p e same",1);
   legCent->Draw();
 
   cnv->cd(6);  
+	gStyle->SetOptStat("");
   DoubleGlb_Phi_2010->Sumw2();
-  DoubleGlb_Phi_2010->SetMarkerStyle(20);
+  DoubleGlb_Phi_2010->SetMarkerStyle(25);
   DoubleGlb_Phi_2010->SetMarkerColor(1);
-//  DoubleGlb_Phi_2010->DrawNormalized("p e",1);
-//  DoubleGlb_Phi_2010->Draw("p e");
+  DoubleGlb_Phi_2010->DrawNormalized("p e",1);
   DoubleGlb_Phi_2011->Sumw2();
   DoubleGlb_Phi_2011->SetMarkerStyle(20);
   DoubleGlb_Phi_2011->SetMarkerColor(2);
-  DoubleGlb_Phi_2011->DrawNormalized("p e",1);
-//  DoubleGlb_Phi_2011->DrawNormalized("p e same",1);
-//  DoubleGlb_Phi_2011->Draw("p e");
+  DoubleGlb_Phi_2011->DrawNormalized("p e same",1);
   legCent->Draw();
+
+	cnv->Update();
   
   if (flag->doGlb) {
 	cnv->Print("diMu_plots_Global.pdf");
@@ -451,35 +460,336 @@ int diMu_plots() {
 	cnv->Print("diMu_plots_STA.pdf");
   }
   
+  // Draw final histograms and save it into .png files
+	cnv = new TCanvas("cnv","cnv",800,600);
+
+	legCent = new TLegend(0.15,0.90,0.2,1.0);
+  legCent->SetFillColor(0);
+  legCent->SetBorderSize(0);
+  legCent->SetTextSize(0.05);
+
+	double marker_size = 2.0;
+	double label_size = 0.05;
+	
+  TLatex *lax = new TLatex();
+  lax->SetTextSize(0.1);
+	stringstream lax_title;
+	
+	TPad *pad1;
+	TPad *pad2;
+
+	TH1F *ratio_2011;
+
+	char count_2010[512];
+	char count_2011[512];
+	
+	TLine* l3a;
+	
+	gStyle->SetPalette(1,0);
+	gStyle->SetTitleOffset(0.1);
+	//	gStyle->SetPadLeftMargin(0.17);
+//	gStyle->SetPadBottomMargin(0.2);
+//	gStyle->SetPadTopMargin(0.1);
+//	gStyle->SetPadRightMargin(0.02);
+//	gStyle->SetOptTitle(1);
+//	gStyle->SetTextSize(0.03);
+//	gStyle->SetMarkerSize(1);
+//	gStyle->SetMarkerStyle(20);
+
+//	gStyle->SetOptTitle(0);
+//	gStyle->SetStatX(0.8);
+//	gStyle->SetStatY(1.0);
+//	gStyle->SetStatW(0.2);
+//	gStyle->SetStatH(0.2);
+//	gStyle->SetOptStat("mn");
+	
+	for (int i = 0; i < 3; i++) {
+// START Phi	
+	cnv = new TCanvas("cnv","cnv",1300,1000);
+	
+	pad1 = new TPad("pad1", "The pad 70% of the height",0.0,0.3,1.0,1.0,0);
+	pad1->SetBottomMargin(0.0);
+	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
+	pad2->SetTopMargin(0.0);
+
+	pad2->SetBottomMargin(0.4);
+	pad1->Draw();
+	pad2->Draw();
+
+	pad1->cd();
+	pad1->SetLogy(0);
+
+	gStyle->SetMarkerSize(1);
+	entries_2010 = SingleGlb_Phi_2010[i]->GetEntries();
+	SingleGlb_Phi_2010[i]->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_Phi_2010[i]->GetYaxis()->SetLabelSize(label_size);
+	SingleGlb_Phi_2010[i]->SetMinimum(0);
+	SingleGlb_Phi_2010[i]->Sumw2();
+  SingleGlb_Phi_2010[i]->SetMarkerStyle(25);
+  SingleGlb_Phi_2010[i]->SetMarkerSize(marker_size);
+	SingleGlb_Phi_2010[i]->Scale(1.0/SingleGlb_Phi_2010[i]->GetEntries());
+  SingleGlb_Phi_2010[i]->DrawNormalized("p e",1);
+	cnv->Update();
+	gStyle->SetStatX(0.8);
+	gStyle->SetStatY(1.0);
+	gStyle->SetStatW(0.2);
+	gStyle->SetStatH(0.2);
+	gStyle->SetOptStat("mn");
+	cnv->Update();
+	entries_2011 = SingleGlb_Phi_2011[i]->GetEntries();
+  SingleGlb_Phi_2011[i]->Sumw2();
+  SingleGlb_Phi_2011[i]->SetMarkerStyle(20);
+  SingleGlb_Phi_2011[i]->SetMarkerSize(marker_size);
+  SingleGlb_Phi_2011[i]->SetMarkerColor(kRed);
+	SingleGlb_Phi_2011[i]->Scale(1.0/SingleGlb_Phi_2011[i]->GetEntries());
+  SingleGlb_Phi_2011[i]->DrawNormalized("p e sames",1);
+	gStyle->SetStatX(1.0);
+	cnv->Update();
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
+	legCent->Clear();
+	legCent->AddEntry(SingleGlb_Phi_2010[i],count_2010,"lp");
+	legCent->AddEntry(SingleGlb_Phi_2011[i],count_2011,"lp");
+  legCent->Draw();
+	cnv->Update();
+
+	pad2->cd();
+
+	ratio_2011 = (TH1F*)SingleGlb_Phi_2011[i]->Clone("ratio_2011");
+	ratio_2011->Sumw2();
+	ratio_2011->Divide(SingleGlb_Phi_2010[i]);
+	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerColor(kViolet);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
+	ratio_2011->SetMinimum(0);
+	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
+
+	gStyle->SetStatX(0.55);
+	gStyle->SetStatY(0.6);
+	gStyle->SetStatW(0.1);
+	gStyle->SetStatH(0.3);
+	gStyle->SetOptStat("");
+
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetYaxis()->SetNdivisions(505);
+	ratio_2011->GetYaxis()->SetTitle("2011/2010");
+	ratio_2011->GetYaxis()->SetTitleSize(0.1);
+
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
+	ratio_2011->GetXaxis()->SetTitle("#phi");
+	
+	gStyle->SetOptTitle(0);
+	gPad->SetLogy(0);
+	
+	ratio_2011->Draw();
+	l3a = new TLine(-PI,1.0,PI,1.0);
+	l3a->SetHorizontal(1);
+	l3a->SetLineStyle(2);
+	l3a->SetX2(PI);
+	l3a->Draw("same");
+
+	sprintf(title,"SingleGlb_Phi_%s.pdf",particle_names[i]);
+	cnv->SaveAs(title);
+
+	cnv->Clear(); cnv->Draw();
+// END Phi
+
+// START Pt	
+	cnv = new TCanvas("cnv","cnv",1300,1000);
+	
+	pad1 = new TPad("pad1", "The pad 70% of the height",0.0,0.3,1.0,1.0,0);
+	pad1->SetBottomMargin(0.0);
+	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
+	pad2->SetTopMargin(0.0);
+
+	pad2->SetBottomMargin(0.4);
+	pad1->Draw();
+	pad2->Draw();
+
+	pad1->cd();
+	pad1->SetLogy(1);
+
+	gStyle->SetMarkerSize(1);
+	entries_2010 = SingleGlb_Pt_2010[i]->GetEntries();
+	SingleGlb_Pt_2010[i]->GetYaxis()->SetLabelSize(label_size);
+	SingleGlb_Pt_2010[i]->SetMinimum(1);
+	SingleGlb_Pt_2010[i]->Sumw2();
+  SingleGlb_Pt_2010[i]->SetMarkerStyle(25);
+  SingleGlb_Pt_2010[i]->SetMarkerSize(marker_size);
+	SingleGlb_Pt_2010[i]->Scale(1.0/SingleGlb_Pt_2010[i]->GetEntries());
+  SingleGlb_Pt_2010[i]->DrawNormalized("p e",1);
+	cnv->Update();
+	gStyle->SetStatX(0.8);
+	gStyle->SetStatY(1.0);
+	gStyle->SetStatW(0.2);
+	gStyle->SetStatH(0.2);
+	gStyle->SetOptStat("mn");
+	cnv->Update();
+  SingleGlb_Pt_2011[i]->Sumw2();
+  SingleGlb_Pt_2011[i]->SetMarkerStyle(20);
+  SingleGlb_Pt_2011[i]->SetMarkerColor(kRed);
+  SingleGlb_Pt_2011[i]->SetMarkerSize(marker_size);
+	SingleGlb_Pt_2011[i]->Scale(1.0/SingleGlb_Pt_2011[i]->GetEntries());
+  SingleGlb_Pt_2011[i]->DrawNormalized("p e sames",1);
+	gStyle->SetStatX(1.0);
+	entries_2010 = SingleGlb_Pt_2010[i]->GetEntries();
+	entries_2011 = SingleGlb_Pt_2011[i]->GetEntries();
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
+	legCent->Clear();
+	legCent->AddEntry(SingleGlb_Pt_2010[i],count_2010,"lp");
+	legCent->AddEntry(SingleGlb_Pt_2011[i],count_2011,"lp");
+  legCent->Draw();
+	cnv->Update();
+
+	pad2->cd();
+
+	ratio_2011 = (TH1F*)SingleGlb_Pt_2011[i]->Clone("ratio_2011");
+	ratio_2011->Sumw2();
+	ratio_2011->GetYaxis()->SetTitle("2011/2010");
+	ratio_2011->GetYaxis()->SetTitleSize(0.1);
+	ratio_2011->Divide(SingleGlb_Pt_2010[i]);
+	ratio_2011->SetMarkerColor(kViolet);
+	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
+	ratio_2011->SetMinimum(0);
+	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
+
+	gStyle->SetStatX(0.55);
+	gStyle->SetStatY(0.6);
+	gStyle->SetStatW(0.1);
+	gStyle->SetStatH(0.3);
+	gStyle->SetOptStat("");
+
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetTitle("2011/2010");
+	ratio_2011->GetYaxis()->SetTitleSize(0.1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetYaxis()->SetNdivisions(505);
+
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
+	ratio_2011->GetXaxis()->SetTitle("p_{T}");
+	
+	gStyle->SetOptTitle(0);
+	gPad->SetLogy(0);
+	
+	ratio_2011->Draw();
+	l3a = new TLine(0,1.0,60,1.0);
+	l3a->SetHorizontal(1);
+	l3a->SetLineStyle(2);
+	l3a->SetX2(60);
+	l3a->Draw("same");
+
+	sprintf(title,"SingleGlb_Pt_%s.pdf",particle_names[i]);
+	cnv->SaveAs(title);
+	cnv->Clear(); cnv->Draw();
+// END Pt
+	
+	// START Eta
+	cnv = new TCanvas("cnv","cnv",1300,1000);
+	
+	pad1 = new TPad("pad1", "The pad 70% of the height",0.0,0.3,1.0,1.0,0);
+	pad1->SetBottomMargin(0.0);
+	pad2 = new TPad("pad2", "The pad 30% of the height",0.0,0.0,1.0,0.3,0);
+	pad2->SetTopMargin(0.0);
+
+	pad2->SetBottomMargin(0.4);
+	pad1->Draw();
+	pad2->Draw();
+
+	pad1->cd();
+	pad1->SetLogy(0);
+
+	gStyle->SetMarkerSize(1);
+	SingleGlb_Eta_2010[i]->GetXaxis()->SetLabelSize(label_size);
+	SingleGlb_Eta_2010[i]->GetYaxis()->SetLabelSize(label_size);
+	SingleGlb_Eta_2010[i]->SetMinimum(0);
+	SingleGlb_Eta_2010[i]->Sumw2();
+  SingleGlb_Eta_2010[i]->SetMarkerStyle(25);
+  SingleGlb_Eta_2010[i]->SetMarkerSize(marker_size);
+	SingleGlb_Eta_2010[i]->Scale(1.0/SingleGlb_Eta_2010[i]->GetEntries());
+  SingleGlb_Eta_2010[i]->DrawNormalized("p e",1);
+	cnv->Update();
+	gStyle->SetStatX(0.8);
+	gStyle->SetStatY(1.0);
+	gStyle->SetStatW(0.2);
+	gStyle->SetStatH(0.2);
+	gStyle->SetOptStat("mn");
+	cnv->Update();
+	entries_2010 = SingleGlb_Eta_2010[i]->GetEntries();
+	cnv->Update();
+  SingleGlb_Eta_2011[i]->Sumw2();
+  SingleGlb_Eta_2011[i]->SetMarkerStyle(20);
+  SingleGlb_Eta_2011[i]->SetMarkerColor(kRed);
+  SingleGlb_Eta_2011[i]->SetMarkerSize(marker_size);
+	SingleGlb_Eta_2011[i]->Scale(1.0/SingleGlb_Eta_2011[i]->GetEntries());
+  SingleGlb_Eta_2011[i]->DrawNormalized("p e sames",1);
+	gStyle->SetStatX(1.0);
+	entries_2010 = SingleGlb_Eta_2010[i]->GetEntries();
+	entries_2011 = SingleGlb_Eta_2011[i]->GetEntries();
+	sprintf(count_2010,"  2010 Data - %i Muons", entries_2010);
+	sprintf(count_2011,"  2011 Data - %i Muons", entries_2011);
+	legCent->Clear();
+	legCent->AddEntry(SingleGlb_Eta_2010[i],count_2010,"lp");
+	legCent->AddEntry(SingleGlb_Eta_2011[i],count_2011,"lp");
+  legCent->Draw();
+	cnv->Update();
+
+	pad2->cd();
+
+	ratio_2011 = (TH1F*)SingleGlb_Eta_2011[i]->Clone("ratio_2011");
+	ratio_2011->Sumw2();
+	ratio_2011->GetYaxis()->SetTitle("2011/2010");
+	ratio_2011->GetYaxis()->SetTitleSize(0.1);
+	ratio_2011->Divide(SingleGlb_Eta_2010[i]);
+	ratio_2011->SetMarkerColor(kViolet);
+	ratio_2011->SetMarkerStyle(29);
+	ratio_2011->SetMarkerSize(marker_size*5.0/3.0);
+
+	ratio_2011->SetMinimum(0);
+	ratio_2011->SetMaximum(ratio_2011->GetMaximum()+0.1);
+
+	gStyle->SetStatX(0.55);
+	gStyle->SetStatY(0.6);
+	gStyle->SetStatW(0.1);
+	gStyle->SetStatH(0.3);
+	gStyle->SetOptStat("");
+
+	gStyle->SetMarkerSize(1);
+	ratio_2011->GetYaxis()->SetTitle("2011/2010");
+	ratio_2011->GetYaxis()->SetTitleSize(0.1);
+	ratio_2011->GetYaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetYaxis()->SetNdivisions(505);
+
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetLabelSize(label_size*8.0/3.0);
+	ratio_2011->GetXaxis()->SetTitleSize(0.15);
+	ratio_2011->GetXaxis()->SetTitle("#eta");
+	
+	gStyle->SetOptTitle(0);
+	gPad->SetLogy(0);
+	
+	ratio_2011->Draw();
+	l3a = new TLine(-2.4,1.0,2.4,1.0);
+	l3a->SetHorizontal(1);
+	l3a->SetLineStyle(2);
+	l3a->SetX2(2.4);
+	l3a->Draw("same");
+
+	sprintf(title,"SingleGlb_Eta_%s.pdf",particle_names[i]);
+	cnv->SaveAs(title);
+	cnv->Clear(); cnv->Draw();
+// END Eta
+  }
+
+	output->Write();
+	output->Close();
+	
   return 0;
 }
-
-/*
-void format_TH1 (TH1& th1, string title_name = "", string xaxis = "", string yaxis = "", int marker_color = 0, int marker_style = 0) {
-	th1.Sumw2();
-	th1.SetTitle(title_name);
-	th1.SetMarkerColor(marker_color);
-	th1.SetMarkerStyle(marker_style);
-	th1.SetLineColor(marker_color);
-	th1.GetXaxis()->SetTitle(xaxis);
-	th1.GetXaxis()->CenterTitle();
-	th1.GetYaxis()->SetTitle(yaxis);
-	th1.GetYaxis()->CenterTitle();
-	
-	return;
-}
-
-void format_TH2 (TH2& th2, string title_name = "", string xaxis = "", string yaxis = "", int marker_color = 0, int marker_style = 0) {
-//	th2.Sumw2();
-	th2.SetTitle(title_name);
-	th2.SetMarkerColor(marker_color);
-	th2.SetMarkerStyle(marker_style);
-	th2.SetLineColor(marker_color);
-	th2.GetXaxis()->SetTitle(xaxis);
-	th2.GetXaxis()->CenterTitle();
-	th2.GetYaxis()->SetTitle(yaxis);
-	th2.GetYaxis()->CenterTitle();
-	
-	return;
-}
-*/
